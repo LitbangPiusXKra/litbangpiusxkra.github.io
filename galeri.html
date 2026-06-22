@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Foto Kegiatan - Paroki Santo Pius X</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="images/logo.png" alt="Logo">
+        <div>
+            <h1>Paroki Santo Pius X</h1>
+            <p>Karanganyar</p>
+        </div>
+    </div>
+
+    <nav>
+		<a href="index.html">Beranda</a>
+
+		<div class="dropdown">
+			<span class="dropdown-title">
+				Tentang Kita <i class="fas fa-caret-down"></i>
+			</span>
+
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
+</header>
+
+<!-- ISI HALAMAN -->
+<!-- <section class="page-content"> -->
+   <!-- <h2>Galeri Foto Kegiatan Paroki</h2>
+    <p>Isi konten halaman di sini.</p> -->
+<!-- </section> -->
+
+<section class="galeri">
+    <h2>Galeri Foto Kegiatan Paroki</h2>
+
+    <!-- FILTER KATEGORI -->
+    <div class="galeri-filter">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="misa">Misa</button>
+        <button class="filter-btn" data-filter="omk">OMK</button>
+        <button class="filter-btn" data-filter="baptis">Baptis</button>
+        <button class="filter-btn" data-filter="sosial">Sosial</button>
+    </div>
+
+    <!-- GRID GALERI -->
+    <div class="galeri-grid">
+
+        <!-- ITEM 1 -->
+        <div class="galeri-item" data-kategori="misa">
+            <h3 class="galeri-judul">Misa Natal 2025</h3>
+            <span class="galeri-tanggal">25 Desember 2025</span>
+            <img src="images/banner.jpg" alt="Misa Natal"
+                 data-ket="Perayaan Misa Malam Natal bersama seluruh umat paroki dengan penuh sukacita dan khidmat.">
+            <p class="galeri-ket">
+                Perayaan Misa Malam Natal bersama seluruh umat paroki
+                dengan penuh sukacita.
+            </p>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="galeri-item" data-kategori="baptis">
+            <h3 class="galeri-judul">Baptisan Bayi</h3>
+            <span class="galeri-tanggal">12 Januari 2026</span>
+            <img src="images/logo.png" alt="Baptisan"
+                 data-ket="Sakramen Baptis bagi putra-putri umat sebagai tanda kelahiran baru dalam Kristus.">
+            <p class="galeri-ket">
+                Sakramen Baptis bagi putra-putri umat di Paroki
+                Santo Pius X.
+            </p>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="galeri-item" data-kategori="omk">
+            <h3 class="galeri-judul">Kegiatan OMK</h3>
+            <span class="galeri-tanggal">5 Februari 2026</span>
+            <img src="images/banner.jpg" alt="OMK"
+                 data-ket="Pertemuan Orang Muda Katolik dalam membangun kebersamaan, persaudaraan, dan iman.">
+            <p class="galeri-ket">
+                Pertemuan Orang Muda Katolik dalam membangun
+                kebersamaan dan iman.
+            </p>
+        </div>
+
+        <!-- ITEM 4 -->
+        <div class="galeri-item" data-kategori="sosial">
+            <h3 class="galeri-judul">Bakti Sosial</h3>
+            <span class="galeri-tanggal">20 Maret 2026</span>
+            <img src="images/logo.png" alt="Baksos"
+                 data-ket="Kegiatan bakti sosial pembagian sembako kepada masyarakat yang membutuhkan.">
+            <p class="galeri-ket">
+                Pembagian sembako kepada warga sekitar sebagai wujud
+                kasih dan kepedulian.
+            </p>
+        </div>
+		
+		<!-- ITEM 5 -->
+        <div class="galeri-item" data-kategori="omk">
+            <h3 class="galeri-judul">Kegiatan OMK</h3>
+            <span class="galeri-tanggal">15 Mei 2026</span>
+            <img src="images/logo.png" alt="OMK"
+                 data-ket="Pertemuan Orang Muda Katolik Pemilihan Kepenguruan Baru">
+            <p class="galeri-ket">
+                Pertemuan Orang Muda Katolik Pemilihan
+                Kepenguruan Baru
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+
+    <!-- TOMBOL PREV -->
+    <span class="lightbox-prev" id="lightboxPrev">&#10094;</span>
+
+    <img id="lightboxImg" src="" alt="">
+
+    <!-- TOMBOL NEXT -->
+    <span class="lightbox-next" id="lightboxNext">&#10095;</span>
+
+    <div class="lightbox-judul" id="lightboxJudul"></div>
+    <div class="lightbox-tanggal" id="lightboxTanggal"></div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<footer>
+    © 2026 Paroki Santo Pius X Karanganyar
+</footer>
+
+<!-- POPUP WHATSAPP -->
+<div class="wa-popup" id="waPopup">
+
+    <div class="wa-header">
+        <span>Sekretariat Paroki</span>
+        <button onclick="closeWAPopup()">×</button>
+    </div>
+
+    <div class="wa-body">
+        <p>
+            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
+            Silahkan chat untuk informasi lebih lanjut. 🏠👋
+        </p>
+
+        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
+           target="_blank" class="wa-open-btn">
+            Open Chat
+        </a>
+    </div>
+
+</div>
+
+
+<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+   class="wa-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil - Paroki Santo Pius X</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="images/logo.png" alt="Logo">
+        <div>
+            <h1>Paroki Santo Pius X</h1>
+            <p>Karanganyar</p>
+        </div>
+    </div>
+
+    <nav>
+		<a href="index.html">Beranda</a>
+
+		<div class="dropdown">
+			<span class="dropdown-title">
+				Tentang Kita <i class="fas fa-caret-down"></i>
+			</span>
+
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
+</header>
+
+<!-- ISI HALAMAN -->
+
+<section class="tentang">
+    <div class="tentang-container">
+
+        <div class="tentang-text">
+            <h2>Tentang Paroki</h2>
+            <p>
+                Paroki Santo Pius X Karanganyar adalah komunitas umat
+                Katolik yang bertumbuh dalam iman, bersatu dalam kasih,
+                dan melayani dengan sukacita.
+            </p>
+
+            <p>
+                Sejak berdirinya, paroki ini menjadi pusat pembinaan iman,
+                pelayanan sakramen, serta kegiatan sosial kemasyarakatan
+                bagi umat di wilayah Karanganyar dan sekitarnya.
+            </p>
+
+            <a href="javascript:void(0)" onclick="openSambutan()" class="btn">Baca Sambutan Romo</a>
+        </div>
+
+        <div class="tentang-img">
+            <img src="images/RomoTri1.jpg" alt="Tentang Paroki">
+        </div>
+
+    </div>
+</section>
+
+<section class="sejarah fade-in">
+    <h2 class="sejarah-judul">Sejarah Paroki Santo Pius X</h2>
+
+    <div class="sejarah-container">
+
+        <!-- GAMBAR KIRI -->
+        <div class="sejarah-img">
+            <img src="images/FotoGereja2.jpg" alt="Gereja Santo Pius X">
+        </div>
+
+        <!-- PDF VIEWER KANAN -->
+        <div class="sejarah-pdf">
+            <div class="pdf-window">
+                <iframe
+                    src="pdf/sejarah.pdf"
+                    width="100%"
+                    height="100%">
+                </iframe>
+            </div>
+
+            <a href="pdf/sejarah.pdf" 
+               target="_blank" 
+               class="btn">
+                📄 Buka Fullscreen
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    © 2026 Paroki Santo Pius X Karanganyar
+</footer>
+
+<!-- MODAL SAMBUTAN ROMO -->
+<div id="modalSambutan" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeSambutan()">&times;</span>
+        <h3>Kata Sambutan Romo Paroki</h3>
+        
+        <!-- Perhatikan: #toolbar=0&navpanes=0 untuk menyembunyikan menu PDF -->
+        <!-- <iframe src="pdf/sambutan-romo.pdf#toolbar=0&navpanes=0&scrollbar=1"></iframe> -->
+		<!-- GANTI IFRAME DENGAN INI -->
+		<div class="sambutan-text">
+			<p>Salam Sejahtera dalam Kasih Kristus,</p>
+    
+			<p>Puji syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa...</p>
+    
+			<p>(Silakan copy-paste semua isi surat Romo di sini.) </p>
+				<!--Pakai tag &lt;p&gt; untuk setiap paragraf baru.)-->
+    
+			<p>Terima kasih.</p>
+			<br>
+			<p><strong>Romo Paroki</strong></p>
+		</div>
+    </div>
+</div>
+
+<!-- POPUP WHATSAPP -->
+<div class="wa-popup" id="waPopup">
+
+    <div class="wa-header">
+        <span>Sekretariat Paroki</span>
+        <button onclick="closeWAPopup()">×</button>
+    </div>
+
+    <div class="wa-body">
+        <p>
+            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
+            Silahkan chat untuk informasi lebih lanjut. 🏠👋
+        </p>
+
+        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
+           target="_blank" class="wa-open-btn">
+            Open Chat
+        </a>
+    </div>
+
+</div>
+
+<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+   class="wa-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

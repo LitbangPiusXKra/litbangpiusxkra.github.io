@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontak Kami - Paroki Santo Pius X</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="images/logo.png" alt="Logo">
+        <div>
+            <h1>Paroki Santo Pius X</h1>
+            <p>Karanganyar</p>
+        </div>
+    </div>
+
+    <nav>
+		<a href="index.html">Beranda</a>
+
+		<div class="dropdown">
+			<span class="dropdown-title">
+				Tentang Kita <i class="fas fa-caret-down"></i>
+			</span>
+
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
+</header>
+
+<!-- ISI HALAMAN -->
+<!-- <section class="page-content"></section> -->
+
+<section class="kontak-section">
+
+    <div class="kontak-container">
+
+        <!-- KOLOM 1 -->
+        <div class="kontak-info">
+
+			<h3>Jam Operasional Kantor Sekretariat</h3>
+			<p>Senin – Sabtu Pukul 08.00 WIB – 18.00 WIB</p>
+			<p>Minggu Pukul 08.00 WIB – 18.00 WIB</p>
+
+			<div class="spasi-besar"></div>
+
+			<h3>Alamat Gereja :</h3>
+			<p>
+				Jl. Lawu No.362, Cangakan Timur,<br>
+				Cangakan, Kec. Karanganyar,<br>
+				Kabupaten Karanganyar, Jawa Tengah 57712
+			</p>
+
+			<div class="spasi-besar"></div>
+
+			<p><strong>Telepon :</strong> (0271) -12345678</p>
+			<p><strong>WhatsApp :</strong> 081391390040</p>
+
+		</div>
+
+        <!-- KOLOM 2 (GOOGLE MAPS) -->
+        <div class="kontak-map">
+            <iframe 
+                src="https://www.google.com/maps?q=Paroki%20Santo%20Pius%20X%20Karanganyar&output=embed"
+                width="100%" height="100%" 
+                style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+			
+			<div class="map-btn">
+			<a href="https://www.google.com/maps?q=Paroki+Santo+Pius+X+Karanganyar"
+				target="_blank">
+				Buka di Google Maps
+			</a>
+		</div>
+        </div>
+		
+		
+		
+        <!-- KOLOM 3 (SOSIAL MEDIA) -->
+        <div class="kontak-sosial">
+			<h3>Sosial Media</h3>
+
+			<div class="sosial-icons">
+				<a href="http://facebook.com" target="_blank">
+					<i class="fab fa-facebook-f"></i>
+				</a>
+
+				<a href="https://www.instagram.com/st.piusxkra/" target="_blank">
+					<i class="fab fa-instagram"></i>
+				</a>
+
+				<a href="https://www.youtube.com/@komsospiusxkaranganyar5585" target="_blank">
+					<i class="fab fa-youtube"></i>
+				</a>
+			</div>
+
+			<br>
+
+			<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+				class="kontak-wa-btn" target="_blank">
+				Chat via WhatsApp
+			</a>
+		</div>
+
+    </div>
+	
+	<div class="kontak-form">
+		<h3>Kirim Pesan</h3>
+
+		<form action="https://formsubmit.co/EMAILANDA@gmail.com" method="POST">
+			<input type="text" name="nama" placeholder="Nama Anda" required>
+			<input type="email" name="email" placeholder="Email Anda" required>
+			<textarea name="pesan" rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+        
+			<button type="submit">Kirim Pesan</button>
+		</form>
+	</div>
+
+</section>
+
+<footer>
+    © 2026 Paroki Santo Pius X Karanganyar
+</footer>
+
+<!-- POPUP WHATSAPP -->
+<div class="wa-popup" id="waPopup">
+
+    <div class="wa-header">
+        <span>Sekretariat Paroki</span>
+        <button onclick="closeWAPopup()">×</button>
+    </div>
+
+    <div class="wa-body">
+        <p>
+            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
+            Silahkan chat untuk informasi lebih lanjut. 🏠👋
+        </p>
+
+        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
+           target="_blank" class="wa-open-btn">
+            Open Chat
+        </a>
+    </div>
+
+</div>
+
+<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+   class="wa-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

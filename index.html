@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Paroki Santo Pius X Karanganyar</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="images/logo.png" alt="Logo">
+        <div>
+            <h1>Paroki Santo Pius X</h1>
+            <p>Karanganyar</p>
+        </div>
+    </div>
+
+	<nav>
+		<a href="index.html">Beranda</a>
+
+		<div class="dropdown">
+			<span class="dropdown-title">
+				Tentang Kita <i class="fas fa-caret-down"></i>
+			</span>
+
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
+</header>
+
+<section class="hero"></section>
+
+<section class="quick-menu">
+
+    <a href="#" class="card">
+        <i class="fas fa-church"></i>
+        <h3>Jadwal Misa</h3>
+    </a>
+
+    <a href="#" class="card">
+        <i class="fas fa-newspaper"></i>
+        <h3>Berita</h3>
+    </a>
+
+    <a href="#" class="card">
+        <i class="fas fa-image"></i>
+        <h3>Galeri</h3>
+    </a>
+
+    <a href="#" class="card">
+        <i class="fas fa-file-alt"></i>
+        <h3>Dokumen</h3>
+    </a>
+
+</section>
+
+<section class="jadwal">
+
+    <h2>Jadwal Misa</h2>
+
+    <table>
+
+        <tr>
+            <th>Hari</th>
+            <th>Jam</th>
+            <th>Keterangan</th>
+        </tr>
+
+        <tr>
+            <td>Sabtu</td>
+            <td>18.00 WIB</td>
+            <td>Misa Sore</td>
+        </tr>
+
+        <tr>
+            <td>Minggu</td>
+            <td>08.00 WIB</td>
+            <td>Misa Pagi</td>
+        </tr>
+
+    </table>
+
+</section>
+
+<section class="tentang fade-in"></section>
+<section class="galeri fade-in"></section>
+<section class="sejarah fade-in"></section>
+<section class="jadwal fade-in"></section>
+
+<section class="kontak">
+
+    <h2>Alamat dan Kontak Paroki</h2>
+
+    <p>
+        Jl. Lawu No.362, Cangakan,
+        Karanganyar, Jawa Tengah
+    </p>
+
+    <p>
+        WA : 081391390040
+    </p>
+
+</section>
+
+<footer>
+    © 2026 Paroki Santo Pius X Karanganyar
+</footer>
+
+<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+   class="wa-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- POPUP WHATSAPP -->
+<div class="wa-popup" id="waPopup">
+
+    <div class="wa-header">
+        <span>Sekretariat Paroki</span>
+        <button onclick="closeWAPopup()">×</button>
+    </div>
+
+    <div class="wa-body">
+        <p>
+            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
+            Silahkan chat untuk informasi lebih lanjut. 🏠👋
+        </p>
+
+        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
+           target="_blank" class="wa-open-btn">
+            Open Chat
+        </a>
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
