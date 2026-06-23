@@ -28,129 +28,8 @@ background:transparent;
 
 header.scrolled{
 background:#0B1F3A;
-/*padding:15px 5%;*/
+padding:15px 5%;
 box-shadow:0 4px 15px rgba(0,0,0,0.2);
-}
-
-.nav-overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.4);
-opacity:0;
-visibility:hidden;
-transition:0.3s;
-z-index:999;
-}
-
-.nav-overlay.active{
-opacity:1;
-visibility:visible;
-}
-
-/* HAMBURGER */
-.menu-toggle{
-display:none;
-font-size:26px;
-color:white;
-cursor:pointer;
-}
-
-/* ================= MOBILE MENU ================= */
-
-.header-left{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-.menu-toggle{
-display:none;
-font-size:24px;
-color:white;
-cursor:pointer;
-z-index:1100;
-}
-
-/* MOBILE STYLE */
-@media(max-width:768px){
-
-header{
-justify-content:space-between;
-}
-
-.menu-toggle{
-display:block;
-}
-
-/* NAV OVERLAY */
-nav{
-position:fixed;
-top:0;
-left:-100%;
-width:260px;
-height:100vh;
-background:#071b2f;
-flex-direction:column;
-align-items:flex-start;
-padding:80px 25px;
-gap:20px;
-transition:0.4s ease;
-z-index:1000;
-}
-
-nav a{
-color:white;
-font-size:16px;
-}
-
-/* NAV ACTIVE */
-nav.active{
-left:0;
-}
-
-/* OVERLAY GELAP */
-body.menu-open::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-z-index:900;
-}
-
-}
-
-nav{
-position:fixed;
-top:0;
-left:-100%;
-width:75%;
-height:100vh;
-background:#0B1F3A;
-flex-direction:column;
-align-items:flex-start;
-padding:100px 30px 30px 30px;
-gap:20px;
-transition:0.4s ease;
-box-shadow:5px 0 20px rgba(0,0,0,0.3);
-}
-
-nav a,
-.dropdown-title{
-color:white;
-font-size:16px;
-width:100%;
-}
-
-nav.active{
-left:0;
-}
-
 }
 
 .page-content{
@@ -531,14 +410,6 @@ height:400px;
 
 }
 
-@media (max-width:1024px){
-    .sejarah{
-        display:block !important;
-        min-height:auto;
-        background-attachment:scroll; /* matikan parallax di mobile */
-    }
-}
-
 /* ==========================
 SECTION PENGURUS
 ========================== */
@@ -628,35 +499,8 @@ background-attachment: scroll;
 }
 }
 
-/* TABLET */
-@media(max-width:1024px){
-.pengurus-container{
-grid-template-columns:repeat(2, 1fr);
-}
-}
-
-/* HP */
-@media(max-width:768px){
-.pengurus-container{
-grid-template-columns:1fr;
-}
-
-.pengurus-card{
-text-align:center;
-padding:20px;
-}
-
-.pengurus-foto img{
-width:180px;
-}
-}
-
-/* ================= KONTAK RESPONSIVE ================= */
-
 @media(max-width:992px){
-
 .kontak-container{
-display:grid;
 grid-template-columns:1fr;
 text-align:center;
 }
@@ -666,47 +510,8 @@ justify-content:center;
 }
 
 .kontak-map{
-width:100%;
-height:350px;
-border-radius:12px;
-overflow:hidden;
+height:250px;
 }
-
-.kontak-map iframe{
-width:100%;
-height:100%;
-border:0;
-display:block;
-}
-
-}
-
-@media(max-width:768px){
-
-.kontak-map{
-height:300px;
-}
-
-}
-
-.kontak-container{
-display:grid;
-grid-template-columns: 1fr 1.2fr 0.8fr;
-gap:40px;
-align-items:start;
-}
-
-.kontak-section{
-position:relative;
-}
-
-.kontak-section::before{
-z-index:0;
-}
-
-.kontak-container{
-position:relative;
-z-index:1;
 }
 
 /* ==========================
@@ -1410,39 +1215,6 @@ font-size:24px;
 
 .overlay p{
 font-size:18px;
-}
-
-}
-
-/* ================= DESKTOP NAV FIX ================= */
-@media (min-width: 769px){
-
-nav{
-    position:static;
-    left:0;
-    width:auto;
-    height:auto;
-    background:transparent;
-    padding:0;
-    box-shadow:none;
-
-    display:flex !important;
-    flex-direction:row !important;   /* ✅ ini yang bikin horizontal */
-    align-items:center;
-    gap:25px;
-}
-
-nav a,
-.dropdown-title{
-    width:auto;
-}
-
-.menu-toggle{
-    display:none !important;
-}
-
-.nav-overlay{
-    display:none !important;
 }
 
 }
