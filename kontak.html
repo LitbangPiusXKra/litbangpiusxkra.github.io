@@ -12,15 +12,23 @@
 <body>
 
 <header>
-    <div class="logo-area">
-        <img src="images/logo.png" alt="Logo">
-        <div>
-            <h1>Paroki Santo Pius X</h1>
-            <p>Karanganyar</p>
+	<div class="nav-overlay" id="navOverlay"></div>
+	
+	<div class="header-left">
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="logo-area">
+            <img src="images/logo.png" alt="Logo">
+            <div>
+                <h1>Paroki Santo Pius X</h1>
+                <p>Karanganyar</p>
+            </div>
         </div>
     </div>
 
-    <nav>
+	<nav id="mainNav">
 		<a href="index.html">Beranda</a>
 
 		<div class="dropdown">
@@ -73,19 +81,22 @@
 		</div>
 
         <!-- KOLOM 2 (GOOGLE MAPS) -->
+		<!--width="100%" height="100%" -->
+		<!--style="border:0;" allowfullscreen="" loading="lazy"> -->
+		
         <div class="kontak-map">
             <iframe 
                 src="https://www.google.com/maps?q=Paroki%20Santo%20Pius%20X%20Karanganyar&output=embed"
-                width="100%" height="100%" 
-                style="border:0;" allowfullscreen="" loading="lazy">
+				loading="lazy"
+				allowfullscreen>
             </iframe>
 			
 			<div class="map-btn">
-			<a href="https://www.google.com/maps?q=Paroki+Santo+Pius+X+Karanganyar"
-				target="_blank">
-				Buka di Google Maps
-			</a>
-		</div>
+				<a href="https://www.google.com/maps?q=Paroki+Santo+Pius+X+Karanganyar"
+					target="_blank">
+					Buka di Google Maps
+				</a>
+			</div>
         </div>
 		
 		
