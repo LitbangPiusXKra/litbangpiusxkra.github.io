@@ -10,16 +10,44 @@ window.addEventListener("scroll", function(){
     }
 });
 
+const menuToggle = document.getElementById("menuToggle");
+const nav = document.getElementById("mainNav");
+
+if(menuToggle && nav){
+
+    menuToggle.addEventListener("click", function(){
+        nav.classList.toggle("active");
+        document.body.classList.toggle("menu-open");
+    });
+
+    // Klik area gelap untuk menutup
+    document.addEventListener("click", function(e){
+        if(
+            nav.classList.contains("active") &&
+            !nav.contains(e.target) &&
+            !menuToggle.contains(e.target)
+        ){
+            nav.classList.remove("active");
+            document.body.classList.remove("menu-open");
+        }
+    });
+
+}
+
 // ===== FADE IN =====
 const faders = document.querySelectorAll('.fade-in');
-window.addEventListener('scroll', () => {
+
+function checkFadeIn(){
     faders.forEach(fade => {
         const rect = fade.getBoundingClientRect();
         if(rect.top < window.innerHeight - 100){
             fade.classList.add('show');
         }
     });
-});
+}
+
+window.addEventListener('scroll', checkFadeIn);
+window.addEventListener('load', checkFadeIn);
 
 // ===== LIGHTBOX =====
 const lightbox = document.getElementById("lightbox");
