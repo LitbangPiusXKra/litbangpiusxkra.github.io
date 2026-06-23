@@ -12,15 +12,23 @@
 <body>
 
 <header>
-    <div class="logo-area">
-        <img src="images/logo.png" alt="Logo">
-        <div>
-            <h1>Paroki Santo Pius X</h1>
-            <p>Karanganyar</p>
+	<div class="nav-overlay" id="navOverlay"></div>
+	
+	<div class="header-left">
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="logo-area">
+            <img src="images/logo.png" alt="Logo">
+            <div>
+                <h1>Paroki Santo Pius X</h1>
+                <p>Karanganyar</p>
+            </div>
         </div>
     </div>
 
-	<nav>
+	<nav id="mainNav">
 		<a href="index.html">Beranda</a>
 
 		<div class="dropdown">
@@ -43,10 +51,95 @@
 </header>
 
 <!-- ISI HALAMAN -->
-<section class="page-content">
-    <h2>Jadwal Misa Paroki</h2>
-    <p>Isi konten halaman di sini.</p>
+
+<section class="jadwalmisa-section">
+    <div class="wrapper-jadwal-modern">
+
+    <!-- BAGIAN 1: MISA BERIKUTNYA -->
+    <div class="seksi-jadwal">
+        <h3 class="judul-seksi"><i class="fas fa-bolt" style="color: #4a8b71;"></i> Misa Berikutnya</h3>
+        
+        <!-- Kartu 1 (Aktif/Terdekat) -->
+        <div class="kartu-misa kartu-aktif">
+            <div class="kartu-header">
+                <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">05:25</span></div>
+                <div class="sisa-waktu">3 hari 8 jam lagi</div>
+            </div>
+            <div class="keterangan-misa">Misa Harian (Senin - Sabtu)</div>
+            <div class="info-tambahan">
+                <span class="teks-jarak">4.5 km</span>
+                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
+                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
+            </div>
+        </div>
+
+        <!-- Kartu 2 -->
+        <div class="kartu-misa">
+            <div class="kartu-header">
+                <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">18:00</span></div>
+                <div class="sisa-waktu">3 hari 21 jam lagi</div>
+            </div>
+            <div class="keterangan-misa">Misa Sabtu</div>
+            <div class="info-tambahan">
+                <span class="teks-jarak">4.5 km</span>
+                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
+                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
+            </div>
+        </div>
+
+        <!-- Kartu 3 -->
+        <div class="kartu-misa">
+            <div class="kartu-header">
+                <div class="waktu-misa"><span class="hari">MINGGU</span> <span class="jam">07:00</span></div>
+                <div class="sisa-waktu">4 hari 10 jam lagi</div>
+            </div>
+            <div class="keterangan-misa">Misa Minggu</div>
+            <div class="info-tambahan">
+                <span class="teks-jarak">4.5 km</span>
+                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
+                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
+            </div>
+        </div>
+        
+        <div class="catatan-bawah">Estimasi waktu tempuh berdasarkan jarak garis lurus. Waktu sebenarnya bisa berbeda.</div>
+    </div>
+
+
+    <!-- BAGIAN 2: JADWAL MISA RUTIN -->
+    <div class="seksi-jadwal mt-40">
+        <div class="kotak-tabel">
+            <h3 class="judul-seksi"><i class="far fa-clock" style="color: #4a8b71;"></i> Jadwal Misa Rutin</h3>
+            
+            <div class="wadah-tabel-responsive">
+                <table class="tabel-rutin">
+					<thead>
+					<tr>
+						<th>HARI</th>
+						<th>WAKTU</th>
+						<th>KETERANGAN</th>
+						<th>SUMBER</th>
+					</tr>
+					</thead>
+					<!-- Perhatikan, saya menambahkan id="isi-jadwal-dinamis" di sini -->
+					<tbody id="isi-jadwal-dinamis">
+					<!-- Teks sementara sebelum data Google Sheets berhasil ditarik -->
+					<tr>
+						<td colspan="4" style="text-align: center; color: #888;">
+							<i class="fas fa-spinner fa-spin"></i> Sedang mengambil jadwal terbaru...
+						</td>
+					</tr>
+					</tbody>
+				</table>
+            </div>
+
+            <div class="catatan-bawah center">Jadwal dapat berubah sewaktu-waktu. Harap konfirmasi langsung ke <strong>sekretariat paroki</strong>.</div>
+        </div>
+    </div>
+
+</div>
 </section>
+
+
 
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
@@ -80,6 +173,96 @@
 </a>
 
 <script src="js/script.js"></script>
+
+<!-- ==========================================
+     AWAL KODE TABEL & SCRIPT GOOGLE SHEETS 
+=========================================== -->
+<div class="wadah-tabel-responsive">
+    <table class="tabel-rutin">
+        <thead>
+            <tr>
+                <th>HARI</th>
+                <th>WAKTU</th>
+                <th>KETERANGAN</th>
+                <th>SUMBER</th>
+            </tr>
+        </thead>
+        <!-- ID ini sangat penting, jangan sampai terhapus -->
+        <tbody id="isi-jadwal-dinamis">
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
+                    <i>Mengambil data dari Google Sheets...</i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // 1. Link Excel Asli Boss
+    const linkExcel = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pub?output=csv";
+
+    // 2. Kita bungkus pakai API AllOrigins (Format JSON) agar tembus keamanan lokal browser
+    const linkAmanLokal = "https://api.allorigins.win/get?url=" + encodeURIComponent(linkExcel);
+
+    // 3. Tarik data
+    fetch(linkAmanLokal)
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal terhubung ke API");
+            return response.json(); // Kita ambil format JSON, bukan teks mentah
+        })
+        .then(data => {
+            // Data CSV yang asli bersembunyi di dalam "data.contents"
+            const dataMentah = data.contents;
+            
+            // Cek jika Google sedang memproses redirect
+            if (dataMentah === null || dataMentah === undefined) {
+                throw new Error("Data kosong dari Google");
+            }
+
+            const barisData = dataMentah.split('\n');
+            let isiTabel = '';
+
+            // Mulai loop dari baris ke-2 (melewati judul)
+            for (let i = 1; i < barisData.length; i++) {
+                if (barisData[i].trim() === '') continue;
+
+                // Pisahkan per kolom dengan koma
+                const kolom = barisData[i].split(',');
+
+                // Bersihkan tanda kutip
+                const hari = kolom[0] ? kolom[0].replace(/"/g, '').trim() : '';
+                const waktu = kolom[1] ? kolom[1].replace(/"/g, '').trim() : '';
+                const keterangan = kolom[2] ? kolom[2].replace(/"/g, '').trim() : '';
+                const sumber = kolom[3] ? kolom[3].replace(/"/g, '').trim() : '';
+
+                // Susun HTML
+                isiTabel += `
+                    <tr>
+                        <td><span class="pil-hari">${hari}</span></td>
+                        <td class="waktu-tebal">${waktu}</td>
+                        <td>${keterangan}</td>
+                        <td class="sumber-teks">${sumber}</td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel;
+        })
+        .catch(error => {
+            console.error("Error Detail:", error);
+            document.getElementById('isi-jadwal-dinamis').innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align:center; color:red; padding:20px;">
+                        Gagal memuat jadwal lokal. Data ini akan otomatis muncul saat website di-upload ke Hosting.
+                    </td>
+                </tr>
+            `;
+        });
+</script>
+<!-- ==========================================
+     AKHIR KODE TABEL & SCRIPT GOOGLE SHEETS 
+=========================================== -->->
 
 </body>
 </html>
