@@ -1413,3 +1413,36 @@ font-size:18px;
 }
 
 }
+
+/* ================= DESKTOP NAV FIX ================= */
+@media (min-width: 769px){
+
+nav{
+    position:static;
+    left:0;
+    width:auto;
+    height:auto;
+    background:transparent;
+    padding:0;
+    box-shadow:none;
+
+    display:flex !important;
+    flex-direction:row !important;   /* ✅ ini yang bikin horizontal */
+    align-items:center;
+    gap:25px;
+}
+
+nav a,
+.dropdown-title{
+    width:auto;
+}
+
+.menu-toggle{
+    display:none !important;
+}
+
+.nav-overlay{
+    display:none !important;
+}
+
+}
