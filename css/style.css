@@ -1610,10 +1610,25 @@ nav a,
     -webkit-overflow-scrolling: touch; /* Geser mulus di perangkat iOS */
 }
 
+.kotak-tabel {
+    background: #ffffff;
+    border: 1px solid #e0e6e3;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    margin-bottom: 25px;
+}
+
+.wadah-tabel-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Scroll mulus di browser iOS/Safari */
+}
+
 .tabel-rutin {
     width: 100%;
     border-collapse: collapse;
-    min-width: 500px; /* Memaksa scrollbar muncul di HP jika layar terlalu sempit */
+    min-width: 550px; /* Menghindari teks tertekuk parah di layar HP kecil */
 }
 
 .tabel-rutin th {
@@ -1624,7 +1639,7 @@ nav a,
     border-bottom: 2px solid #bdc3c7;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .tabel-rutin td {
@@ -1642,7 +1657,7 @@ nav a,
 .waktu-tebal {
     font-weight: 700;
     color: #2c3e50;
-    white-space: nowrap; /* Jam tidak akan terpotong ke bawah */
+    white-space: nowrap; /* Mencegah jam terpotong menjadi dua baris */
 }
 
 .pil-hari {
@@ -1653,12 +1668,12 @@ nav a,
     font-size: 12px;
     font-weight: 700;
     display: inline-block;
-    text-transform: capitalize; /* Membuat huruf pertama otomatis Kapital */
+    text-transform: capitalize; /* Otomatis membuat huruf pertama teks menjadi kapital */
 }
 
 .keterangan-teks {
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .sumber-teks {
