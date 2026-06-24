@@ -200,30 +200,28 @@
 </div>
 
 <script>
-    // Menggunakan format gviz agar data diambil langsung dari Google tanpa perantara API AllOrigins
-    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; // ID dari link Anda
+    // Menggunakan format gviz agar data diambil langsung dari Google tanpa perantara API
+    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; 
     const urlDirect = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
     fetch(urlDirect)
         .then(response => response.text())
         .then(dataText => {
-            // Google mengembalikan data dengan bungkus fungsi google.visualization.Query.setResponse()
-            // Kita perlu memotong bungkus tersebut agar menjadi JSON murni
+            // Memotong bungkus Google agar menjadi JSON murni
             const jsonString = dataText.substring(dataText.indexOf("{"), dataText.lastIndexOf("}") + 1);
             const json = JSON.parse(jsonString);
             
             const rows = json.table.rows;
             let isiTabel = '';
 
-            // Looping data baris demi baris dari Google Sheets
+            // Looping data dari Google Sheets
             rows.forEach(row => {
-                // Mengambil nilai dari tiap kolom (kolom 0=Hari, 1=Waktu, 2=Keterangan, 3=Tempat)
+                // Mengambil nilai kolom (0=Hari, 1=Jam, 2=Misa, 3=Tempat)
                 const hari = row.c[0] ? row.c[0].v : '';
                 const waktu = row.c[1] ? row.c[1].v : '';
                 const keterangan = row.c[2] ? row.c[2].v : '';
                 const sumber = row.c[3] ? row.c[3].v : '';
 
-                // Validasi: Jika baris kosong, jangan dimasukkan ke tabel
                 if (!hari && !waktu && !keterangan) return;
 
                 isiTabel += `
