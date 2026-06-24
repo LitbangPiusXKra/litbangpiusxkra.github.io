@@ -1,182 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jadwal Misa - Paroki Santo Pius X</title>
-
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-
-<body>
-
-<header>
-	<div class="nav-overlay" id="navOverlay"></div>
-	
-	<div class="header-left">
-        <div class="menu-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
-        </div>
-
-        <div class="logo-area">
-            <img src="images/logo.png" alt="Logo">
-            <div>
-                <h1>Paroki Santo Pius X</h1>
-                <p>Karanganyar</p>
-            </div>
-        </div>
-    </div>
-
-	<nav id="mainNav">
-		<a href="index.html">Beranda</a>
-
-		<div class="dropdown">
-			<span class="dropdown-title">
-				Tentang Kita <i class="fas fa-caret-down"></i>
-			</span>
-
-			<div class="dropdown-menu">
-				<a href="profil.html">Sambutan & Sejarah Gereja</a>
-				<a href="pgpm.html">Pengurus PGPM</a>
-				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
-			</div>
-		</div>
-
-		<a href="jadwal.html">Jadwal Misa</a>
-		<a href="berita.html">Berita</a>
-		<a href="galeri.html">Galeri</a>
-		<a href="kontak.html">Kontak</a>
-	</nav>
-</header>
-
-<!-- ISI HALAMAN -->
-
-<section class="jadwalmisa-section">
-    <div class="wrapper-jadwal-modern">
-
-    <!-- BAGIAN 1: MISA BERIKUTNYA -->
-    <div class="seksi-jadwal">
-        <h3 class="judul-seksi"><i class="fas fa-bolt" style="color: #4a8b71;"></i> Misa Berikutnya</h3>
-        
-        <!-- Kartu 1 (Aktif/Terdekat) -->
-        <div class="kartu-misa kartu-aktif">
-            <div class="kartu-header">
-                <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">05:25</span></div>
-                <div class="sisa-waktu">3 hari 8 jam lagi</div>
-            </div>
-            <div class="keterangan-misa">Misa Harian (Senin - Sabtu)</div>
-            <div class="info-tambahan">
-                <span class="teks-jarak">4.5 km</span>
-                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
-                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
-            </div>
-        </div>
-
-        <!-- Kartu 2 -->
-        <div class="kartu-misa">
-            <div class="kartu-header">
-                <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">18:00</span></div>
-                <div class="sisa-waktu">3 hari 21 jam lagi</div>
-            </div>
-            <div class="keterangan-misa">Misa Sabtu</div>
-            <div class="info-tambahan">
-                <span class="teks-jarak">4.5 km</span>
-                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
-                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
-            </div>
-        </div>
-
-        <!-- Kartu 3 -->
-        <div class="kartu-misa">
-            <div class="kartu-header">
-                <div class="waktu-misa"><span class="hari">MINGGU</span> <span class="jam">07:00</span></div>
-                <div class="sisa-waktu">4 hari 10 jam lagi</div>
-            </div>
-            <div class="keterangan-misa">Misa Minggu</div>
-            <div class="info-tambahan">
-                <span class="teks-jarak">4.5 km</span>
-                <span class="badge-hijau"><i class="fas fa-car"></i> 11 mnt</span>
-                <span class="badge-hijau"><i class="fas fa-walking"></i> 80 mnt</span>
-            </div>
-        </div>
-        
-        <div class="catatan-bawah">Estimasi waktu tempuh berdasarkan jarak garis lurus. Waktu sebenarnya bisa berbeda.</div>
-    </div>
-
-
-    <!-- BAGIAN 2: JADWAL MISA RUTIN -->
-    <div class="seksi-jadwal mt-40">
-        <div class="kotak-tabel">
-            <h3 class="judul-seksi"><i class="far fa-clock" style="color: #4a8b71;"></i> Jadwal Misa Rutin</h3>
-            
-            <div class="wadah-tabel-responsive">
-                <table class="tabel-rutin">
-					<thead>
-					<tr>
-						<th>HARI</th>
-						<th>WAKTU</th>
-						<th>KETERANGAN</th>
-						<th>SUMBER</th>
-					</tr>
-					</thead>
-					<!-- Perhatikan, saya menambahkan id="isi-jadwal-dinamis" di sini -->
-					<tbody id="isi-jadwal-dinamis">
-					<!-- Teks sementara sebelum data Google Sheets berhasil ditarik -->
-					<tr>
-						<td colspan="4" style="text-align: center; color: #888;">
-							<i class="fas fa-spinner fa-spin"></i> Sedang mengambil jadwal terbaru...
-						</td>
-					</tr>
-					</tbody>
-				</table>
-            </div>
-
-            <div class="catatan-bawah center">Jadwal dapat berubah sewaktu-waktu. Harap konfirmasi langsung ke <strong>sekretariat paroki</strong>.</div>
-        </div>
-    </div>
-
-</div>
-</section>
-
-
-
-<footer>
-    © 2026 Paroki Santo Pius X Karanganyar
-</footer>
-
-<!-- POPUP WHATSAPP -->
-<div class="wa-popup" id="waPopup">
-
-    <div class="wa-header">
-        <span>Sekretariat Paroki</span>
-        <button onclick="closeWAPopup()">×</button>
-    </div>
-
-    <div class="wa-body">
-        <p>
-            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
-            Silahkan chat untuk informasi lebih lanjut. 🏠👋
-        </p>
-
-        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
-           target="_blank" class="wa-open-btn">
-            Open Chat
-        </a>
-    </div>
-
-</div>
-
-<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
-   class="wa-float" target="_blank">
-   <i class="fab fa-whatsapp"></i>
-</a>
-
-<script src="js/script.js"></script>
-
-<!-- ==========================================
-     AWAL KODE TABEL & SCRIPT GOOGLE SHEETS 
-=========================================== -->
 <div class="kotak-tabel">
     <div class="wadah-tabel-responsive">
         <table class="tabel-rutin">
@@ -200,28 +21,30 @@
 </div>
 
 <script>
-    // Menggunakan format gviz agar data diambil langsung dari Google tanpa perantara API
-    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; 
+    // Menggunakan format gviz agar data diambil langsung dari Google tanpa perantara API AllOrigins
+    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; // ID dari link Anda
     const urlDirect = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
     fetch(urlDirect)
         .then(response => response.text())
         .then(dataText => {
-            // Memotong bungkus Google agar menjadi JSON murni
+            // Google mengembalikan data dengan bungkus fungsi google.visualization.Query.setResponse()
+            // Kita perlu memotong bungkus tersebut agar menjadi JSON murni
             const jsonString = dataText.substring(dataText.indexOf("{"), dataText.lastIndexOf("}") + 1);
             const json = JSON.parse(jsonString);
             
             const rows = json.table.rows;
             let isiTabel = '';
 
-            // Looping data dari Google Sheets
+            // Looping data baris demi baris dari Google Sheets
             rows.forEach(row => {
-                // Mengambil nilai kolom (0=Hari, 1=Jam, 2=Misa, 3=Tempat)
+                // Mengambil nilai dari tiap kolom (kolom 0=Hari, 1=Waktu, 2=Keterangan, 3=Tempat)
                 const hari = row.c[0] ? row.c[0].v : '';
                 const waktu = row.c[1] ? row.c[1].v : '';
                 const keterangan = row.c[2] ? row.c[2].v : '';
                 const sumber = row.c[3] ? row.c[3].v : '';
 
+                // Validasi: Jika baris kosong, jangan dimasukkan ke tabel
                 if (!hari && !waktu && !keterangan) return;
 
                 isiTabel += `
@@ -249,9 +72,3 @@
             `;
         });
 </script>
-<!-- ==========================================
-     AKHIR KODE TABEL & SCRIPT GOOGLE SHEETS 
-=========================================== -->->
-
-</body>
-</html>
