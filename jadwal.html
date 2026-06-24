@@ -130,11 +130,20 @@
             let isiTabel = '';
 
             rows.forEach(row => {
-                // Ambil data tiap cell (0=Hari, 1=Waktu, 2=Keterangan, 3=Tempat)
-                const hari = row.c[0] && row.c[0].v ? row.c[0].v : '';
-                const waktu = row.c[1] && row.c[1].v ? row.c[1].v : '';
-                const keterangan = row.c[2] && row.c[2].v ? row.c[2].v : '';
-                const sumber = row.c[3] && row.c[3].v ? row.c[3].v : '';
+                if (!row.c) return;
+
+                // Fungsi bantuan untuk membaca data sel secara aman (baik berupa text, angka, atau jam)
+                const ambilTeks = (cell) => {
+                    if (!cell) return '';
+                    if (cell.f) return cell.f; // Ambil teks terformat (misal jam atau tanggal)
+                    if (cell.v !== null && cell.v !== undefined) return cell.v; // Ambil nilai mentah
+                    return '';
+                };
+
+                const hari = ambilTeks(row.c[0]);
+                const waktu = ambilTeks(row.c[1]);
+                const keterangan = ambilTeks(row.c[2]);
+                const sumber = ambilTeks(row.c[3]);
 
                 // Lewati baris jika kolom penting bernilai kosong
                 if (!hari && !waktu && !keterangan) return;
@@ -142,7 +151,7 @@
                 isiTabel += `
                     <tr>
                         <td><span class="pil-hari">${hari}</span></td>
-                        <td class="waktu-tebal">${waktu} WIB</td>
+                        <td class="waktu-tebal">${waktu} ${waktu.toLowerCase().includes('wib') ? '' : 'WIB'}</td>
                         <td class="keterangan-teks">${keterangan}</td>
                         <td class="sumber-teks">${sumber}</td>
                     </tr>
