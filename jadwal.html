@@ -116,60 +116,62 @@
 <script src="js/script.js"></script>
 
 <script>
-const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; // ganti dengan ID asli
+    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45";
+    const urlDirect = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
-const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+    fetch(urlDirect)
+        .then(response => response.text())
+        .then(dataText => {
+            // Potong format ekstra google gviz agar didapatkan JSON murni
+            const jsonString = dataText.substring(dataText.indexOf("{"), dataText.lastIndexOf("}") + 1);
+            const json = JSON.parse(jsonString);
+            
+            const rows = json.table.rows;
+            let isiTabel = '';
 
-console.log("URL:", url);
+            rows.forEach(row => {
+                if (!row.c) return;
 
-fetch(url)
-  .then(res => {
-    if (!res.ok) {
-      throw new Error("HTTP " + res.status + " - Sheet tidak ditemukan / ID salah");
-    }
-    return res.text();
-  })
-  .then(text => {
+                // Fungsi bantuan untuk membaca data sel secara aman (baik berupa text, angka, atau jam)
+                const ambilTeks = (cell) => {
+                    if (!cell) return '';
+                    if (cell.f) return cell.f; // Ambil teks terformat (misal jam atau tanggal)
+                    if (cell.v !== null && cell.v !== undefined) return cell.v; // Ambil nilai mentah
+                    return '';
+                };
 
-    if (text.includes("<html")) {
-      throw new Error("Sheet belum public atau butuh login.");
-    }
+                const hari = ambilTeks(row.c[0]);
+                const waktu = ambilTeks(row.c[1]);
+                const keterangan = ambilTeks(row.c[2]);
+                const sumber = ambilTeks(row.c[3]);
 
-    const json = JSON.parse(
-      text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1)
-    );
+                // Lewati baris jika kolom penting bernilai kosong
+                if (!hari && !waktu && !keterangan) return;
 
-    const rows = json.table.rows;
-    let html = "";
+                isiTabel += `
+                    <tr>
+                        <td><span class="pil-hari">${hari}</span></td>
+                        <td class="waktu-tebal">${waktu} ${waktu.toLowerCase().includes('wib') ? '' : 'WIB'}</td>
+                        <td class="keterangan-teks">${keterangan}</td>
+                        <td class="sumber-teks">${sumber}</td>
+                    </tr>
+                `;
+            });
 
-    rows.forEach(row => {
-      if (!row.c) return;
-
-      const ambil = cell => cell?.f ?? cell?.v ?? "";
-
-      const hari = ambil(row.c[0]);
-      const waktu = ambil(row.c[1]);
-      const ket = ambil(row.c[2]);
-      const sumber = ambil(row.c[3]);
-
-      if (!hari && !waktu && !ket) return;
-
-      html += `
-        <tr>
-          <td>${hari}</td>
-          <td>${waktu}</td>
-          <td>${ket}</td>
-          <td>${sumber}</td>
-        </tr>
-      `;
-    });
-
-    document.getElementById("isi-jadwal-dinamis").innerHTML = html;
-
-  })
-  .catch(err => {
-    console.error("GAGAL:", err.message);
-  });
+            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Belum ada data jadwal yang diinput di Google Sheets.</td></tr>
+            `;
+        })
+        .catch(error => {
+            console.error("Gagal ambil data:", error);
+            document.getElementById('isi-jadwal-dinamis').innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
+                        ⚠️ Gagal memuat jadwal secara live. Silakan segarkan halaman beberapa saat lagi.
+                    </td>
+                </tr>
+            `;
+        });
 </script>
 
 </body>
