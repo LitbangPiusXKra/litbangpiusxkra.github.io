@@ -1630,11 +1630,11 @@ nav a,
     border-collapse: collapse;
     min-width: 550px; /* Menghindari teks tertekuk parah di layar HP kecil */
 }
-
+/* #7f8c8d */
 .tabel-rutin th {
     text-align: center;
     font-size: 11px;
-    color: #7f8c8d;
+    color: white;
     padding: 12px 10px;
     border-bottom: 2px solid #bdc3c7;
     font-weight: 700;
