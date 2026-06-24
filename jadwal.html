@@ -177,28 +177,30 @@
 <!-- ==========================================
      AWAL KODE TABEL & SCRIPT GOOGLE SHEETS 
 =========================================== -->
-<div class="wadah-tabel-responsive">
-    <table class="tabel-rutin">
-        <thead>
-            <tr>
-                <th>HARI</th>
-                <th>WAKTU</th>
-                <th>KETERANGAN</th>
-                <th>SUMBER</th>
-            </tr>
-        </thead>
-        <!-- ID ini sangat penting, jangan sampai terhapus -->
-        <tbody id="isi-jadwal-dinamis">
-            <tr>
-                <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
-                    <i>Mengambil data dari Google Sheets...</i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="kotak-tabel">
+    <div class="wadah-tabel-responsive">
+        <table class="tabel-rutin">
+            <thead>
+                <tr>
+                    <th>HARI</th>
+                    <th>WAKTU</th>
+                    <th>KETERANGAN / MISA</th>
+                    <th>TEMPAT / WILAYAH</th>
+                </tr>
+            </thead>
+            <tbody id="isi-jadwal-dinamis">
+                <tr>
+                    <td colspan="4" style="text-align:center; padding:20px; color:#888;">
+                        Sedang memuat jadwal misa...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
+    // Link Excel CSV Anda
     const linkExcel = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pub?output=csv";
     const linkAmanLokal = "https://api.allorigins.win/get?url=" + encodeURIComponent(linkExcel);
 
@@ -211,40 +213,44 @@
             const dataMentah = data.contents;
             if (!dataMentah) throw new Error("Data kosong dari Google");
 
-            // Memisahkan baris dengan aman (menghapus \r)
+            // Bersihkan karakter return (\r) dan pisahkan per baris baru
             const barisData = dataMentah.replace(/\r/g, '').split('\n');
             let isiTabel = '';
 
-            // Deteksi otomatis apakah memakai pemisah koma (,) atau titik koma (;)
-            const barisPertama = barisData[0] || "";
-            const pemisah = barisPertama.includes(';') ? ';' : ',';
+            // Deteksi otomatis apakah spreadsheet menggunakan pembatas koma (,) atau titik koma (;)
+            const barisHeader = barisData[0] || "";
+            const pemisah = barisHeader.includes(';') ? ';' : ',';
 
-            // Mulai loop dari baris ke-2 (i = 1) melewati header
+            // Loop dimulai dari indeks 1 (melewati baris judul/header)
             for (let i = 1; i < barisData.length; i++) {
-                if (barisData[i].trim() === '') continue;
+                const barisAktif = barisData[i].trim();
+                if (barisAktif === '') continue; // Lewati jika ada baris kosong
 
-                // Pisahkan kolom berdasarkan pemisah yang terdeteksi
-                const kolom = barisData[i].split(pemisah);
+                // Pisahkan teks per kolom
+                const kolom = barisAktif.split(pemisah);
 
-                // Bersihkan tanda kutip ganda di awal/akhir teks
-                const hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '-';
-                const waktu = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '-';
-                const keterangan = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '-';
-                const sumber = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '-';
+                // Bersihkan tanda kutip pembungkus bawaan CSV ("teks" -> teks)
+                const hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
+                const waktu = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
+                const keterangan = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
+                const sumber = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
 
-                // Susun baris HTML
+                // Validasi minimal: Jika hari dan waktu kosong, jangan tampilkan baris rusak
+                if (!hari && !waktu && !keterangan) continue;
+
+                // Susun element HTML tabel baris demi baris
                 isiTabel += `
                     <tr>
-                        <td><span class="pil-hari">${hari}</span></td>
-                        <td class="waktu-tebal">${waktu}</td>
-                        <td class="keterangan-teks">${keterangan}</td>
-                        <td class="sumber-teks">${sumber}</td>
+                        <td><span class="pil-hari">${hari || '-'}</span></td>
+                        <td class="waktu-tebal">${waktu || '-'} WIB</td>
+                        <td class="keterangan-teks">${keterangan || '-'}</td>
+                        <td class="sumber-teks">${sumber || '-'}</td>
                     </tr>
                 `;
             }
 
             document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
-                <tr><td colspan="4" style="text-align:center; padding:20px;">Tidak ada data jadwal tersedia.</td></tr>
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Tidak ada jadwal misa untuk saat ini.</td></tr>
             `;
         })
         .catch(error => {
@@ -252,7 +258,7 @@
             document.getElementById('isi-jadwal-dinamis').innerHTML = `
                 <tr>
                     <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
-                        ⚠️ Gagal memuat jadwal misa secara live. Silakan segarkan halaman atau cek koneksi internet Anda.
+                        ⚠️ Gagal memuat jadwal secara live. Silakan refresh halaman beberapa saat lagi.
                     </td>
                 </tr>
             `;
