@@ -199,62 +199,60 @@
 </div>
 
 <script>
-    // 1. Link Excel Asli Boss
     const linkExcel = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pub?output=csv";
-
-    // 2. Kita bungkus pakai API AllOrigins (Format JSON) agar tembus keamanan lokal browser
     const linkAmanLokal = "https://api.allorigins.win/get?url=" + encodeURIComponent(linkExcel);
 
-    // 3. Tarik data
     fetch(linkAmanLokal)
         .then(response => {
             if (!response.ok) throw new Error("Gagal terhubung ke API");
-            return response.json(); // Kita ambil format JSON, bukan teks mentah
+            return response.json();
         })
         .then(data => {
-            // Data CSV yang asli bersembunyi di dalam "data.contents"
             const dataMentah = data.contents;
-            
-            // Cek jika Google sedang memproses redirect
-            if (dataMentah === null || dataMentah === undefined) {
-                throw new Error("Data kosong dari Google");
-            }
+            if (!dataMentah) throw new Error("Data kosong dari Google");
 
-            const barisData = dataMentah.split('\n');
+            // Memisahkan baris dengan aman (menghapus \r)
+            const barisData = dataMentah.replace(/\r/g, '').split('\n');
             let isiTabel = '';
 
-            // Mulai loop dari baris ke-2 (melewati judul)
+            // Deteksi otomatis apakah memakai pemisah koma (,) atau titik koma (;)
+            const barisPertama = barisData[0] || "";
+            const pemisah = barisPertama.includes(';') ? ';' : ',';
+
+            // Mulai loop dari baris ke-2 (i = 1) melewati header
             for (let i = 1; i < barisData.length; i++) {
                 if (barisData[i].trim() === '') continue;
 
-                // Pisahkan per kolom dengan koma
-                const kolom = barisData[i].split(',');
+                // Pisahkan kolom berdasarkan pemisah yang terdeteksi
+                const kolom = barisData[i].split(pemisah);
 
-                // Bersihkan tanda kutip
-                const hari = kolom[0] ? kolom[0].replace(/"/g, '').trim() : '';
-                const waktu = kolom[1] ? kolom[1].replace(/"/g, '').trim() : '';
-                const keterangan = kolom[2] ? kolom[2].replace(/"/g, '').trim() : '';
-                const sumber = kolom[3] ? kolom[3].replace(/"/g, '').trim() : '';
+                // Bersihkan tanda kutip ganda di awal/akhir teks
+                const hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '-';
+                const waktu = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '-';
+                const keterangan = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '-';
+                const sumber = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '-';
 
-                // Susun HTML
+                // Susun baris HTML
                 isiTabel += `
                     <tr>
                         <td><span class="pil-hari">${hari}</span></td>
                         <td class="waktu-tebal">${waktu}</td>
-                        <td>${keterangan}</td>
+                        <td class="keterangan-teks">${keterangan}</td>
                         <td class="sumber-teks">${sumber}</td>
                     </tr>
                 `;
             }
 
-            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel;
+            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Tidak ada data jadwal tersedia.</td></tr>
+            `;
         })
         .catch(error => {
             console.error("Error Detail:", error);
             document.getElementById('isi-jadwal-dinamis').innerHTML = `
                 <tr>
-                    <td colspan="4" style="text-align:center; color:red; padding:20px;">
-                        Gagal memuat jadwal lokal. Data ini akan otomatis muncul saat website di-upload ke Hosting.
+                    <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
+                        ⚠️ Gagal memuat jadwal misa secara live. Silakan segarkan halaman atau cek koneksi internet Anda.
                     </td>
                 </tr>
             `;
