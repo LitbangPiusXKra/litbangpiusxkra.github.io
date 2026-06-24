@@ -116,28 +116,50 @@
 <script src="js/script.js"></script>
 
 <script>
-    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45";
+    // 1. PASTIKAN ID INI BENAR (Hanya 44 karakter)
+    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5Br"; 
+    
+    // 2. URL Gviz
     const urlDirect = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
+    console.log("🚀 Mencoba ambil data dari:", urlDirect);
+
     fetch(urlDirect)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP Error: ${response.status} (Cek izin akses sheet!)`);
+            }
+            return response.text();
+        })
         .then(dataText => {
-            // Potong format ekstra google gviz agar didapatkan JSON murni
+            // Debug: Cek apakah response benar JSON atau malah HTML Error
+            if (dataText.includes("<html") || dataText.includes("google.com/signin")) {
+                throw new Error("Response bukan JSON! Kemungkinan Sheet masih PRIVATE atau ID salah.");
+            }
+
+            // Potong wrapper google.visualization
             const jsonString = dataText.substring(dataText.indexOf("{"), dataText.lastIndexOf("}") + 1);
-            const json = JSON.parse(jsonString);
             
+            let json;
+            try {
+                json = JSON.parse(jsonString);
+            } catch (e) {
+                console.error("Gagal parse JSON:", e);
+                throw new Error("Format JSON rusak. Cek Console untuk detail.");
+            }
+
             const rows = json.table.rows;
+            console.log("✅ Data berhasil diambil, jumlah baris:", rows.length);
+
             let isiTabel = '';
 
-            rows.forEach(row => {
+            rows.forEach((row, index) => {
                 if (!row.c) return;
 
-                // Fungsi bantuan untuk membaca data sel secara aman (baik berupa text, angka, atau jam)
                 const ambilTeks = (cell) => {
                     if (!cell) return '';
-                    if (cell.f) return cell.f; // Ambil teks terformat (misal jam atau tanggal)
-                    if (cell.v !== null && cell.v !== undefined) return cell.v; // Ambil nilai mentah
-                    return '';
+                    // Prioritaskan formatted value (f), fallback ke value (v)
+                    return cell.f !== null ? cell.f : (cell.v !== null ? cell.v : '');
                 };
 
                 const hari = ambilTeks(row.c[0]);
@@ -145,32 +167,42 @@
                 const keterangan = ambilTeks(row.c[2]);
                 const sumber = ambilTeks(row.c[3]);
 
-                // Lewati baris jika kolom penting bernilai kosong
+                // Skip baris kosong total
                 if (!hari && !waktu && !keterangan) return;
 
                 isiTabel += `
                     <tr>
                         <td><span class="pil-hari">${hari}</span></td>
-                        <td class="waktu-tebal">${waktu} ${waktu.toLowerCase().includes('wib') ? '' : 'WIB'}</td>
+                        <td class="waktu-tebal">${waktu} ${String(waktu).toLowerCase().includes('wib') ? '' : 'WIB'}</td>
                         <td class="keterangan-teks">${keterangan}</td>
                         <td class="sumber-teks">${sumber}</td>
                     </tr>
                 `;
             });
 
-            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
-                <tr><td colspan="4" style="text-align:center; padding:20px;">Belum ada data jadwal yang diinput di Google Sheets.</td></tr>
-            `;
+            const container = document.getElementById('isi-jadwal-dinamis');
+            if (container) {
+                container.innerHTML = isiTabel || `
+                    <tr><td colspan="4" style="text-align:center; padding:20px;">⚠️ Sheet kosong atau format kolom tidak sesuai.</td></tr>
+                `;
+            } else {
+                console.error("❌ Element #isi-jadwal-dinamis tidak ditemukan di HTML!");
+            }
         })
         .catch(error => {
-            console.error("Gagal ambil data:", error);
-            document.getElementById('isi-jadwal-dinamis').innerHTML = `
-                <tr>
-                    <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
-                        ⚠️ Gagal memuat jadwal secara live. Silakan segarkan halaman beberapa saat lagi.
-                    </td>
-                </tr>
-            `;
+            console.error("💥 GAGAL AMBIL DATA:", error.message);
+            
+            const container = document.getElementById('isi-jadwal-dinamis');
+            if (container) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px;">
+                            ⚠️ Gagal memuat jadwal.<br>
+                            <small style="color:#666;">Cek Console (F12) untuk detail error. Pastikan Sheet ID benar & Akses Public.</small>
+                        </td>
+                    </tr>
+                `;
+            }
         });
 </script>
 
