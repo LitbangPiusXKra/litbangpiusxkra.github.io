@@ -1,68 +1,160 @@
-<div class="kotak-tabel">
-    <div class="wadah-tabel-responsive">
-        <table class="tabel-rutin">
-            <thead>
-                <tr>
-                    <th>HARI</th>
-                    <th>WAKTU</th>
-                    <th>KETERANGAN / MISA</th>
-                    <th>TEMPAT / WILAYAH</th>
-                </tr>
-            </thead>
-            <tbody id="isi-jadwal-dinamis">
-                <tr>
-                    <td colspan="4" style="text-align:center; padding:20px; color:#888;">
-                        Sedang memuat jadwal misa...
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Misa - Paroki Santo Pius X</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="header-left">
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="Logo">
+            <div>
+                <h1>Paroki Santo Pius X</h1>
+                <p>Karanganyar</p>
+            </div>
+        </div>
     </div>
-</div>
+    <nav id="mainNav">
+        <a href="index.html">Beranda</a>
+        <div class="dropdown">
+            <span class="dropdown-title"> Tentang Kita <i class="fas fa-caret-down"></i> </span>
+            <div class="dropdown-menu">
+                <a href="profil.html">Sambutan & Sejarah Gereja</a>
+                <a href="pgpm.html">Pengurus PGPM</a>
+                <a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+            </div>
+        </div>
+        <a href="jadwal.html">Jadwal Misa</a>
+        <a href="berita.html">Berita</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+    </nav>
+</header>
+
+<section class="jadwalmisa-section">
+    <div class="wrapper-jadwal-modern">
+        
+        <div class="seksi-jadwal">
+            <h3 class="judul-seksi"><i class="fas fa-bolt" style="color: #4a8b71;"></i> Misa Berikutnya</h3>
+            
+            <div class="kartu-misa kartu-aktif">
+                <div class="kartu-header">
+                    <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">05:25</span></div>
+                    <div class="sisa-waktu">Misa Harian</div>
+                </div>
+                <div class="keterangan-misa">Misa Harian (Senin - Sabtu)</div>
+                <div class="info-tambahan">
+                    <span class="teks-jarak">Gereja Pusat</span>
+                </div>
+            </div>
+
+            <div class="kartu-misa">
+                <div class="kartu-header">
+                    <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">18:00</span></div>
+                    <div class="sisa-waktu">Misa Mingguan</div>
+                </div>
+                <div class="keterangan-misa">Misa Sabtu Sore</div>
+                <div class="info-tambahan">
+                    <span class="teks-jarak">Gereja Pusat</span>
+                </div>
+            </div>
+
+            <div class="kartu-misa">
+                <div class="kartu-header">
+                    <div class="waktu-misa"><span class="hari">MINGGU</span> <span class="jam">07:00</span></div>
+                    <div class="sisa-waktu">Misa Utama</div>
+                </div>
+                <div class="keterangan-misa">Misa Hari Minggu</div>
+                <div class="info-tambahan">
+                    <span class="teks-jarak">Gereja Pusat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="seksi-jadwal mt-40">
+            <div class="kotak-tabel">
+                <h3 class="judul-seksi"><i class="far fa-clock" style="color: #4a8b71;"></i> Jadwal Misa Live</h3>
+                <div class="wadah-tabel-responsive">
+                    <table class="tabel-rutin">
+                        <thead>
+                            <tr>
+                                <th>HARI</th>
+                                <th>WAKTU</th>
+                                <th>KETERANGAN / MISA</th>
+                                <th>TEMPAT / WILAYAH</th>
+                            </tr>
+                        </thead>
+                        <tbody id="isi-jadwal-dinamis">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #888; padding: 30px;">
+                                    <i class="fas fa-spinner fa-spin"></i> Membaca data langsung dari Google Sheets...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="catatan-bawah center">Data di atas terupdate otomatis dari Google Sheets Inti.</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    © 2026 Paroki Santo Pius X Karanganyar
+</footer>
+
+<script src="js/script.js"></script>
 
 <script>
-    // Menggunakan format gviz agar data diambil langsung dari Google tanpa perantara API AllOrigins
-    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45"; // ID dari link Anda
+    const sheetID = "1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45";
     const urlDirect = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
     fetch(urlDirect)
         .then(response => response.text())
         .then(dataText => {
-            // Google mengembalikan data dengan bungkus fungsi google.visualization.Query.setResponse()
-            // Kita perlu memotong bungkus tersebut agar menjadi JSON murni
+            // Potong format ekstra google gviz agar didapatkan JSON murni
             const jsonString = dataText.substring(dataText.indexOf("{"), dataText.lastIndexOf("}") + 1);
             const json = JSON.parse(jsonString);
             
             const rows = json.table.rows;
             let isiTabel = '';
 
-            // Looping data baris demi baris dari Google Sheets
             rows.forEach(row => {
-                // Mengambil nilai dari tiap kolom (kolom 0=Hari, 1=Waktu, 2=Keterangan, 3=Tempat)
-                const hari = row.c[0] ? row.c[0].v : '';
-                const waktu = row.c[1] ? row.c[1].v : '';
-                const keterangan = row.c[2] ? row.c[2].v : '';
-                const sumber = row.c[3] ? row.c[3].v : '';
+                // Ambil data tiap cell (0=Hari, 1=Waktu, 2=Keterangan, 3=Tempat)
+                const hari = row.c[0] && row.c[0].v ? row.c[0].v : '';
+                const waktu = row.c[1] && row.c[1].v ? row.c[1].v : '';
+                const keterangan = row.c[2] && row.c[2].v ? row.c[2].v : '';
+                const sumber = row.c[3] && row.c[3].v ? row.c[3].v : '';
 
-                // Validasi: Jika baris kosong, jangan dimasukkan ke tabel
+                // Lewati baris jika kolom penting bernilai kosong
                 if (!hari && !waktu && !keterangan) return;
 
                 isiTabel += `
                     <tr>
-                        <td><span class="pil-hari">${hari || '-'}</span></td>
-                        <td class="waktu-tebal">${waktu || '-'} WIB</td>
-                        <td class="keterangan-teks">${keterangan || '-'}</td>
-                        <td class="sumber-teks">${sumber || '-'}</td>
+                        <td><span class="pil-hari">${hari}</span></td>
+                        <td class="waktu-tebal">${waktu} WIB</td>
+                        <td class="keterangan-teks">${keterangan}</td>
+                        <td class="sumber-teks">${sumber}</td>
                     </tr>
                 `;
             });
 
             document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
-                <tr><td colspan="4" style="text-align:center; padding:20px;">Tidak ada jadwal misa untuk saat ini.</td></tr>
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Belum ada data jadwal yang diinput di Google Sheets.</td></tr>
             `;
         })
         .catch(error => {
-            console.error("Error Detail:", error);
+            console.error("Gagal ambil data:", error);
             document.getElementById('isi-jadwal-dinamis').innerHTML = `
                 <tr>
                     <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
@@ -72,3 +164,6 @@
             `;
         });
 </script>
+
+</body>
+</html>
