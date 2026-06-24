@@ -1596,38 +1596,43 @@ nav a,
 
 /* TABEL JADWAL RUTIN */
 .kotak-tabel {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #e0e6e3;
     border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
 }
 
 .wadah-tabel-responsive {
     width: 100%;
-    overflow-x: auto; /* Agar tabel bisa digeser kiri-kanan di HP jika kepanjangan */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Geser mulus di perangkat iOS */
 }
 
 .tabel-rutin {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    min-width: 500px; /* Memaksa scrollbar muncul di HP jika layar terlalu sempit */
 }
 
 .tabel-rutin th {
     text-align: left;
-    font-size: 12px;
-    color: #888;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    font-weight: 600;
+    font-size: 11px;
+    color: #7f8c8d;
+    padding: 12px 10px;
+    border-bottom: 2px solid #bdc3c7;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .tabel-rutin td {
-    padding: 15px 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 14px 10px;
+    border-bottom: 1px solid #f1f2f6;
     font-size: 14px;
-    color: #444;
+    color: #2c3e50;
+    vertical-align: middle;
 }
 
 .tabel-rutin tr:last-child td {
@@ -1636,22 +1641,30 @@ nav a,
 
 .waktu-tebal {
     font-weight: 700;
-    color: #222;
+    color: #2c3e50;
+    white-space: nowrap; /* Jam tidak akan terpotong ke bawah */
 }
 
 .pil-hari {
     background-color: #e5f5ec;
     color: #2c7a51;
-    padding: 5px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
-    text-transform: lowercase;
+    font-weight: 700;
+    display: inline-block;
+    text-transform: capitalize; /* Membuat huruf pertama otomatis Kapital */
+}
+
+.keterangan-teks {
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .sumber-teks {
-    color: #aaa;
-    font-size: 12px;
+    color: #7f8c8d;
+    font-size: 13px;
+    font-style: italic;
 }
 
 
