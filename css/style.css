@@ -1641,12 +1641,12 @@ nav a,
     text-transform: uppercase;
     letter-spacing: 0.8px;
 }
-
+/* #2c3e50 */
 .tabel-rutin td {
     padding: 14px 10px;
     border-bottom: 1px solid #f1f2f6;
     font-size: 14px;
-    color: #2c3e50;
+    color: white;
     vertical-align: middle;
 }
 
