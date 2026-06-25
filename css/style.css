@@ -1701,3 +1701,120 @@ nav a,
         padding-right: 15px; /* Memberi jarak agar tidak terlalu mepet saat digeser di HP */
     }
 }
+
+
+/* ========================================================
+   LOGIKA WARNA HEADER (TRANSPARAN VS SCROLLED)
+   ======================================================== */
+
+/* 1. WARNA DEFAULT SAAT DI ATAS (HEADER TRANSPARAN) */
+/* Membuat teks menu, logo, dan icon hamburger jadi gelap */
+header #mainNav a,
+header .dropdown-title,
+header .menu-toggle i,
+header .logo-area h1,
+header .logo-area p {
+    color: #0B1F3A; /* Warna Navy Gelap (bisa diganti #000 untuk hitam pekat) */
+    transition: color 0.3s ease; /* Biar perubahannya halus */
+}
+
+/* 2. WARNA SAAT DI-SCROLL (HEADER JADI GELAP) */
+/* Saat class .scrolled aktif, semua teks di atas berubah putih */
+header.scrolled #mainNav a,
+header.scrolled .dropdown-title,
+header.scrolled .menu-toggle i,
+header.scrolled .logo-area h1,
+header.scrolled .logo-area p {
+    color: #ffffff; /* Berubah jadi putih bersih */
+}
+
+/* 3. EFEK HOVER (SAAT MOUSE DIARAHKAN KE MENU) */
+header #mainNav a:hover,
+header .dropdown-title:hover,
+header.scrolled #mainNav a:hover,
+header.scrolled .dropdown-title:hover {
+    color: #C5A059; /* Tetap warna emas elegan saat di-hover di kondisi apapun */
+}
+
+/* ========================================================
+   1. FIX DROPDOWN DI DESKTOP (BERSIH & ELEGAN)
+   ======================================================== */
+
+/* Mengatur kotak utama Dropdown */
+header .dropdown-menu {
+    background-color: #ffffff !important; /* Paksa kotak jadi Putih */
+    border-radius: 8px !important; /* Sudut agak melengkung */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important; /* Bayangan halus */
+    padding: 10px 0 !important; /* Jarak atas bawah */
+    overflow: hidden;
+}
+
+/* Mengatur tulisan link di dalam Dropdown */
+header .dropdown-menu a {
+    color: #0B1F3A !important; /* Tulisan warna Navy */
+    background-color: transparent !important; /* Bersihkan blok warna aneh */
+    padding: 12px 20px !important;
+    display: block !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid #f0f0f0 !important; /* Garis pemisah tipis antar menu */
+    transition: all 0.3s ease !important;
+}
+
+/* Hilangkan garis pemisah di menu paling bawah */
+header .dropdown-menu a:last-child {
+    border-bottom: none !important;
+}
+
+/* Saat disentuh mouse (Hover) */
+header .dropdown-menu a:hover {
+    color: #C5A059 !important; /* Tulisan berubah Emas */
+    background-color: #f8fafc !important; /* Latar berubah abu-abu kebiruan sangat muda */
+    padding-left: 25px !important; /* Efek tulisan geser sedikit ke kanan (Opsional, biar keren) */
+}
+
+/* ========================================================
+   FIX MENU HP: JARAK DIRAPATKAN & DROPDOWN MENJOROK
+   ======================================================== */
+@media screen and (max-width: 768px) {
+    /* 1. Merapatkan Jarak Antar Menu Utama */
+    header #mainNav a,
+    header .dropdown-title {
+        color: #ffffff !important;
+        display: block !important;
+        padding: 12px 20px !important; /* Jarak atas-bawah dikurangi biar rapat */
+        margin: 0 !important; /* Membuang margin siluman yang bikin jarak terlalu jauh */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    /* Warna saat menu ditekan */
+    header #mainNav a:hover,
+    header .dropdown-title:hover {
+        color: #C5A059 !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    /* 2. Mengatur Kotak Dropdown (Biar mendorong menu di bawahnya) */
+    header .dropdown-menu {
+        position: static !important; /* Tidak melayang, tapi mendorong ke bawah */
+        background-color: rgba(0, 0, 0, 0.2) !important; /* Latar sedikit lebih gelap */
+        box-shadow: none !important;
+        padding: 5px 0 !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+    }
+
+    /* 3. Membuat Sub-Menu Menjorok ke Kanan (Elegan) */
+    header .dropdown-menu a {
+        padding: 10px 20px 10px 45px !important; /* Kiri 45px bikin tulisan menjorok ke dalam */
+        font-size: 14px !important; /* Huruf sub-menu sedikit lebih kecil */
+        color: #e2e8f0 !important; /* Putih sedikit redup */
+        border-bottom: none !important; /* Bersihkan garis bawah di sub-menu */
+    }
+
+    header .dropdown-menu a:hover {
+        color: #C5A059 !important;
+    }
+}
