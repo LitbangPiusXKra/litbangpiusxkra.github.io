@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Misa - Paroki Santo Pius X</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Misa - Paroki Santo Pius X</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
 
 <header>
-    <div class="nav-overlay" id="navOverlay"></div>
-    <div class="header-left">
+	<div class="nav-overlay" id="navOverlay"></div>
+	
+	<div class="header-left">
         <div class="menu-toggle" id="menuToggle">
             <i class="fas fa-bars"></i>
         </div>
+
         <div class="logo-area">
             <img src="images/logo.png" alt="Logo">
             <div>
@@ -23,157 +27,323 @@
             </div>
         </div>
     </div>
-    <nav id="mainNav">
-        <a href="index.html">Beranda</a>
-        <div class="dropdown">
-            <span class="dropdown-title"> Tentang Kita <i class="fas fa-caret-down"></i> </span>
-            <div class="dropdown-menu">
-                <a href="profil.html">Sambutan & Sejarah Gereja</a>
-                <a href="pgpm.html">Pengurus PGPM</a>
-                <a href="dewan-harian.html">Dewan Pastoral Paroki</a>
-            </div>
-        </div>
-        <a href="jadwal.html">Jadwal Misa</a>
-        <a href="berita.html">Berita</a>
-        <a href="galeri.html">Galeri</a>
-        <a href="kontak.html">Kontak</a>
-    </nav>
+
+	<nav id="mainNav">
+		<a href="index.html">Beranda</a>
+
+		<div class="dropdown">
+			<span class="dropdown-title">
+				Tentang Kita <i class="fas fa-caret-down"></i>
+			</span>
+
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
 </header>
+
+<!-- ISI HALAMAN -->
 
 <section class="jadwalmisa-section">
     <div class="wrapper-jadwal-modern">
+
+    <!-- BAGIAN 1: MISA BERIKUTNYA -->
+    <div class="seksi-jadwal" style="padding-top: 50px;">
+        <h3 class="judul-seksi"><i class="fas fa-bolt" style="color: #4a8b71;"></i> Misa Berikutnya</h3>
+       
+	   <!-- WADAH OTOMATIS UNTUK 3 MISA BERIKUTNYA -->
+		<div id="wadahMisaBerikutnya">
+			<p style="text-align:center; padding:20px;">Memuat jadwal...</p>
+		</div>
         
-        <div class="seksi-jadwal" style="padding-top: 50px;">
-            <h3 class="judul-seksi"><i class="fas fa-bolt" style="color: #4a8b71;"></i> Misa Berikutnya</h3>
-            
-            <div class="kartu-misa kartu-aktif">
-                <div class="kartu-header">
-                    <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">05:25</span></div>
-                    <div class="sisa-waktu">1 Hari 24 Jam Lagi</div>
-                </div>
-                <div class="keterangan-misa">Misa Harian (Senin - Sabtu)</div>
-                <div class="info-tambahan">
-                    <span class="teks-jarak">Gereja Pusat</span>
-                </div>
-            </div>
-
-            <div class="kartu-misa">
-                <div class="kartu-header">
-                    <div class="waktu-misa"><span class="hari">SABTU</span> <span class="jam">18:00</span></div>
-                    <div class="sisa-waktu">1 Hari 29 Jam Lagi</div>
-                </div>
-                <div class="keterangan-misa">Misa Sabtu Sore</div>
-                <div class="info-tambahan">
-                    <span class="teks-jarak">Gereja Pusat</span>
-                </div>
-            </div>
-
-            <div class="kartu-misa">
-                <div class="kartu-header">
-                    <div class="waktu-misa"><span class="hari">MINGGU</span> <span class="jam">08:00</span></div>
-                    <div class="sisa-waktu">2 Hari 30 Jam Lagi</div>
-                </div>
-                <div class="keterangan-misa">Misa Hari Minggu</div>
-                <div class="info-tambahan">
-                    <span class="teks-jarak">Gereja Pusat</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="seksi-jadwal mt-40">
-            <div class="kotak-tabel">
-                <h3 class="judul-seksi"><i class="far fa-clock" style="color: #4a8b71;"></i> Jadwal Misa Rutin</h3>
-                <div class="wadah-tabel-responsive">
-                    <table class="tabel-rutin">
-                        <thead>y
-                            <tr>
-                                <th>HARI</th>
-                                <th>WAKTU</th>
-                                <th>KETERANGAN / MISA</th>
-                                <th>TEMPAT / WILAYAH</th>
-                            </tr>
-                        </thead>
-                        <tbody id="isi-jadwal-dinamis">
-                            <tr>
-                                <td colspan="4" style="text-align: center; color: #888; padding: 30px;">
-                                    <i class="fas fa-spinner fa-spin"></i> Membaca data langsung dari Google Sheets...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="catatan-bawah center">Data di atas terupdate otomatis dari Google Sheets Inti.</div>
-            </div>
-        </div>
-
+        <div class="catatan-bawah">Estimasi waktu tempuh berdasarkan jarak garis lurus. Waktu sebenarnya bisa berbeda.</div>
     </div>
+
+
+    <!-- BAGIAN 2: JADWAL MISA RUTIN -->
+    <div class="seksi-jadwal mt-40">
+        <div class="kotak-tabel">
+            <h3 class="judul-seksi"><i class="far fa-clock" style="color: #4a8b71;"></i> Jadwal Misa Rutin</h3>
+            
+            <div class="wadah-tabel-responsive">
+                <table class="tabel-rutin">
+					<thead>
+					<tr>
+						<th>HARI</th>
+						<th>WAKTU</th>
+						<th>KETERANGAN</th>
+						<th>SUMBER</th>
+					</tr>
+					</thead>
+					<!-- Perhatikan, saya menambahkan id="isi-jadwal-dinamis" di sini -->
+					<tbody id="isi-jadwal-dinamis">
+					<!-- Teks sementara sebelum data Google Sheets berhasil ditarik -->
+					<tr>
+						<td colspan="4" style="text-align: center; color: #888;">
+							<i class="fas fa-spinner fa-spin"></i> Sedang mengambil jadwal terbaru...
+						</td>
+					</tr>
+					</tbody>
+				</table>
+            </div>
+
+            <div class="catatan-bawah center">Jadwal dapat berubah sewaktu-waktu. Harap konfirmasi langsung ke <strong>sekretariat paroki</strong>.</div>
+        </div>
+    </div>
+
+</div>
 </section>
+
+
 
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
 </footer>
 
-<script src="js/script.js"></script>
-<!--https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pubhtml -->
-<script>
-    // Langsung menggunakan link CSV publik Anda tanpa perlu dipotong-potong
-    const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pub?output=csv";
+<!-- POPUP WHATSAPP -->
+<div class="wa-popup" id="waPopup">
 
-    fetch(urlCSV)
+    <div class="wa-header">
+        <span>Sekretariat Paroki</span>
+        <button onclick="closeWAPopup()">×</button>
+    </div>
+
+    <div class="wa-body">
+        <p>
+            Selamat datang di Sekretariat Paroki St. PIUS X Karanganar. 
+            Silahkan chat untuk informasi lebih lanjut. 🏠👋
+        </p>
+
+        <a href="https://wa.me/6281391390040?text=Halo%20Sekretariat%20Paroki"
+           target="_blank" class="wa-open-btn">
+            Open Chat
+        </a>
+    </div>
+
+</div>
+
+<a href="https://wa.me/6281391390040?text=Halo%20Paroki%20Santo%20Pius%20X,%20saya%20ingin%20bertanya" 
+   class="wa-float" target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="js/script.js"></script>
+
+<!-- ==========================================
+     AWAL KODE TABEL & SCRIPT GOOGLE SHEETS 
+=========================================== -->
+<div class="wadah-tabel-responsive">
+    <table class="tabel-rutin">
+        <thead>
+            <tr>
+                <th>HARI</th>
+                <th>WAKTU</th>
+                <th>KETERANGAN</th>
+                <th>SUMBER</th>
+            </tr>
+        </thead>
+        <!-- ID ini sangat penting, jangan sampai terhapus -->
+        <tbody id="isi-jadwal-dinamis">
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
+                    <i>Mengambil data dari Google Sheets...</i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--* Ambil data GooleSpreadSheets -->
+
+<script>
+    // 1. Link Excel Asli Boss
+    const linkExcel = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSK_4Lki0EmzXCJX8Uqh90AbbLYwfVjM4DimWmhxk5BrfD3eNITQIHOdON4gzmMEBu3kvEOadsaCs45/pub?output=csv";
+
+    // 2. Kita bungkus pakai API AllOrigins (Format JSON) agar tembus keamanan lokal browser
+    const linkAmanLokal = "https://api.allorigins.win/get?url=" + encodeURIComponent(linkExcel);
+
+    // 3. Tarik data
+    fetch(linkAmanLokal)
         .then(response => {
-            if (!response.ok) throw new Error("Gagal mengambil data dari Google");
-            return response.text();
+            if (!response.ok) throw new Error("Gagal terhubung ke API");
+            return response.json(); // Kita ambil format JSON, bukan teks mentah
         })
-        .then(dataText => {
-            // Bersihkan karakter tak terlihat \r dan pisahkan per baris
-            const barisData = dataText.replace(/\r/g, '').split('\n');
+        .then(data => {
+            // Data CSV yang asli bersembunyi di dalam "data.contents"
+            const dataMentah = data.contents;
+            
+            // Cek jika Google sedang memproses redirect
+            if (dataMentah === null || dataMentah === undefined) {
+                throw new Error("Data kosong dari Google");
+            }
+
+            const barisData = dataMentah.split('\n');
             let isiTabel = '';
 
-            // Cek apakah pemisah kolomnya menggunakan koma (,) atau titik koma (;)
-            const header = barisData[0] || '';
-            const pemisah = header.includes(';') ? ';' : ',';
-
-            // Loop dimulai dari baris ke-2 (i = 1) untuk melewati judul kolom
+            // Mulai loop dari baris ke-2 (melewati judul)
             for (let i = 1; i < barisData.length; i++) {
-                const barisAktif = barisData[i].trim();
-                if (barisAktif === '') continue; // Lewati jika ada baris kosong
+                if (barisData[i].trim() === '') continue;
 
-                // Pisahkan teks berdasarkan pemisah yang terdeteksi
-                const kolom = barisAktif.split(pemisah);
+                // Pisahkan per kolom dengan koma
+                const kolom = barisData[i].split(',');
 
-                // Bersihkan tanda kutip pembungkus bawaan CSV ("teks" -> teks)
-                const hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
-                const waktu = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
-                const keterangan = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
-                const sumber = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
+                // Bersihkan tanda kutip
+                const hari = kolom[0] ? kolom[0].replace(/"/g, '').trim() : '';
+                const waktu = kolom[1] ? kolom[1].replace(/"/g, '').trim() : '';
+                const keterangan = kolom[2] ? kolom[2].replace(/"/g, '').trim() : '';
+                const sumber = kolom[3] ? kolom[3].replace(/"/g, '').trim() : '';
 
-                // Jika kolom utama kosong, jangan tampilkan baris rusak
-                if (!hari && !waktu && !keterangan) continue;
-
+                // Susun HTML
                 isiTabel += `
                     <tr>
                         <td><span class="pil-hari">${hari}</span></td>
-                        <td class="waktu-tebal">${waktu} ${waktu.toLowerCase().includes('wib') ? '' : 'WIB'}</td>
-                        <td class="keterangan-teks">${keterangan}</td>
+                        <td class="waktu-tebal">${waktu}</td>
+                        <td>${keterangan}</td>
                         <td class="sumber-teks">${sumber}</td>
                     </tr>
                 `;
             }
 
-            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel || `
-                <tr><td colspan="4" style="text-align:center; padding:20px;">Belum ada data jadwal yang diinput di Google Sheets.</td></tr>
-            `;
+            document.getElementById('isi-jadwal-dinamis').innerHTML = isiTabel;
         })
         .catch(error => {
-            console.error("Detail Error:", error);
+            console.error("Error Detail:", error);
             document.getElementById('isi-jadwal-dinamis').innerHTML = `
                 <tr>
-                    <td colspan="4" style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">
-                        ⚠️ Gagal memuat jadwal secara live. Silakan segarkan halaman beberapa saat lagi.
+                    <td colspan="4" style="text-align:center; color:red; padding:20px;">
+                        Gagal memuat jadwal lokal. Data ini akan otomatis muncul saat website di-upload ke Hosting.
                     </td>
                 </tr>
             `;
         });
+</script>
+<!-- ==========================================
+     AKHIR KODE TABEL & SCRIPT GOOGLE SHEETS 
+=========================================== -->
+
+<!-- ==========================================
+    AMBIL DATA JADWAL MISA AKTIVE 
+=========================================== -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // === 1. DATABASE JADWAL MINGGUAN (Ini nanti bisa diganti dari Google Sheets) ===
+    const JADWAL_MISA = [
+        { hari: 'Senin', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Selasa', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Rabu', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Kamis', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Jumat', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Jumat', jam: '18:00', ket: 'Misa Jumat Pertama', lokasi: 'Gereja Pusat' },
+        { hari: 'Sabtu', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
+        { hari: 'Sabtu', jam: '18:00', ket: 'Misa Sabtu Sore', lokasi: 'Gereja Pusat' },
+        { hari: 'Minggu', jam: '07:00', ket: 'Misa Minggu Pagi', lokasi: 'Gereja Pusat' },
+        { hari: 'Minggu', jam: '09:30', ket: 'Misa Minggu Siang', lokasi: 'Gereja Pusat' },
+        { hari: 'Minggu', jam: '17:00', ket: 'Misa Minggu Sore', lokasi: 'Gereja Pusat' },
+    ];
+
+    const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const wadah = document.getElementById('wadahMisaBerikutnya');
+
+    // === 2. FUNGSI MENCARI 3 MISA TERDEKAT ===
+    function get3MisaTerdekat() {
+        const sekarang = new Date();
+        let semuaJadwal = [];
+
+        JADWAL_MISA.forEach(item => {
+            const targetHari = NAMA_HARI.indexOf(item.hari);
+            const [jam, menit] = item.jam.split(':').map(Number);
+
+            // Cari untuk 2 minggu ke depan (biar aman)
+            for (let i = 0; i < 2; i++) {
+                let tgl = new Date(sekarang);
+                let selisihHari = (targetHari - sekarang.getDay() + 7) % 7;
+                selisihHari += (i * 7);
+                
+                tgl.setDate(sekarang.getDate() + selisihHari);
+                tgl.setHours(jam, menit, 0, 0);
+
+                // Jika hari ini tapi jam sudah lewat, jangan ambil
+                if (tgl > sekarang) {
+                    semuaJadwal.push({...item, datetime: tgl});
+                }
+            }
+        });
+
+        // Urutkan dan ambil 3 teratas
+        return semuaJadwal.sort((a,b) => a.datetime - b.datetime).slice(0, 3);
+    }
+
+    // === 3. FUNGSI FORMAT COUNTDOWN ===
+    function formatSisaWaktu(ms) {
+        if (ms <= 0) return 'SEGERA DIMULAI';
+        const detik = Math.floor(ms / 1000);
+        const hari = Math.floor(detik / 86400);
+        const jam = Math.floor((detik % 86400) / 3600);
+        const menit = Math.floor((detik % 3600) / 60);
+        
+        if (hari > 0) return `${hari} hari ${jam} jam lagi`;
+        if (jam > 0) return `${jam} jam ${menit} menit lagi`;
+        return `${menit} menit ${detik % 60} detik lagi`;
+    }
+
+    // === 4. FUNGSI RENDER HTML ===
+    function renderMisa() {
+        const misaTerdekat = get3MisaTerdekat();
+        let html = '';
+
+        misaTerdekat.forEach((misa, index) => {
+            html += `
+            <div class="kartu-misa ${index === 0 ? 'kartu-aktif' : ''}" data-waktu="${misa.datetime.toISOString()}">
+                <div class="kartu-header">
+                    <div class="waktu-misa"><span class="hari">${misa.hari.toUpperCase()}</span> <span class="jam">${misa.jam}</span></div>
+                    <div class="sisa-waktu">menghitung...</div>
+                </div>
+                <div class="keterangan-misa">${misa.ket}</div>
+                <div class="info-tambahan">
+                    <span class="teks-jarak">${misa.lokasi}</span>
+                </div>
+            </div>`;
+        });
+        wadah.innerHTML = html;
+    }
+
+    // === 5. MESIN WAKTU (UPDATE SETIAP DETIK) ===
+    function updateCountdown() {
+        const semuaKartu = document.querySelectorAll('#wadahMisaBerikutnya .kartu-misa');
+        let perluRenderUlang = false;
+
+        semuaKartu.forEach(kartu => {
+            const waktuMisa = new Date(kartu.dataset.waktu);
+            const sisa = waktuMisa - new Date();
+            
+            kartu.querySelector('.sisa-waktu').textContent = formatSisaWaktu(sisa);
+
+            if (sisa <= 0) {
+                perluRenderUlang = true; // Jika ada yg lewat, tandai untuk render ulang
+            }
+        });
+
+        // Jika misa pertama sudah lewat, render ulang 3 jadwal baru
+        if (perluRenderUlang) {
+            renderMisa();
+        }
+    }
+
+    // JALANKAN PERTAMA KALI
+    renderMisa();
+    // UPDATE SETIAP 1 DETIK
+    setInterval(updateCountdown, 1000);
+});
 </script>
 
 </body>
