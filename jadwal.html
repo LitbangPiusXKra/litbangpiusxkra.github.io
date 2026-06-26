@@ -103,7 +103,13 @@
 </section>
 
 <style>
-
+/* Mewarnai latar countdown menjadi merah muda khusus untuk kartu pertama */
+.kartu-aktif .sisa-waktu {
+    background-color: #fce4ec !important; /* Warna Merah Muda (Soft Pink pastel) */
+    color: #d81b60 !important; /* Warna teks merah gelap agar kontras & terbaca */
+    border: 1px solid #f8bbd0 !important; /* Garis pinggir tipis merah muda */
+    transition: all 0.3s ease;
+}
 /* Efek Warning Merah untuk waktu < 45 Menit di Plan B */
 .sisa-waktu.warning-merah {
     background-color: #ef4444 !important; 
