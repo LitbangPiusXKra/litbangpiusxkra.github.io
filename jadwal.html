@@ -102,7 +102,23 @@
 </div>
 </section>
 
+<style>
 
+/* Efek Warning Merah untuk waktu < 45 Menit di Plan B */
+.sisa-waktu.warning-merah {
+    background-color: #ef4444 !important; 
+    color: #ffffff !important; 
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6) !important;
+    animation: kedip-cepat 1s infinite !important;
+}
+
+@keyframes kedip-cepat {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+</style>
 
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
@@ -236,7 +252,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
-    // === 1. DATABASE JADWAL MINGGUAN (Ini nanti bisa diganti dari Google Sheets) ===
+    // === 1. DATABASE JADWAL MINGGUAN ===
     const JADWAL_MISA = [
         { hari: 'Senin', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
         { hari: 'Selasa', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
@@ -263,7 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetHari = NAMA_HARI.indexOf(item.hari);
             const [jam, menit] = item.jam.split(':').map(Number);
 
-            // Cari untuk 2 minggu ke depan (biar aman)
             for (let i = 0; i < 2; i++) {
                 let tgl = new Date(sekarang);
                 let selisihHari = (targetHari - sekarang.getDay() + 7) % 7;
@@ -272,28 +287,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 tgl.setDate(sekarang.getDate() + selisihHari);
                 tgl.setHours(jam, menit, 0, 0);
 
-                // Jika hari ini tapi jam sudah lewat, jangan ambil
-                if (tgl > sekarang) {
+                // Jika jam sudah lewat lebih dari 60 menit, jangan ambil
+                // 3600000 ms = 60 menit
+                if (tgl.getTime() > (sekarang.getTime() - 3600000)) {
                     semuaJadwal.push({...item, datetime: tgl});
                 }
             }
         });
 
-        // Urutkan dan ambil 3 teratas
         return semuaJadwal.sort((a,b) => a.datetime - b.datetime).slice(0, 3);
     }
 
     // === 3. FUNGSI FORMAT COUNTDOWN ===
     function formatSisaWaktu(ms) {
-        if (ms <= 0) return 'SEGERA DIMULAI';
+        // Jika minus tapi belum lewat 60 menit
+        if (ms <= 0 && ms > -60000) return 'SEDANG BERLANGSUNG...'; 
+        
         const detik = Math.floor(ms / 1000);
         const hari = Math.floor(detik / 86400);
         const jam = Math.floor((detik % 86400) / 3600);
         const menit = Math.floor((detik % 3600) / 60);
+        const sisaDetik = detik % 60;
         
         if (hari > 0) return `${hari} hari ${jam} jam lagi`;
         if (jam > 0) return `${jam} jam ${menit} menit lagi`;
-        return `${menit} menit ${detik % 60} detik lagi`;
+        // Tampilkan detik jika waktunya tinggal hitungan menit
+        return `${menit} mnt ${sisaDetik} dtk lagi`; 
     }
 
     // === 4. FUNGSI RENDER HTML ===
@@ -324,16 +343,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         semuaKartu.forEach(kartu => {
             const waktuMisa = new Date(kartu.dataset.waktu);
-            const sisa = waktuMisa - new Date();
+            const sisa = waktuMisa - new Date(); // Hasil dalam milidetik (ms)
+            const elemenWaktu = kartu.querySelector('.sisa-waktu');
             
-            kartu.querySelector('.sisa-waktu').textContent = formatSisaWaktu(sisa);
+            elemenWaktu.textContent = formatSisaWaktu(sisa);
 
-            if (sisa <= 0) {
-                perluRenderUlang = true; // Jika ada yg lewat, tandai untuk render ulang
+            // ==========================================
+            // LOGIKA WARNING MERAH (< 45 MENIT)
+            // 45 menit = 2.700.000 milidetik
+            // ==========================================
+            if (sisa > 0 && sisa <= 2700000) {
+                // Kurang dari 45 menit (merah + kedip)
+                elemenWaktu.classList.add('warning-merah');
+                elemenWaktu.style.animation = ""; 
+            } else if (sisa <= 0 && sisa > -3600000) {
+                // Sedang berlangsung (Merah terang tapi tanpa kedip agar tenang)
+                elemenWaktu.classList.add('warning-merah');
+                elemenWaktu.style.animation = "none"; 
+            } else {
+                // Lebih dari 45 menit (kembali normal)
+                elemenWaktu.classList.remove('warning-merah');
+            }
+
+            // Jika sudah lewat 60 menit (-3.600.000 ms), render ulang untuk membuang kartu ini
+            if (sisa <= -3600000) {
+                perluRenderUlang = true; 
             }
         });
 
-        // Jika misa pertama sudah lewat, render ulang 3 jadwal baru
         if (perluRenderUlang) {
             renderMisa();
         }
