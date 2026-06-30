@@ -619,77 +619,78 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 	
-<!-- SCRIPT UNTUK LOGIKA BERITA DINAMIS -->
+<!-- SCRIPT MESIN BERITA DINAMIS DARI GOOGLE SHEETS -->
 <script>
-    // 1. DATABASE DUMMY (Persiapan untuk MySQL/Google Sheets)
-    // Nanti format JSON ini yang dihasilkan oleh Backend Anda
-    const dataBerita = [
-        {
-            kode: "vatikan", nama_kategori: "Vatikan",
-            judul: "Paus Fransiskus Ajak Umat Berdoa untuk Perdamaian Dunia",
-            tgl: "20 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1579782502621-0d32cb07d5b4?q=80&w=800",
-            kutipan: "Dalam audiensi umum terbarunya, Bapa Suci Paus Fransiskus menekankan pentingnya dialog dan doa tiada henti untuk daerah konflik..."
-        },
-        {
-            kode: "kas", nama_kategori: "KAS",
-            judul: "Surat Gembala Prapaskah Uskup Agung Semarang 2024",
-            tgl: "18 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1548625361-ec8530182fc6?q=80&w=800",
-            kutipan: "Mgr. Robertus Rubiyatmoko mengajak seluruh umat di Keuskupan Agung Semarang untuk memaknai masa Prapaskah dengan pertobatan ekologis..."
-        },
-        {
-            kode: "kevikepan", nama_kategori: "Kevikepan Surakarta",
-            judul: "Pertemuan Dewan Paroki se-Kevikepan Surakarta",
-            tgl: "15 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206?q=80&w=800",
-            kutipan: "Membahas sinergitas program pastoral tahun 2024, Kevikepan Surakarta menggelar pertemuan yang dihadiri perwakilan DPH tiap paroki..."
-        },
-        {
-            kode: "omk", nama_kategori: "OMK",
-            judul: "Retret OMK Paroki Berlangsung Meriah di Giri Sonta",
-            tgl: "12 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1510659695421-4f9689814467?q=80&w=800",
-            kutipan: "Lebih dari 100 Orang Muda Katolik mengikuti retret tahunan yang diisi dengan rekoleksi, outbond, dan misa penutup..."
-        },
-        {
-            kode: "wkri", nama_kategori: "WKRI",
-            judul: "Bakti Sosial WKRI Cabang Karanganyar Sambut Paskah",
-            tgl: "10 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800",
-            kutipan: "Ibu-ibu WKRI membagikan paket sembako kepada warga prasejahtera di sekitar lingkungan paroki sebagai bentuk aksi nyata APP..."
-        },
-        {
-            kode: "katedral", nama_kategori: "Katedral Jakarta",
-            judul: "Jadwal Misa Tri Hari Suci Katedral Jakarta Resmi Dirilis",
-            tgl: "08 Mar 2024", 
-            img: "https://images.unsplash.com/photo-1572945781358-1f19f2a96f13?q=80&w=800",
-            kutipan: "Bagi umat yang akan mengikuti perayaan Pekan Suci, Katedral Jakarta menyiapkan sistem pendaftaran online untuk misa tertentu..."
-        }
-    ];
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // === 1. PENGATURAN GOOGLE SHEETS ===
+    const sheetID = "MASUKKAN_ID_SHEET_BOSS_DI_SINI"; // <-- GANTI DENGAN ID BOSS
+    const urlBerita = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Berita`;
 
-    // Elemen DOM
+    // === 2. ELEMEN HTML ===
     const wadahHeadline = document.getElementById('wadahHeadline');
     const wadahListBerita = document.getElementById('wadahListBerita');
     const inputPencarian = document.getElementById('inputPencarian');
-    const filterButns = document.querySelectorAll('.filter-btn');
+    const newsFilterBtns = document.querySelectorAll('.filter-btn');
 
+    let dataBeritaGlobal = []; // Tempat menyimpan semua berita dari Google Sheets
     let filterSaatIni = 'all';
     let keywordSaatIni = '';
 
-    // Fungsi Render Tampilan
+    // === TAMPILAN LOADING SEMENTARA ===
+    wadahHeadline.innerHTML = `<div style="text-align:center; padding:50px; color:#888;"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Memuat berita terbaru...</p></div>`;
+
+    // === 3. AMBIL DATA DARI GOOGLE SHEETS ===
+    fetch(urlBerita)
+        .then(res => res.text())
+        .then(text => {
+            const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+            const json = JSON.parse(jsonString);
+            const rows = json.table.rows;
+
+            // Fungsi bantu baca sel Google Sheet
+            const getVal = (cell) => cell ? (cell.f || cell.v) : '';
+
+            // Membaca baris mulai dari baris ke-2 (karena baris 1 adalah judul kolom)
+            for (let i = 1; i < rows.length; i++) {
+                let baris = rows[i];
+                if (!baris.c) continue;
+
+                // Memasukkan data ke dalam Array agar bisa di-filter dan di-search
+                dataBeritaGlobal.push({
+                    kode: getVal(baris.c[0]).toString().toLowerCase().trim(),
+                    nama_kategori: getVal(baris.c[1]),
+                    judul: getVal(baris.c[2]),
+                    tgl: getVal(baris.c[3]),
+                    img: getVal(baris.c[4]) || 'images/logo.png', // Gambar default jika kosong
+                    kutipan: getVal(baris.c[5]),
+                    link: getVal(baris.c[6]) || '#'
+                });
+            }
+
+            // Setelah data selesai diambil, jalankan fungsi Render (Tampilkan ke layar)
+            renderBerita();
+        })
+        .catch(err => {
+            console.error("Error Berita:", err);
+            wadahHeadline.innerHTML = `<div class="empty-state"><h3>Gagal memuat berita</h3><p>Pastikan ID Sheet benar dan akses diset ke Publik.</p></div>`;
+        });
+
+    // === 4. FUNGSI RENDER (MENYARING & MENAMPILKAN) ===
     function renderBerita() {
-        // 1. Saring data berdasarkan Kategori & Pencarian
-        const dataDisaring = dataBerita.filter(item => {
+        // A. Saring data berdasarkan Kategori & Pencarian (Search)
+        const dataDisaring = dataBeritaGlobal.filter(item => {
             const cocokKategori = (filterSaatIni === 'all') || (item.kode === filterSaatIni);
-            const cocokKeyword = item.judul.toLowerCase().includes(keywordSaatIni.toLowerCase());
+            const cocokKeyword = item.judul.toLowerCase().includes(keywordSaatIni.toLowerCase()) || 
+                                 item.kutipan.toLowerCase().includes(keywordSaatIni.toLowerCase());
             return cocokKategori && cocokKeyword;
         });
 
-        // Kosongkan wadah
+        // B. Kosongkan wadah
         wadahHeadline.innerHTML = '';
         wadahListBerita.innerHTML = '';
 
+        // C. Jika hasil filter kosong
         if (dataDisaring.length === 0) {
             wadahHeadline.innerHTML = `
                 <div class="empty-state">
@@ -700,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // 2. Berita Pertama jadikan Headline
+        // D. Berita Pertama (Index 0) jadikan Headline Besar
         const headlineData = dataDisaring[0];
         wadahHeadline.innerHTML = `
             <article class="news-card">
@@ -710,12 +711,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h2 class="headline-title">${headlineData.judul}</h2>
                     <p style="color: #666; font-size: 14px; margin-top:0;"><i class="far fa-calendar-alt"></i> ${headlineData.tgl}</p>
                     <p>${headlineData.kutipan}</p>
-                    <a href="#" style="color: var(--news-accent); font-weight: bold; text-decoration: none;">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    <a href="${headlineData.link}" style="color: var(--news-accent); font-weight: bold; text-decoration: none;">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
                 </div>
             </article>
         `;
 
-        // 3. Sisanya (Index 1 dst) jadikan Grid
+        // E. Sisanya (Index 1 dst) jadikan Grid (Kotak-kotak kecil)
         const listData = dataDisaring.slice(1);
         listData.forEach(item => {
             const card = document.createElement('article');
@@ -726,10 +727,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="berita-meta">
                         <i class="fas fa-tag"></i> ${item.nama_kategori} | <i class="far fa-calendar-alt"></i> ${item.tgl}
                     </div>
-                    <h3 class="berita-item-title"><a href="#">${item.judul}</a></h3>
-                    <p style="font-size: 13px; color: #555; margin-bottom: 0;">${item.kutipan.substring(0, 80)}...</p>
+                    <h3 class="berita-item-title"><a href="${item.link}">${item.judul}</a></h3>
+                    <p style="font-size: 13px; color: #555; margin-bottom: 0;">${item.kutipan.substring(0, 90)}...</p>
                     <div style="margin-top: auto; padding-top: 15px;">
-                        <a href="#" style="font-size:13px; color: var(--news-primary); font-weight:bold; text-decoration:none;">Baca <i class="fas fa-angle-right"></i></a>
+                        <a href="${item.link}" style="font-size:13px; color: var(--news-primary); font-weight:bold; text-decoration:none;">Baca <i class="fas fa-angle-right"></i></a>
                     </div>
                 </div>
             `;
@@ -737,28 +738,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Event Listener Pencarian
-    inputPencarian.addEventListener('input', (e) => {
-        keywordSaatIni = e.target.value;
-        renderBerita();
-    });
+    // === 5. EVENT LISTENER (TOMBOL KATEGORI & KOTAK PENCARIAN) ===
+    
+    // Pencarian Teks (Mengetik di kolom search)
+    if(inputPencarian) {
+        inputPencarian.addEventListener('input', (e) => {
+            keywordSaatIni = e.target.value;
+            renderBerita();
+        });
+    }
 
-    // Event Listener Filter Kategori
-    filterButns.forEach(btn => {
+    // Klik Tombol Kategori
+    newsFilterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Hapus class active dari semua tombol
-            filterButns.forEach(b => b.classList.remove('active'));
-            // Tambahkan class active ke tombol yang diklik
+            // Ubah tampilan tombol yang aktif
+            newsFilterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
+            // Set filter dan render ulang
             filterSaatIni = btn.getAttribute('data-kategori');
             renderBerita();
         });
     });
 
-    // Render pertama kali saat halaman dimuat
-    renderBerita();
-
+});
 </script>
 <script src="js/script.js"></script>
 </body>
