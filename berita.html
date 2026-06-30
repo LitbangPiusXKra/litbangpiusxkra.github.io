@@ -115,15 +115,15 @@
                     <p style="font-size: 13px; margin: 5px 0 0; color: #555;">Bacaan 1: Yer 31:31-34<br>Injil: Yoh 12:20-33</p>
                 </div>
 
-                <!-- Pengumuman Singkat -->
-                <div class="widget">
-                    <h3><i class="fas fa-bullhorn"></i> Pengumuman</h3>
-                    <ul class="sidebar-list">
-                        <li>Pendaftaran Baptis Bayi periode Mei sudah dibuka.</li>
-                        <li>Latihan Koor Paskah Selasa & Jumat pk 19.00.</li>
-                        <li>Aksi Puasa Pembangunan (APP) dikumpulkan maks 30 Maret.</li>
-                    </ul>
-                </div>
+                <!-- Widget Pengumuman (Otomatis dari Google Sheets Tab 'Pengumuman') -->
+				<div class="widget">
+				    <h3><i class="fas fa-bullhorn"></i> Pengumuman</h3>
+   					<ul class="sidebar-list" id="list-pengumuman">
+        				<li style="text-align: center; color: #888; font-style: italic;">
+          				  <i class="fas fa-spinner fa-spin"></i> Memuat pengumuman...
+        				</li>
+    				</ul>
+				</div>
 
                 <!-- Link Cepat -->
                 <div class="widget">
@@ -375,103 +375,99 @@
 	
 </style>
 
-
-
 <footer>© 2026 Paroki Santo Pius X Karanganyar</footer>
 
-<!-- SCRIPT UNTUK MENGAMBIL AGENDA (AUTO-FILTER TANGGAL LEWAT) -->
+<!-- SCRIPT UNTUK MENGAMBIL AGENDA & PENGUMUMAN DARI GOOGLE SHEETS -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. Masukkan ID Google Sheet Agenda di sini
-    const sheetIDAgenda = "13FhqeJEq11IJpAlkTxre0HOY_DRXPJervBRdMRAwr_o"; 
+    // === 1. ID GOOGLE SHEET UTAMA ===
+    const sheetID = "MASUKKAN_ID_SHEET_BOSS_DI_SINI"; 
     
-    const urlAgenda = `https://docs.google.com/spreadsheets/d/${sheetIDAgenda}/gviz/tq?tqx=out:json`;
-    const listAgenda = document.getElementById('list-agenda');
+    // URL Spesifik untuk memanggil masing-masing Tab (Perhatikan tulisan &sheet=...)
+    const urlAgenda = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Agenda`;
+    const urlPengumuman = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Pengumuman`;
 
-    // === MESIN CERDAS PEMBACA TANGGAL INDONESIA ===
+    const listAgenda = document.getElementById('list-agenda');
+    const listPengumuman = document.getElementById('list-pengumuman');
+
+    // === MESIN PEMBACA TANGGAL AGENDA ===
     function apakahSudahLewat(teksTanggal) {
-        // Daftar singkatan bulan bahasa Indonesia
         const bulanIndo = {
             'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'mei': 4, 'jun': 5,
             'jul': 6, 'agt': 7, 'sep': 8, 'okt': 9, 'nov': 10, 'des': 11
         };
-
         try {
-            // Bersihkan teks dan ambil angka serta 3 huruf pertama bulan
-            // Misal: "24 Mar" atau "24 Maret" -> ["24", "mar"]
             let parts = teksTanggal.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim().split(/\s+/);
-            if(parts.length < 2) return false; // Kalau format di Excel aneh, jangan disembunyikan
-
+            if(parts.length < 2) return false;
             let tgl = parseInt(parts[0]);
-            let teksBulan = parts[1].substring(0, 3);
-            let angkaBulan = bulanIndo[teksBulan];
-
+            let angkaBulan = bulanIndo[parts[1].substring(0, 3)];
             if(angkaBulan === undefined) return false;
-
-            // Set waktu batas akhir (Jam 23:59:59 di hari agenda tersebut)
-            let tahunSekarang = new Date().getFullYear();
-            let batasAkhirAgenda = new Date(tahunSekarang, angkaBulan, tgl, 23, 59, 59);
-            let waktuSekarang = new Date();
-
-            // Jika batas akhir agenda LEBIH KECIL dari waktu sekarang = SUDAH LEWAT
-            return batasAkhirAgenda < waktuSekarang;
-
-        } catch(e) {
-            return false; // Jika error baca, biarkan tetap tampil biar aman
-        }
+            let batasAkhirAgenda = new Date(new Date().getFullYear(), angkaBulan, tgl, 23, 59, 59);
+            return batasAkhirAgenda < new Date();
+        } catch(e) { return false; }
     }
 
+    // === 2. FUNGSI MENGAMBIL DATA AGENDA ===
     if(listAgenda) {
         fetch(urlAgenda)
-            .then(res => {
-                if (!res.ok) throw new Error("Gagal terhubung ke Google Sheets");
-                return res.text();
-            })
+            .then(res => res.text())
             .then(text => {
-                const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
-                const json = JSON.parse(jsonString);
-                
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 const rows = json.table.rows;
                 let htmlAgenda = '';
                 let jumlahTampil = 0;
 
-                for (let i = 1; i < rows.length; i++) {
+                for (let i = 1; i < rows.length; i++) { // Mulai dari baris ke-2
                     let baris = rows[i];
                     if (!baris.c) continue; 
 
                     let tanggal = baris.c[0] ? (baris.c[0].f || baris.c[0].v) : '';
                     let namaAgenda = baris.c[1] ? (baris.c[1].f || baris.c[1].v) : '';
 
-                    if (tanggal && namaAgenda) {
-                        
-                        // === FILTER CEK TANGGAL DI SINI ===
-                        // Jika belum lewat, maka rakit HTML-nya
-                        if (!apakahSudahLewat(tanggal)) {
-                            htmlAgenda += `
-                                <li>
-                                    <span class="tanggal-badge">${tanggal}</span> 
-                                    ${namaAgenda}
-                                </li>
-                            `;
-                            jumlahTampil++;
-                        }
-                        
+                    if (tanggal && namaAgenda && !apakahSudahLewat(tanggal)) {
+                        htmlAgenda += `<li><span class="tanggal-badge">${tanggal}</span> ${namaAgenda}</li>`;
+                        jumlahTampil++;
                     }
                 }
-
-                // Tampilkan ke layar
-                if(jumlahTampil > 0) {
-                    listAgenda.innerHTML = htmlAgenda;
-                } else {
-                    listAgenda.innerHTML = `<li style="text-align:center; color:#888;">Tidak ada agenda terdekat.</li>`;
-                }
+                listAgenda.innerHTML = jumlahTampil > 0 ? htmlAgenda : `<li style="text-align:center; color:#888;">Tidak ada agenda terdekat.</li>`;
             })
             .catch(err => {
-                console.error("Error Agenda:", err.message);
-                listAgenda.innerHTML = `<li style="text-align:center; color:red;">Gagal memuat agenda.</li>`;
+                console.error("Error Agenda:", err);
+                listAgenda.innerHTML = `<li style="color:red; text-align:center;">Gagal memuat agenda.</li>`;
             });
     }
+
+    // === 3. FUNGSI MENGAMBIL DATA PENGUMUMAN ===
+    if(listPengumuman) {
+        fetch(urlPengumuman)
+            .then(res => res.text())
+            .then(text => {
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                const rows = json.table.rows;
+                let htmlPengumuman = '';
+
+                // Mulai dari baris ke-2 (asumsi baris 1 adalah Judul 'Isi Pengumuman')
+                for (let i = 1; i < rows.length; i++) { 
+                    let baris = rows[i];
+                    if (!baris.c) continue;
+
+                    // Mengambil data dari Kolom A (index 0)
+                    let teksPengumuman = baris.c[0] ? (baris.c[0].f || baris.c[0].v) : '';
+
+                    if (teksPengumuman) {
+                        htmlPengumuman += `<li>${teksPengumuman}</li>`;
+                    }
+                }
+                
+                listPengumuman.innerHTML = htmlPengumuman !== '' ? htmlPengumuman : `<li style="text-align:center; color:#888;">Tidak ada pengumuman baru.</li>`;
+            })
+            .catch(err => {
+                console.error("Error Pengumuman:", err);
+                listPengumuman.innerHTML = `<li style="color:red; text-align:center;">Gagal memuat pengumuman.</li>`;
+            });
+    }
+
 });
 </script>
 	
