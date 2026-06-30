@@ -8,7 +8,7 @@
 <!-- Link CSS Bawaan Boss -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -108,18 +108,30 @@
                 </div>
 
                 <!-- Widget Kalender Liturgi Dinamis (Link ke Bahtera.net) -->
+				<!-- Widget Kalender Liturgi Dinamis PREMIUM -->
 				<a href="#" target="_blank" class="link-liturgi" id="link-bahtera">
-   				   <div class="widget widget-liturgi-dinamis">
-        				<h3 class="liturgi-title"><i class="fas fa-book-bible"></i> Liturgi Hari Ini</h3>
+    				<div class="widget-liturgi-premium">
         
-       				    <!-- Tanggal untuk tampilan teks -->
-        	 	     	<p id="tgl-liturgi-sekarang" class="tgl-teks">Memuat tanggal...</p>
-        				<p class="liturgi-desc">Klik kotak ini untuk melihat Warna Liturgi, Bacaan Injil, dan Renungan Harian hari ini.</p>
+       					 <div class="liturgi-header">
+            				<i class="fas fa-book-bible"></i>
+            				<span>LITURGI HARI INI</span>
+       					 </div>
         
-        		 		<div class="liturgi-aksi">
-            	  			<span class="btn-baca">Baca Renungan <i class="fas fa-arrow-right"></i></span>
-        				</div>
-    				</div>
+      					 <!-- Tanggal untuk tampilan teks -->
+       					 <h2 id="tgl-liturgi-sekarang" class="tgl-teks-premium">Memuat tanggal...</h2>
+        
+        				<div class="divider-emas"></div>
+        
+       						 <p class="liturgi-desc-premium">
+            					"Sabda-Mu adalah pelita bagi kakiku dan terang bagi jalanku."<br>
+           						 Klik untuk membaca Renungan & Injil hari ini.
+       						 </p>
+        
+        					<div class="liturgi-aksi-premium">
+           						 <span class="btn-baca-premium">BACA BACAAN HARI INI <i class="fas fa-arrow-right"></i></span>
+       						</div>
+
+   					 </div>
 				</a>
 
                 <!-- Widget Pengumuman (Otomatis dari Google Sheets Tab 'Pengumuman') -->
@@ -379,9 +391,100 @@
         .premium-title { font-size: 28px; }
         .premium-desc { font-size: 14px; }
     }
-	
-</style>
 
+/* ========================================================
+   GAYA WIDGET LITURGI PREMIUM (NAVY & GOLD)
+   ======================================================== */
+.link-liturgi {
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.widget-liturgi-premium {
+    background: linear-gradient(145deg, #0B1F3A 0%, #16325B 100%); /* Latar Navy Biru Malam */
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(197, 160, 89, 0.3); /* Bingkai Emas Tipis */
+    box-shadow: 0 10px 20px rgba(11, 31, 58, 0.15);
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+/* Judul Atas (Liturgi Hari Ini) */
+.liturgi-header {
+    color: #C5A059; /* Warna Emas */
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.liturgi-header i {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Teks Tanggal */
+.tgl-teks-premium {
+    font-family: 'Playfair Display', serif; /* Font Klasik/Sakral */
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff; /* Teks Putih Bersih */
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Garis Pembatas Emas */
+.divider-emas {
+    width: 50px;
+    height: 2px;
+    background-color: #C5A059;
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+/* Deskripsi / Kutipan Ayat */
+.liturgi-desc-premium {
+    font-size: 13px;
+    color: #94a3b8; /* Abu-abu kebiruan terang */
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Tombol Baca */
+.btn-baca-premium {
+    display: inline-block;
+    background-color: transparent;
+    color: #C5A059;
+    border: 1px solid #C5A059;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* EFEK SAAT MOUSE DIARAHKAN (HOVER) */
+.link-liturgi:hover .widget-liturgi-premium {
+    transform: translateY(-8px); /* Melayang naik */
+    box-shadow: 0 15px 30px rgba(11, 31, 58, 0.25);
+    border-color: #C5A059; /* Bingkai Emas menyala */
+}
+
+.link-liturgi:hover .btn-baca-premium {
+    background-color: #C5A059;
+    color: #0B1F3A; /* Teks tombol jadi gelap */
+}
+
+</style>
+	
 <footer>© 2026 Paroki Santo Pius X Karanganyar</footer>
 
 <!-- SCRIPT UNTUK MENGAMBIL AGENDA & PENGUMUMAN DARI GOOGLE SHEETS -->
