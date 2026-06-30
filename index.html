@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -51,80 +52,303 @@
 	</nav>
 </header>
 
-<section class="hero"></section>
+<!-- ==============================================
+     1. HERO BANNER (GAMBAR BESAR DEPAN)
+     ============================================== -->
 
-<section class="quick-menu">
 
-    <a href="jadwal.html" class="card">
-        <i class="fas fa-church"></i>
-        <h3>Jadwal Misa</h3>
-    </a>
-
-    <a href="berita.html" class="card">
-        <i class="fas fa-newspaper"></i>
-        <h3>Berita</h3>
-    </a>
-
-    <a href="galeri.html" class="card">
-        <i class="fas fa-image"></i>
-        <h3>Galeri</h3>
-    </a>
-
-    <a href="#" class="card">
-        <i class="fas fa-file-alt"></i>
-        <h3>Dokumen</h3>
-    </a>
-
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <span class="hero-subtitle">Selamat Datang di</span>
+        <h1 class="hero-title">Paroki Santo Pius X<br>Karanganyar</h1>
+        <div class="hero-desc-wrapper">
+			<p class="hero-desc">"Bertumbuh dalam Iman, Bersatu dalam Kasih, Melayani dengan Sukacita."</p>
+		</div>
+    </div>
 </section>
 
-<section class="jadwal">
-
-    <h2>Jadwal Misa</h2>
-
-    <table>
-
-        <tr>
-            <th>Hari</th>
-            <th>Jam</th>
-            <th>Keterangan</th>
-        </tr>
-
-        <tr>
-            <td>Sabtu</td>
-            <td>18.00 WIB</td>
-            <td>Misa Sore</td>
-        </tr>
-
-        <tr>
-            <td>Minggu</td>
-            <td>08.00 WIB</td>
-            <td>Misa Pagi</td>
-        </tr>
-
-    </table>
-
+<section class="sub-banner-section">
+    <img src="images/banner1.png" alt="Banner Spesial Paroki">
 </section>
 
-<section class="tentang fade-in"></section>
-<section class="galeri fade-in"></section>
-<section class="sejarah fade-in"></section>
-<section class="jadwal fade-in"></section>
+<!-- ==============================================
+     2. QUICK MENU (KOTAK-KOTAK MELAYANG)
+     ============================================== -->
+<div class="quick-menu-wrapper">
+    <div class="quick-menu-grid">
+        
+        <a href="jadwal.html" class="soft-card-menu">
+            <i class="fas fa-church"></i>
+            <span>Jadwal Misa</span>
+        </a>
 
-<section class="kontak">
+        <a href="berita.html" class="soft-card-menu">
+            <i class="far fa-newspaper"></i>
+            <span>Berita Paroki</span>
+        </a>
 
-    <h2>Alamat dan Kontak Paroki</h2>
+        <a href="galeri.html" class="soft-card-menu">
+            <i class="far fa-images"></i>
+            <span>Galeri Foto</span>
+        </a>
 
+        <a href="kontak.html" class="soft-card-menu">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>Kontak & Layanan</span>
+        </a>
+
+    </div>
+</div>
+
+<!-- ==============================================
+     3. SAMBUTAN / ABOUT SINGKAT
+     ============================================== -->
+<section class="welcome-section">
+    <h2>Satu Hati, Satu Jiwa</h2>
+    <div class="welcome-divider"></div>
     <p>
-        Jl. Lawu No.362, Cangakan,
-        Karanganyar, Jawa Tengah
+        Gereja Katolik Paroki Santo Pius X Karanganyar hadir sebagai komunitas umat beriman yang paguyuban dan inklusif. Kami mengundang Anda untuk bergabung, berdoa bersama, dan melayani sesama dalam terang kasih Kristus. Semoga damai sejahtera senantiasa menyertai Anda dan keluarga.
     </p>
-
-    <p>
-        WA : 081391390040
-    </p>
-
 </section>
 
+<style>
+/* ========================================================
+   GAYA BERANDA: SOFT, ELEGAN & PROFESIONAL
+   ======================================================== */
+
+/* ========================================================
+   GAYA UNTUK BANNER TAMBAHAN (35%)
+   ======================================================== */
+.sub-banner-section {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    margin-top: -100px; /* Efek melayang, menimpa gambar hero di atasnya */
+}
+
+.sub-banner-section img {
+    width: 35%; /* Ukuran 35% sesuai permintaan Boss */
+    border-radius: 16px; /* Sudut melengkung yang elegan */
+    box-shadow: 0 15px 35px rgba(11, 31, 58, 0.2); /* Bayangan soft */
+    border: 4px solid #ffffff; /* Bingkai putih tipis agar menonjol */
+    transition: transform 0.3s ease;
+}
+
+/* Animasi melayang tipis saat disentuh mouse */
+.sub-banner-section img:hover {
+    transform: translateY(-5px);
+}
+
+/* KHUSUS TAMPILAN HP */
+@media (max-width: 768px) {
+    .sub-banner-section {
+        margin-top: -60px;
+    }
+    .sub-banner-section img {
+        width: 85%; /* Di HP harus diperlebar, kalau 35% nanti tidak terbaca */
+    }
+}
+
+/* Latar belakang halaman beranda dibuat putih tulang/abu-abu sangat muda */
+body.home-page {
+    background-color: #f8fafc; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 1. HERO BANNER (Gambar Atas Besar) */
+.hero-section {
+    position: relative;
+    height: 85vh; /* Tinggi banner 85% dari layar */
+    min-height: 500px;
+    background-image: url('images/banner2.jpg'); /* GANTI DENGAN FOTO GEREJA BOSS */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Gradient overlay yang 'Soft' (Navy transparan ke gelap) */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, rgba(11, 31, 58, 0.3), rgba(11, 31, 58, 0.8));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    max-width: 800px;
+    padding: 0 20px;
+    margin-top: 50px; /* Jarak dari header */
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C5A059; /* Emas Elegan */
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.hero-title {
+	font-family: 'Playfair Display', serif; 
+	
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* ========================================================
+   ANIMASI TEKS BERJALAN (KIRI KE KANAN)
+   ======================================================== */
+
+/* Kotak pembungkus agar teks yang keluar layar tidak bikin scroll bocor */
+.hero-desc-wrapper {
+    width: 100vw; /* Membentang selebar layar penuh */
+    margin-left: -50vw; /* Trik agar membentang sempurna ke tepi layar */
+    left: 50%;
+    position: relative;
+    overflow: hidden; /* Sembunyikan teks kalau keluar batas */
+    margin-top: 45px; /* Membuat posisinya 'agak turun' dari judul utama */
+    padding: 20px 0;
+}
+
+/* Pengaturan Teksnya */
+.hero-desc {
+    font-size: 26px; /* Ukuran diperbesar (sebelumnya 18px) */
+    font-weight: 400;
+    font-style: italic; /* Cetak miring biar lebih elegan */
+    color: #F8D27B; /* (Opsional) Diberi warna agak keemasan biar mewah */
+    white-space: nowrap; /* Memaksa teks memanjang tidak turun ke bawah */
+    display: inline-block;
+    margin: 0;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Bayangan teks biar terbaca jelas */
+    
+    /* Perintah Menjalankan Animasi (15 detik, stabil, berulang terus) */
+    animation: jalanKeKanan 15s linear infinite;
+}
+
+/* Mesin Animasinya (Kiri ke Kanan) */
+@keyframes jalanKeKanan {
+    0% {
+        transform: translateX(100vw); /* Mulai dari luar layar sebelah kanan */
+    }
+    100% {
+        transform: translateX(-100vw); /* Berakhir di luar layar sebelah kiri */
+    }
+}
+
+/* KHUSUS TAMPILAN HP */
+@media (max-width: 768px) {
+    .hero-desc {
+        font-size: 20px; /* Di HP dikecilkan sedikit agar tidak terlalu raksasa */
+    }
+}
+
+/* 2. MENU CEPAT (Melayang Soft di Bawah Banner) */
+.quick-menu-wrapper {
+    position: relative;
+    z-index: 10;
+    max-width: 1100px;
+    margin: 40px auto 60px; /* Ubah ke 40px (positif) agar turun ke bawah banner tambahan */
+    padding: 0 15px;
+}
+
+.quick-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Kartu yang soft */
+.soft-card-menu {
+    background: #ffffff;
+    border-radius: 16px; /* Sudut sangat membulat */
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06); /* Bayangan sangat halus */
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.soft-card-menu i {
+    font-size: 32px;
+    color: #0B1F3A;
+    background: #f1f5f9;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+}
+
+.soft-card-menu span {
+    color: #0B1F3A;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Saat di-hover */
+.soft-card-menu:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(11, 31, 58, 0.1);
+}
+.soft-card-menu:hover i {
+    background: #0B1F3A;
+    color: #C5A059;
+    transform: scale(1.1);
+}
+
+/* 3. BAGIAN SAMBUTAN / TENTANG KAMI */
+.welcome-section {
+    padding: 80px 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.welcome-section h2 {
+    color: #0B1F3A;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.welcome-divider {
+    width: 60px;
+    height: 3px;
+    background: #C5A059;
+    margin: 0 auto 30px;
+    border-radius: 2px;
+}
+
+.welcome-section p {
+    color: #475569; /* Abu-abu teks yang soft di mata */
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* Responsif HP */
+@media (max-width: 768px) {
+    .hero-title { font-size: 32px; }
+    .hero-section { height: 70vh; }
+    .quick-menu-wrapper { margin-top: -30px; }
+}
+</style>
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
 </footer>
