@@ -9,6 +9,137 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+</head>
+
+<body>
+
+<header>
+	<div class="nav-overlay" id="navOverlay"></div>
+	<div class="header-left">
+        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="Logo">
+            <div>
+                <h1>Paroki Santo Pius X</h1>
+                <p>Karanganyar</p>
+            </div>
+        </div>
+    </div>
+	<nav id="mainNav">
+		<a href="index.html">Beranda</a>
+		<div class="dropdown">
+			<span class="dropdown-title">Tentang Kita <i class="fas fa-caret-down"></i></span>
+			<div class="dropdown-menu">
+				<a href="profil.html">Sambutan & Sejarah Gereja</a>
+				<a href="pgpm.html">Pengurus PGPM</a>
+				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
+			</div>
+		</div>
+		<a href="jadwal.html">Jadwal Misa</a>
+		<a href="berita.html" class="active">Berita</a>
+		<a href="galeri.html">Galeri</a>
+		<a href="kontak.html">Kontak</a>
+	</nav>
+</header>
+
+<section class="page-content" style="background-color: var(--news-bg); padding-bottom: 50px;">
+   
+   <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
+        
+		<!-- JUDUL ELEGAN MULAI -->
+		<div class="premium-header-container">
+			<span class="premium-subtitle">Kabar Suka Cita Paroki</span>
+			<h2 class="premium-title">Berita & Informasi Katolik</h2>
+    
+			<div class="premium-divider">
+				<span></span>
+				<i class="fas fa-cross"></i> <!-- Icon Salib FontAwesome -->
+				<span></span>
+			</div>
+    
+			<p class="premium-desc">
+				"Pergilah ke seluruh dunia, beritakanlah Injil kepada segala makhluk."<br>
+				(Mrk 16:15)
+			</p>
+		</div>
+		<!-- JUDUL ELEGAN SELESAI -->
+
+        <div class="berita-layout">
+            <!-- KOLOM KIRI (BERITA DINAMIS) -->
+            <main class="kolom-kiri">
+                
+                <!-- Filter & Search -->
+                <div class="tools-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="inputPencarian" placeholder="Cari judul berita atau kata kunci...">
+                    </div>
+                    <div class="filter-pills" id="wadahFilter">
+                        <button class="filter-btn active" data-kategori="all">Semua</button>
+                        <button class="filter-btn" data-kategori="vatikan">Vatikan</button>
+                        <button class="filter-btn" data-kategori="kas">KAS</button>
+                        <button class="filter-btn" data-kategori="katedral">Katedral Jakarta</button>
+                        <button class="filter-btn" data-kategori="kevikepan">Kevikepan Surakarta</button>
+                        <button class="filter-btn" data-kategori="omk">OMK</button>
+                        <button class="filter-btn" data-kategori="wkri">WKRI</button>
+                    </div>
+                </div>
+
+                <!-- Kontainer Dinamis untuk Headline -->
+                <div id="wadahHeadline"></div>
+
+                <!-- Kontainer Dinamis untuk List Berita (Grid) -->
+                <div class="berita-grid" id="wadahListBerita"></div>
+
+            </main>
+
+            <!-- KOLOM KANAN (SIDEBAR TETAP) -->
+            <aside class="kolom-kanan">
+                <!-- Agenda Gereja -->
+                <div class="widget">
+                    <h3><i class="far fa-calendar-check"></i> Agenda Gereja</h3>
+                    <!-- Beri ID 'list-agenda' pada tag UL ini -->
+					<ul class="sidebar-list" id="list-agenda">
+						<!-- Tulisan ini akan muncul sementara saat data sedang diambil dari Google -->
+						<li style="text-align: center; color: #888; font-style: italic;">
+							<i class="fas fa-spinner fa-spin"></i> Memuat agenda...
+						</li>
+					</ul>
+                </div>
+
+                <!-- Kalender Liturgi -->
+                <div class="widget" style="background-color: #fce4ec; border-left: 4px solid #d81b60;">
+                    <h3 style="border-bottom-color: #d81b60; color:#d81b60;"><i class="fas fa-book-bible"></i> Liturgi Hari Ini</h3>
+                    <p style="font-size: 14px; margin: 0 0 10px;"><strong>Minggu Prapaskah V</strong></p>
+                    <p style="font-size: 13px; margin: 0; color: #555;">Warna Liturgi: <strong>Ungu</strong></p>
+                    <p style="font-size: 13px; margin: 5px 0 0; color: #555;">Bacaan 1: Yer 31:31-34<br>Injil: Yoh 12:20-33</p>
+                </div>
+
+                <!-- Pengumuman Singkat -->
+                <div class="widget">
+                    <h3><i class="fas fa-bullhorn"></i> Pengumuman</h3>
+                    <ul class="sidebar-list">
+                        <li>Pendaftaran Baptis Bayi periode Mei sudah dibuka.</li>
+                        <li>Latihan Koor Paskah Selasa & Jumat pk 19.00.</li>
+                        <li>Aksi Puasa Pembangunan (APP) dikumpulkan maks 30 Maret.</li>
+                    </ul>
+                </div>
+
+                <!-- Link Cepat -->
+                <div class="widget">
+                    <h3><i class="fas fa-link"></i> Link Cepat</h3>
+                    <div class="quick-links">
+                        <a href="jadwal.html">Jadwal Misa</a>
+                        <a href="pgpm.html">Profil PGPM</a>
+                        <a href="galeri.html">Galeri Foto</a>
+                        <a href="kontak.html">Kontak</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
 <!-- CSS KHUSUS HALAMAN BERITA -->
 <style>
     :root {
@@ -243,138 +374,73 @@
     }
 	
 </style>
-</head>
 
-<body>
 
-<header>
-	<div class="nav-overlay" id="navOverlay"></div>
-	<div class="header-left">
-        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-        <div class="logo-area">
-            <img src="images/logo.png" alt="Logo">
-            <div>
-                <h1>Paroki Santo Pius X</h1>
-                <p>Karanganyar</p>
-            </div>
-        </div>
-    </div>
-	<nav id="mainNav">
-		<a href="index.html">Beranda</a>
-		<div class="dropdown">
-			<span class="dropdown-title">Tentang Kita <i class="fas fa-caret-down"></i></span>
-			<div class="dropdown-menu">
-				<a href="profil.html">Sambutan & Sejarah Gereja</a>
-				<a href="pgpm.html">Pengurus PGPM</a>
-				<a href="dewan-harian.html">Dewan Pastoral Paroki</a>
-			</div>
-		</div>
-		<a href="jadwal.html">Jadwal Misa</a>
-		<a href="berita.html" class="active">Berita</a>
-		<a href="galeri.html">Galeri</a>
-		<a href="kontak.html">Kontak</a>
-	</nav>
-</header>
-
-<section class="page-content" style="background-color: var(--news-bg); padding-bottom: 50px;">
-   
-   <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
-        
-		<!-- JUDUL ELEGAN MULAI -->
-		<div class="premium-header-container">
-			<span class="premium-subtitle">Kabar Suka Cita Paroki</span>
-			<h2 class="premium-title">Berita & Informasi Katolik</h2>
-    
-			<div class="premium-divider">
-				<span></span>
-				<i class="fas fa-cross"></i> <!-- Icon Salib FontAwesome -->
-				<span></span>
-			</div>
-    
-			<p class="premium-desc">
-				"Pergilah ke seluruh dunia, beritakanlah Injil kepada segala makhluk."<br>
-				(Mrk 16:15)
-			</p>
-		</div>
-		<!-- JUDUL ELEGAN SELESAI -->
-
-        <div class="berita-layout">
-            <!-- KOLOM KIRI (BERITA DINAMIS) -->
-            <main class="kolom-kiri">
-                
-                <!-- Filter & Search -->
-                <div class="tools-container">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="inputPencarian" placeholder="Cari judul berita atau kata kunci...">
-                    </div>
-                    <div class="filter-pills" id="wadahFilter">
-                        <button class="filter-btn active" data-kategori="all">Semua</button>
-                        <button class="filter-btn" data-kategori="vatikan">Vatikan</button>
-                        <button class="filter-btn" data-kategori="kas">KAS</button>
-                        <button class="filter-btn" data-kategori="katedral">Katedral Jakarta</button>
-                        <button class="filter-btn" data-kategori="kevikepan">Kevikepan Surakarta</button>
-                        <button class="filter-btn" data-kategori="omk">OMK</button>
-                        <button class="filter-btn" data-kategori="wkri">WKRI</button>
-                    </div>
-                </div>
-
-                <!-- Kontainer Dinamis untuk Headline -->
-                <div id="wadahHeadline"></div>
-
-                <!-- Kontainer Dinamis untuk List Berita (Grid) -->
-                <div class="berita-grid" id="wadahListBerita"></div>
-
-            </main>
-
-            <!-- KOLOM KANAN (SIDEBAR TETAP) -->
-            <aside class="kolom-kanan">
-                <!-- Agenda Gereja -->
-                <div class="widget">
-                    <h3><i class="far fa-calendar-check"></i> Agenda Gereja</h3>
-                    <ul class="sidebar-list">
-                        <li><span class="tanggal-badge">24 Mar</span> Misa Minggu Palma</li>
-                        <li><span class="tanggal-badge">28 Mar</span> Kamis Putih (18.00)</li>
-                        <li><span class="tanggal-badge">29 Mar</span> Ibadat Jumat Agung (15.00)</li>
-                        <li><span class="tanggal-badge">31 Mar</span> Misa Raya Paskah</li>
-                    </ul>
-                </div>
-
-                <!-- Kalender Liturgi -->
-                <div class="widget" style="background-color: #fce4ec; border-left: 4px solid #d81b60;">
-                    <h3 style="border-bottom-color: #d81b60; color:#d81b60;"><i class="fas fa-book-bible"></i> Liturgi Hari Ini</h3>
-                    <p style="font-size: 14px; margin: 0 0 10px;"><strong>Minggu Prapaskah V</strong></p>
-                    <p style="font-size: 13px; margin: 0; color: #555;">Warna Liturgi: <strong>Ungu</strong></p>
-                    <p style="font-size: 13px; margin: 5px 0 0; color: #555;">Bacaan 1: Yer 31:31-34<br>Injil: Yoh 12:20-33</p>
-                </div>
-
-                <!-- Pengumuman Singkat -->
-                <div class="widget">
-                    <h3><i class="fas fa-bullhorn"></i> Pengumuman</h3>
-                    <ul class="sidebar-list">
-                        <li>Pendaftaran Baptis Bayi periode Mei sudah dibuka.</li>
-                        <li>Latihan Koor Paskah Selasa & Jumat pk 19.00.</li>
-                        <li>Aksi Puasa Pembangunan (APP) dikumpulkan maks 30 Maret.</li>
-                    </ul>
-                </div>
-
-                <!-- Link Cepat -->
-                <div class="widget">
-                    <h3><i class="fas fa-link"></i> Link Cepat</h3>
-                    <div class="quick-links">
-                        <a href="jadwal.html">Jadwal Misa</a>
-                        <a href="pgpm.html">Profil PGPM</a>
-                        <a href="galeri.html">Galeri Foto</a>
-                        <a href="kontak.html">Kontak</a>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </div>
-</section>
 
 <footer>© 2026 Paroki Santo Pius X Karanganyar</footer>
 
+<!-- SCRIPT UNTUK MENGAMBIL AGENDA DARI GOOGLE SHEETS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Masukkan ID Google Sheet Agenda di sini
+    const sheetIDAgenda = "https://docs.google.com/spreadsheets/d/13FhqeJEq11IJpAlkTxre0HOY_DRXPJervBRdMRAwr_o/edit?usp=sharing"; 
+    
+    // URL ajaib Google Visualisation API
+    const urlAgenda = `https://docs.google.com/spreadsheets/d/${sheetIDAgenda}/gviz/tq?tqx=out:json`;
+
+    const listAgenda = document.getElementById('list-agenda');
+
+    if(listAgenda) {
+        fetch(urlAgenda)
+            .then(res => {
+                if (!res.ok) throw new Error("Gagal terhubung ke Google Sheets");
+                return res.text();
+            })
+            .then(text => {
+                // Memotong teks bawaan google agar murni jadi format JSON
+                const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+                const json = JSON.parse(jsonString);
+                
+                const rows = json.table.rows;
+                let htmlAgenda = '';
+
+                // Mulai membaca baris per baris (Mulai dari baris ke-2, karena baris 1 biasanya judul kolom)
+                // Jika baris 1 di sheet boss bukan judul tapi langsung data, ganti let i = 1 menjadi let i = 0
+                for (let i = 1; i < rows.length; i++) {
+                    let baris = rows[i];
+                    if (!baris.c) continue; // Lewati jika baris kosong
+
+                    // Mengambil nilai sel, jika kosong diubah jadi teks kosong ''
+                    let tanggal = baris.c[0] ? (baris.c[0].f || baris.c[0].v) : '';
+                    let namaAgenda = baris.c[1] ? (baris.c[1].f || baris.c[1].v) : '';
+
+                    // Jika dua-duanya ada isinya, buatkan HTML-nya
+                    if (tanggal && namaAgenda) {
+                        htmlAgenda += `
+                            <li>
+                                <span class="tanggal-badge">${tanggal}</span> 
+                                ${namaAgenda}
+                            </li>
+                        `;
+                    }
+                }
+
+                // Masukkan hasil rakitan HTML ke dalam layar
+                if(htmlAgenda !== '') {
+                    listAgenda.innerHTML = htmlAgenda;
+                } else {
+                    listAgenda.innerHTML = `<li style="text-align:center; color:#888;">Belum ada agenda bulan ini.</li>`;
+                }
+            })
+            .catch(err => {
+                console.error("Error Agenda:", err.message);
+                listAgenda.innerHTML = `<li style="text-align:center; color:red;">Gagal memuat agenda.</li>`;
+            });
+    }
+});
+</script>
+	
 <!-- SCRIPT UNTUK LOGIKA BERITA DINAMIS -->
 <script>
     // 1. DATABASE DUMMY (Persiapan untuk MySQL/Google Sheets)
