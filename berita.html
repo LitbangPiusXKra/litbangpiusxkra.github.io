@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Mulai membaca baris per baris (Mulai dari baris ke-2, karena baris 1 biasanya judul kolom)
                 // Jika baris 1 di sheet boss bukan judul tapi langsung data, ganti let i = 1 menjadi let i = 0
-                for (let i = 1; i < rows.length; i++) {
+                for (let i = 0; i < rows.length; i++) {
                     let baris = rows[i];
                     if (!baris.c) continue; // Lewati jika baris kosong
 
