@@ -705,7 +705,6 @@ body.home-page {
     font-size: 14px;
     border: 1px dotted #ccc;
     color: #333;
-	vertical-align: left; /* Agar teks pas di tengah secara vertikal (atas-bawah) */
 }
 
 /* Warna belang-belang pada baris */
@@ -814,7 +813,10 @@ async function muatDataNovena() {
                 const tanggal = kolom[0] ? kolom[0].replace(/['"]+/g, '') : '';
                 const dipimpin = kolom[1] ? kolom[1].replace(/['"]+/g, '') : '';
 
-                htmlTabel += `<tr><td>${tanggal}</td><td>${dipimpin}</td></tr>`;
+                htmlTabel += `<tr>
+                <td style="text-align: center; width: 35%;">${tanggal}</td>
+                <td style="text-align: left !important; padding-left: 15px; width: 65%;">${dipimpin}</td>
+              </tr>`;
             }
         }
 
