@@ -182,55 +182,42 @@
         </div>
     </div>
 
-<!-- ================= POINT 4: GALERI BERJALAN (Bawah Penuh) ================= -->
+	<!-- ================= POINT 4: GALERI SLIDER (2 per 2 di Tengah) ================= -->
     <div class="kegiatan-full-wrapper">
         <h3 class="kegiatan-title">Kegiatan Seputar HUT ke-69</h3>
         
-        <div class="marquee-container">
-            <div class="marquee-track">
-                <!-- GAMBAR 1 SD 4 -->
-                <!-- Perhatikan atribut 'data-title', 'data-desc', dan 'data-link'. Ini untuk memunculkan detail saat di-klik -->
-                
-                <img src="images/donor.jpg" class="kegiatan-img" 
-                     data-title="Donor Darah" 
-                     data-desc="Mari berbagi darah, berbagi kehidupan. Pelaksanaan: Minggu, 28 Juni 2026." 
-                     data-link="LINK_PENDAFTARAN_1">
-                     
-                <img src="images/mewarna.jpg" class="kegiatan-img" 
-                     data-title="Mewarnai PIA" 
-                     data-desc="Lomba mewarnai untuk anak-anak PIA. Ekspresikan imajinasimu dengan ceria." 
-                     data-link="https://bit.ly/mewarnaiPIA">
-                     
-                <img src="images/akubisa.jpg" class="kegiatan-img" 
-                     data-title="Lomba Aku Bisa" 
-                     data-desc="Lomba kreativitas anak. Tunjukkan prestasimu dan raih kemenangan." 
-                     data-link="https://bit.ly/AkuBisaPiusan2026">
-                     
-                <img src="images/merias.jpg" class="kegiatan-img" 
-                     data-title="Merias Wajah" 
-                     data-desc="Lomba merias wajah. Tampil cantik, tebarkan pesona cinta." 
-                     data-link="https://bit.ly/meriaswajahdanmenghiastumpeng">
-
-                <!-- COPY PASTE GAMBAR 1 SD 4 SEKALI LAGI DI BAWAH INI UNTUK EFEK SCROLL TANPA PUTUS -->
-                <img src="images/donor.jpg" class="kegiatan-img" data-title="Donor Darah" data-desc="Mari berbagi darah, berbagi kehidupan. Pelaksanaan: Minggu, 28 Juni 2026." data-link="LINK_PENDAFTARAN_1">
-                <img src="images/mewarna.jpg" class="kegiatan-img" data-title="Mewarnai PIA" data-desc="Halloo anak-anak Se Paroki Pius X Karanganyar🙃
+        <div id="carousel-kegiatan" class="carousel-container">
+            <!-- MASUKKAN GAMBAR ASLI BOSS DI SINI (TIDAK PERLU DI-DOUBLE) -->
+            <!-- Tambahkan class 'slide-item' di setiap gambar -->
+            
+            <img src="images/donor.jpg" class="kegiatan-img slide-item" 
+                 data-title="Donor Darah" data-desc="Mari berbagi darah, berbagi kehidupan. Pelaksanaan: Minggu, 28 Juni 2026." data-link="LINK_1">
+                 
+            <img src="images/mewarna.jpg" class="kegiatan-img slide-item" 
+                 data-title="Mewarnai PIA" data-desc="Halloo anak-anak Se Paroki Pius X Karanganyar🙃
 
 Yuk rame-rame ikut lomba mewarnai dalam rangka Pesta Nama Dan Ulang Tahun Paroki ke 69
 
 Mari ramaikan lomba ini ya.
 Ajak teman² ikut lomba ini, biar seru githu.." data-link="https://bit.ly/mewarnaiPIA">
-                <img src="images/akubisa.jpg" class="kegiatan-img" data-title="Lomba Aku Bisa" data-desc="Hai Remaja misinoner Paroki St Pius X Karanganyar
+                 
+            <img src="images/akubisa.jpg" class="kegiatan-img slide-item" 
+                 data-title="Lomba Aku Bisa" data-desc="Hai Remaja misinoner Paroki St Pius X Karanganyar
 
 Panitia Piusan mau ajak kamu bermain, belajar dan pastinya dapat hadiah gaes.
 
-Yukkk ikutan lomba " Aku Bisa",  Buktikan bahwa kamu adalah Remaja Katolik yang misinoner, cerdas. 
+Yukkk ikutan lomba 'Aku Bisa',  Buktikan bahwa kamu adalah Remaja Katolik yang misinoner, cerdas. 
 Siapa pun boleh ikut lomba ini. Apalagi kamu Calon Penerima Sakramen Penguatan, yukkk ikutan. Wajib.." data-link="https://bit.ly/AkuBisaPiusan2026">
-                <img src="images/merias.jpg" class="kegiatan-img" data-title="Merias Wajah" data-desc="Halooo Keluarga Katolik Paroki St Pius X
+                 
+            <img src="images/merias.jpg" class="kegiatan-img slide-item" 
+                 data-title="Merias Wajah" data-desc="Halooo Keluarga Katolik Paroki St Pius X
 
 Ikuti lomba merias pasangan  dalam rangka memeriahkan Ulang Tahun Paroki ke -69
 
 Per lingkungan wajib mengirimkan perwakilan ya. Biar semua terlibat Dan seru. ." data-link="https://bit.ly/meriaswajahdanmenghiastumpeng">
-            </div>
+
+            <!-- Jika besok Boss mau tambah gambar ke-5, cukup taruh di bawah sini -->
+            <!-- <img src="LINK_GAMBAR_5.jpg" class="kegiatan-img slide-item" ...> -->
         </div>
     </div>
 	<!-- STRUKTUR POPUP KETIKA GAMBAR DI KLIK -->
@@ -786,9 +773,9 @@ body.home-page {
 .tabel-body td:nth-child(1) { width: 35%; }
 .tabel-body td:nth-child(2) { width: 65%; }
 
-/* --- POINT 4: CSS GALERI BERJALAN --- */
+/* --- POINT 4: CSS GALERI SLIDER BARU --- */
 .kegiatan-full-wrapper {
-    grid-column: 1 / -1; /* Ini kode sakti agar membentang penuh melewati kolom kiri & kanan */
+    grid-column: 1 / -1; 
     margin-top: 40px;
     padding-top: 20px;
     border-top: 2px dashed #ccc;
@@ -802,46 +789,44 @@ body.home-page {
     margin-bottom: 20px;
 }
 
-/* Container yang membatasi area scroll */
-.marquee-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    background: #fdfdfd;
-    padding: 15px 0;
-}
-
-/* Track yang bergerak dari kanan ke kiri */
-.marquee-track {
+/* Wadah di tengah untuk gambar */
+.carousel-container {
     display: flex;
-    gap: 20px;
-    width: max-content;
-    /* Kecepatan scroll, ubah angka 20s jika ingin lebih lambat/cepat */
-    animation: scrollMarquee 25s linear infinite; 
+    justify-content: center; /* Memaksa gambar selalu di tengah layar */
+    gap: 30px;
+    min-height: 260px; /* Menjaga tinggi wadah agar layout tidak lompat-lompat */
+    align-items: center;
 }
 
-/* Kalau mouse diarahkan ke gambar, jalannya berhenti biar gampang di-klik */
-.marquee-container:hover .marquee-track {
-    animation-play-state: paused; 
-}
-
-.kegiatan-img {
-    height: 250px; /* Tinggi gambar */
+/* Menyembunyikan gambar secara default, dimunculkan lewat JS */
+.slide-item {
+    display: none; 
+    height: 250px; 
     width: auto;
     border-radius: 10px;
-    cursor: pointer; /* Kursor berubah jadi tangan saat di-hover */
+    cursor: pointer; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
+    /* Transisi halus untuk semua perubahan */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; 
+    animation: fadeMasuk 0.8s ease-in-out forwards; 
 }
 
-.kegiatan-img:hover {
-    transform: scale(1.05); /* Membesar sedikit saat di-hover */
+.slide-item:hover {
+    transform: translateY(-12px) scale(1.03); /* Terangkat ke atas + membesar sedikit */
+    box-shadow: 0 20px 35px rgba(0,0,0,0.3);  /* Bayangan makin tebal, kesan melayang */
+}
 }
 
-/* Keyframes untuk efek berjalan */
-@keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Bergeser 50% karena gambarnya kita double/kopi paste 2x di HTML */
+/* Efek transisi saat gambar berganti */
+@keyframes fadeMasuk {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+/* Responsif untuk HP (Muncul 1 per 1 agar tidak kekecilan) */
+@media (max-width: 768px) {
+    .slide-item { height: 200px; }
 }
 
 /* --- CSS POPUP (MODAL BOX) --- */
@@ -1110,7 +1095,52 @@ window.addEventListener("click", function(event) {
         popup.style.display = "none";
     }
 });
-	
+
+// --- SCRIPT POINT 4 BARU: SLIDER 2 GAMBAR BERGANTIAN ---
+
+const daftarGambar = document.querySelectorAll('.slide-item');
+let indeksSaatIni = 0;
+
+// Fungsi untuk mengecek apakah dibuka di HP atau Laptop
+function getJumlahTampil() {
+    // Kalau di layar HP (lebar < 768px), tampilkan 1 gambar saja biar jelas
+    // Kalau di Laptop, tampilkan 2 gambar sekaligus
+    return window.innerWidth <= 768 ? 1 : 2;
+}
+
+function putarSlider() {
+    const jumlahTampil = getJumlahTampil();
+
+    // 1. Sembunyikan semua gambar dulu
+    daftarGambar.forEach(img => {
+        img.style.display = 'none';
+    });
+
+    // 2. Tampilkan gambar sesuai jatahnya (misal 2 gambar)
+    for (let i = 0; i < jumlahTampil; i++) {
+        let indeksTarget = indeksSaatIni + i;
+        
+        // Cek agar tidak error jika jumlah gambar ganjil (misal sisa 1)
+        if (indeksTarget < daftarGambar.length) {
+            daftarGambar[indeksTarget].style.display = 'block';
+        }
+    }
+
+    // 3. Majukan indeks untuk putaran berikutnya
+    indeksSaatIni += jumlahTampil;
+
+    // 4. Kalau sudah mentok sampai gambar terakhir, kembali lagi ke gambar pertama (0)
+    if (indeksSaatIni >= daftarGambar.length) {
+        indeksSaatIni = 0;
+    }
+}
+
+// Jalankan pertama kali saat web dibuka
+putarSlider();
+
+// Setel agar berganti otomatis setiap 4 detik (4000 milidetik)
+setInterval(putarSlider, 4000); 
+
 </script>
 	
 <script src="js/script.js"></script>
