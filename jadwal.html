@@ -229,7 +229,7 @@
 =========================================== -->
 
 <!-- ==========================================
-    AMBIL DATA JADWAL MISA BERURUTAN (QUEUE) DARI SPREADSHEET (Misa2)
+    AMBIL DATA JADWAL MISA BERURUTAN (QUEUE) - VERSI REVISI FINAL
 =========================================== -->
 
 <script>
@@ -259,35 +259,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const kolom = barisAktif.split(pemisah);
 
-                const tanggalRaw = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : ''; 
+                let tanggalRaw = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : ''; 
                 const jamRaw = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';     
                 const ket = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
                 const lokasi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
 
-                // Pastikan ada tanggal dan ada karakter ':' di jam
-                if (tanggalRaw && jamRaw && jamRaw.includes(':')) {
+                if (tanggalRaw && jamRaw) {
                     
-                    // --- INI OBATNYA BOSS! ---
-                    // Memecah jam dan memastikan selalu 2 digit (misal: 5 jadi 05)
-                    let [jamNum, menitNum] = jamRaw.split(':');
-                    jamNum = jamNum.padStart(2, '0');
-                    menitNum = menitNum.padStart(2, '0');
+                    // --- PERBAIKAN 1: Ekstrak Angka Paksa (Anti Error AM/PM/Detik Sheets) ---
+                    // Mengambil hanya 2 angka di depan dan 2 angka di belakang titik dua
+                    const waktuCocok = jamRaw.match(/(\d{1,2}):(\d{1,2})/);
                     
-                    // Format baku yang tidak akan ditolak browser: YYYY-MM-DDTHH:MM:00
-                    const stringWaktu = `${tanggalRaw}T${jamNum}:${menitNum}:00`;
-                    const waktuPasti = new Date(stringWaktu);
+                    if (waktuCocok) {
+                        let jamNum = waktuCocok[1];
+                        let menitNum = waktuCocok[2];
 
-                    // Cek lagi apakah setelah digabung datanya valid
-                    if (!isNaN(waktuPasti.getTime())) {
-                        const namaHari = NAMA_HARI[waktuPasti.getDay()]; // Ambil nama hari otomatis
+                        // Jika terbaca PM dari sheets (misal 5:25 PM -> diubah ke 17:25)
+                        if (jamRaw.toLowerCase().includes('pm') && parseInt(jamNum) < 12) {
+                            jamNum = (parseInt(jamNum) + 12).toString();
+                        }
+                        
+                        jamNum = jamNum.padStart(2, '0');
+                        menitNum = menitNum.padStart(2, '0');
 
-                        DATA_SEMUA_MISA.push({
-                            waktuAsli: waktuPasti, 
-                            hariTeks: namaHari,    
-                            jamTeks: `${jamNum}:${menitNum}`, // Tampilnya akan rapi: 05:25
-                            ket: ket,
-                            lokasi: lokasi
-                        });
+                        // Jaga-jaga jika sheets mengubah format jadi DD/MM/YYYY, kembalikan ke YYYY-MM-DD
+                        tanggalRaw = tanggalRaw.replace(/\//g, '-');
+
+                        const stringWaktu = `${tanggalRaw}T${jamNum}:${menitNum}:00`;
+                        const waktuPasti = new Date(stringWaktu);
+
+                        // Masukkan ke database jika tanggalnya valid
+                        if (!isNaN(waktuPasti.getTime())) {
+                            const namaHari = NAMA_HARI[waktuPasti.getDay()]; 
+
+                            DATA_SEMUA_MISA.push({
+                                waktuAsli: waktuPasti, 
+                                hariTeks: namaHari,    
+                                jamTeks: `${jamNum}:${menitNum}`, 
+                                ket: ket,
+                                lokasi: lokasi
+                            });
+                        }
                     }
                 }
             }
@@ -305,17 +317,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
 
-    // === 3. LOGIKA ANTRIAN: AMBIL 3 TERATAS YANG BELUM KADALUWARSA ===
+    // === 3. LOGIKA ANTRIAN REVISI (PASTIKAN URUT & AMBIL 3 TERATAS) ===
     function get3AntrianTeratas() {
         const sekarang = new Date().getTime();
         
-        // Buang jadwal yang sudah lewat 60 menit
-        const jadwalAktif = DATA_SEMUA_MISA.filter(item => {
+        // A. Buang jadwal yang sudah lewat 60 menit
+        let jadwalAktif = DATA_SEMUA_MISA.filter(item => {
             return item.waktuAsli.getTime() > (sekarang - 3600000);
         });
 
+        // B. --- PERBAIKAN 2: URUTKAN PAKSA BERDASARKAN WAKTU MATEMATIKA ---
+        // Ini memastikan jadwal 5:25 PASTI muncul sebelum 18:00 di hari yang sama
+        jadwalAktif.sort((a, b) => a.waktuAsli.getTime() - b.waktuAsli.getTime());
+
+        // C. Ambil 3 kartu teratas
         return jadwalAktif.slice(0, 3);
     }
+
 
     // === 4. FUNGSI RENDER HTML ===
     function renderMisa() {
