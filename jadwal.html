@@ -229,37 +229,77 @@
 =========================================== -->
 
 <!-- ==========================================
-    AMBIL DATA JADWAL MISA AKTIVE 
+    AMBIL DATA JADWAL MISA AKTIVE DARI SPREADSHEETS (Misa2)
 =========================================== -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
-    // === 1. DATABASE JADWAL MINGGUAN ===
-    const JADWAL_MISA = [
-        { hari: 'Senin', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Selasa', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Rabu', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Kamis', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Jumat', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Jumat', jam: '18:00', ket: 'Misa Jumat Pertama', lokasi: 'Gereja Pusat' },
-        { hari: 'Sabtu', jam: '05:25', ket: 'Misa Harian', lokasi: 'Gereja Pusat' },
-        { hari: 'Sabtu', jam: '18:00', ket: 'Misa Sabtu Sore', lokasi: 'Gereja Pusat' },
-        { hari: 'Minggu', jam: '07:00', ket: 'Misa Minggu Pagi', lokasi: 'Gereja Pusat' },
-        { hari: 'Minggu', jam: '09:30', ket: 'Misa Minggu Siang', lokasi: 'Gereja Pusat' },
-        { hari: 'Minggu', jam: '17:00', ket: 'Misa Minggu Sore', lokasi: 'Gereja Pusat' },
-    ];
+    // === 1. MASUKKAN LINK CSV SHEET "Misa2" DI SINI ===
+    const urlCSVMisa2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=542087165&single=true&output=csv";
+    
+    let JADWAL_MISA = []; // Kosongkan, nanti diisi otomatis dari Spreadsheet
 
     const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
     const wadah = document.getElementById('wadahMisaBerikutnya');
 
-    // === 2. FUNGSI MENCARI 3 MISA TERDEKAT ===
+    // === 2. AMBIL DATA DARI GOOGLE SHEETS ===
+    fetch(urlCSVMisa2)
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal mengambil data Misa Berikutnya");
+            return response.text();
+        })
+        .then(dataText => {
+            const barisData = dataText.replace(/\r/g, '').split('\n');
+            const header = barisData[0] || '';
+            const pemisah = header.includes(';') ? ';' : ','; // Deteksi pemisah csv
+
+            // Mulai loop dari baris 1 (melewati judul kolom)
+            for (let i = 1; i < barisData.length; i++) {
+                const barisAktif = barisData[i].trim();
+                if (barisAktif === '') continue;
+
+                const kolom = barisAktif.split(pemisah);
+
+                // Ambil dan bersihkan data
+                let hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
+                const jam = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
+                const ket = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
+                const lokasi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
+
+                if (hari && jam) {
+                    // Pastikan huruf pertama hari huruf besar (kapital) agar cocok dengan sistem
+                    hari = hari.charAt(0).toUpperCase() + hari.slice(1).toLowerCase();
+                    
+                    // Masukkan ke dalam array JADWAL_MISA
+                    JADWAL_MISA.push({ hari: hari, jam: jam, ket: ket, lokasi: lokasi });
+                }
+            }
+
+            // SETELAH DATA BERHASIL DIAMBIL, JALANKAN FUNGSI COUNTDOWN
+            if (JADWAL_MISA.length > 0) {
+                renderMisa();
+                setInterval(updateCountdown, 1000);
+            } else {
+                wadah.innerHTML = '<p style="text-align:center; padding:20px;">Belum ada jadwal misa yang diinput.</p>';
+            }
+        })
+        .catch(error => {
+            console.error("Detail Error Misa Berikutnya:", error);
+            wadah.innerHTML = '<p style="text-align:center; padding:20px; color:#e74c3c;">Gagal memuat jadwal Misa terdekat.</p>';
+        });
+
+
+    // === 3. FUNGSI MENCARI 3 MISA TERDEKAT ===
     function get3MisaTerdekat() {
         const sekarang = new Date();
         let semuaJadwal = [];
 
         JADWAL_MISA.forEach(item => {
             const targetHari = NAMA_HARI.indexOf(item.hari);
+            // Amankan jika salah ketik jam (misal tidak pakai : )
+            if (!item.jam.includes(':')) return; 
+            
             const [jam, menit] = item.jam.split(':').map(Number);
 
             for (let i = 0; i < 2; i++) {
@@ -281,10 +321,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return semuaJadwal.sort((a,b) => a.datetime - b.datetime).slice(0, 3);
     }
 
-    // === 3. FUNGSI FORMAT COUNTDOWN ===
+    // === 4. FUNGSI FORMAT COUNTDOWN ===
     function formatSisaWaktu(ms) {
-        // Jika minus tapi belum lewat 60 menit
-        if (ms <= 0 && ms > -60000) return 'SEDANG BERLANGSUNG...'; 
+        if (ms <= 0 && ms > -3600000) return 'SEDANG BERLANGSUNG...'; 
         
         const detik = Math.floor(ms / 1000);
         const hari = Math.floor(detik / 86400);
@@ -294,11 +333,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (hari > 0) return `${hari} hari ${jam} jam lagi`;
         if (jam > 0) return `${jam} jam ${menit} menit lagi`;
-        // Tampilkan detik jika waktunya tinggal hitungan menit
         return `${menit} mnt ${sisaDetik} dtk lagi`; 
     }
 
-    // === 4. FUNGSI RENDER HTML ===
+    // === 5. FUNGSI RENDER HTML ===
     function renderMisa() {
         const misaTerdekat = get3MisaTerdekat();
         let html = '';
@@ -319,36 +357,30 @@ document.addEventListener('DOMContentLoaded', function() {
         wadah.innerHTML = html;
     }
 
-    // === 5. MESIN WAKTU (UPDATE SETIAP DETIK) ===
+    // === 6. MESIN WAKTU (UPDATE SETIAP DETIK) ===
     function updateCountdown() {
         const semuaKartu = document.querySelectorAll('#wadahMisaBerikutnya .kartu-misa');
         let perluRenderUlang = false;
 
         semuaKartu.forEach(kartu => {
             const waktuMisa = new Date(kartu.dataset.waktu);
-            const sisa = waktuMisa - new Date(); // Hasil dalam milidetik (ms)
+            const sisa = waktuMisa - new Date(); 
             const elemenWaktu = kartu.querySelector('.sisa-waktu');
             
             elemenWaktu.textContent = formatSisaWaktu(sisa);
 
-            // ==========================================
-            // LOGIKA WARNING MERAH (< 45 MENIT)
-            // 45 menit = 2.700.000 milidetik
-            // ==========================================
             if (sisa > 0 && sisa <= 2700000) {
-                // Kurang dari 45 menit (merah + kedip)
+                // Kurang dari 45 menit
                 elemenWaktu.classList.add('warning-merah');
                 elemenWaktu.style.animation = ""; 
             } else if (sisa <= 0 && sisa > -3600000) {
-                // Sedang berlangsung (Merah terang tapi tanpa kedip agar tenang)
+                // Sedang berlangsung
                 elemenWaktu.classList.add('warning-merah');
                 elemenWaktu.style.animation = "none"; 
             } else {
-                // Lebih dari 45 menit (kembali normal)
                 elemenWaktu.classList.remove('warning-merah');
             }
 
-            // Jika sudah lewat 60 menit (-3.600.000 ms), render ulang untuk membuang kartu ini
             if (sisa <= -3600000) {
                 perluRenderUlang = true; 
             }
@@ -359,10 +391,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // JALANKAN PERTAMA KALI
-    renderMisa();
-    // UPDATE SETIAP 1 DETIK
-    setInterval(updateCountdown, 1000);
 });
 </script>
 
