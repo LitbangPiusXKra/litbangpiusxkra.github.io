@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">	
 </head>
 
 <body>
@@ -56,7 +59,6 @@
      1. HERO BANNER (GAMBAR BESAR DEPAN)
      ============================================== -->
 
-
 <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -101,6 +103,89 @@
     </div>
 </div>
 
+<section id="hut-69-section" class="hut-container">
+    
+    <!-- ================= KOLOM KIRI ================= -->
+    <div class="hut-left">
+        <!-- Point 2: Teks Tema -->
+        <div class="tema-wrapper">
+            <h2 class="teks-tema">
+                Berjalan Bersama Membangun Gereja yang Bahagia, Menginspirasi dan Mensejahterakan
+            </h2>
+        </div>
+
+       <!-- POINT 3: Tabel Novena -->
+		<div class="novena-container">
+			<!-- Header Tabel Info -->
+			<div class="novena-info">
+				<h4>Jadwal Novena 9 kali</h4>
+				<p>Setiap hari : <strong>JUMAT</strong> <br> Jam : <strong>18:00</strong></p>
+			</div>
+
+			<!-- Bagian Tabel -->
+			<div class="table-wrapper">
+				<!-- Header Tabel (Tetap/Tidak ikut scroll) -->
+				<table class="tabel-header">
+					<thead>
+						<tr>
+							<th style="width: 35%;">Tanggal</th>
+							<th style="width: 65%;">Di Pimpin</th>
+						</tr>
+					</thead>
+				</table>
+        
+				<!-- Body Tabel (Bagian yang akan Scroll 4 baris) -->
+				<div class="scroll-area" id="scroll-area">
+					<table class="tabel-body">
+						<tbody id="novena-data">
+							<!-- Data dari Spreadsheet akan muncul di sini otomatis -->
+							<tr><td colspan="2" style="text-align:center;">Memuat jadwal...</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+    </div>
+
+    <!-- ================= KOLOM KANAN ================= -->
+    <div class="hut-right">
+        <!-- Point 2: Teks Judul -->
+        <div class="judul-wrapper">
+            <h1 class="teks-judul">
+                Pesta Nama & HUT Paroki Santo Pius X <br> 
+                <span class="angka-ke">ke 69</span>
+            </h1>
+        </div>
+
+        <!-- Point 1: Video Box & Countdown -->
+        <div class="video-box-container">
+            <video autoplay loop muted playsinline class="video-box">
+                <source src="video/vdgereja.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Countdown di kanan bawah video -->
+            <div class="countdown-overlay">
+                <h4 class="countdown-title">Menuju Misa HUT ke-69</h4>
+                <div id="countdown">
+                    <div class="time-box"><span id="hari">00</span><small>Hari</small></div>
+                    <div class="time-box"><span id="jam">00</span><small>Jam</small></div>
+                    <div class="time-box"><span id="menit">00</span><small>Menit</small></div>
+                    <div class="time-box"><span id="detik">00</span><small>Detik</small></div>
+                </div>
+            </div>
+        </div>
+
+		
+
+        <!-- Tempat untuk Point 4 (Gambar Berjalan) -->
+        <div id="tempat-gambar-berjalan" style="margin-top: 20px;">
+            <!-- Nanti Carousel Gambar masuk ke sini -->
+        </div>
+    </div>
+
+</section>	
+	
 <!-- ==============================================
      3. SAMBUTAN / ABOUT SINGKAT
      ============================================== -->
@@ -348,7 +433,297 @@ body.home-page {
     .hero-section { height: 70vh; }
     .quick-menu-wrapper { margin-top: -30px; }
 }
+
+/* Styling Section Utama */
+.hut-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Tinggi menyesuaikan layar, bisa diubah misal jadi 600px */
+    overflow: hidden;
+    display: flex;
+}
+
+/* Styling Video agar menjadi background */
+.bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    object-fit: cover;
+}
+
+/* Efek transparan hitam di atas video */
+.overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Ubah angka 0.4 untuk mengatur kegelapan */
+    z-index: 2;
+}
+
+/* Kontainer utama untuk mengatur posisi elemen di dalamnya */
+.content-container {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+}
+
+/* Styling Hitung Mundur (Countdown) di Kanan Bawah */
+.countdown-wrapper {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.countdown-title {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+#countdown {
+    display: flex;
+    gap: 15px;
+}
+
+.time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-box span {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d32f2f; /* Warna merah gereja, bisa diubah */
+}
+
+.time-box small {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+}
+/* Container Utama: Layout 2 Kolom (Grid) */
+.hut-container {
+    display: grid;
+    grid-template-columns: 40% 60%; /* Kiri 40%, Kanan 60% */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto; /* Supaya posisinya di tengah layar */
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* --- POINT 2: STYLING TEKS TEMA (KIRI) --- */
+.hut-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.tema-wrapper {
+    padding: 0px 0;
+}
+
+.teks-tema {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; /* Tulisan miring */
+    font-size: 32px;
+    line-height: 1.5;
+    color: #4a4a4a; /* Abu-abu tua yang soft */
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* --- POINT 2: STYLING TEKS JUDUL (KANAN) --- */
+.hut-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.judul-wrapper {
+    text-align: center;
+	margin-top: 0; /* Pastikan mulai dari nol */
+    margin-bottom: 15px;
+}
+
+.teks-judul {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #d38c6d; /* Warna Soft Peach / Terracotta seperti di gambar */
+    margin: 0;
+    line-height: 1.2;
+}
+
+.angka-ke {
+    font-size: 42px;
+}
+
+/* --- POINT 1: STYLING VIDEO BOX & COUNTDOWN --- */
+.video-box-container {
+    position: relative;
+    width: 100%;
+    border-radius: 10px; /* Sudut video dibuat agak melengkung biar soft */
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Efek bayangan lembut */
+}
+
+.video-box {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.countdown-overlay {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.95); /* Background putih agak transparan */
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.countdown-title {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+#countdown {
+    display: flex;
+    gap: 15px;
+}
+
+.time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-box span {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d32f2f; /* Merah Countdown */
+}
+
+.time-box small {
+    font-size: 10px;
+    color: #666;
+}
+
+/* Responsif untuk HP (Layar kecil) */
+@media (max-width: 768px) {
+    .hut-container {
+        grid-template-columns: 100%; /* Jadi 1 kolom atas-bawah kalau di HP */
+    }
+    .teks-tema {
+        font-size: 26px;
+    }
+    .teks-judul {
+        font-size: 28px;
+    }
+    .angka-ke {
+        font-size: 32px;
+    }
+    .countdown-overlay {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 15px;
+    }
+    .time-box span {
+        font-size: 18px;
+    }
+}
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .countdown-wrapper {
+        bottom: 20px;
+        right: 20px;
+        left: 20px; /* Di HP agar ke tengah/penuh */
+    }
+}
+
+/* Styling Container Novena */
+.novena-container {
+    margin-top: 30px;
+    background: #e8ecf1; /* Warna background abu-abu kebiruan soft */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.novena-info {
+    margin-bottom: 10px;
+}
+
+.novena-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #000;
+}
+
+.novena-info p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+
+/* Styling Tabel */
+.table-wrapper {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.tabel-header, .tabel-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabel-header th {
+    background-color: #5b8bc7; /* Warna biru sesuai gambar */
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 15px;
+    border: 1px solid #4a75a8;
+}
+
+.tabel-body td {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px dotted #ccc;
+    color: #333;
+}
+
+/* Warna belang-belang pada baris */
+.tabel-body tr:nth-child(even) {
+    background-color: #f4f6f9;
+}
+
+/* AREA SCROLL: Tinggi disesuaikan untuk ~4 baris */
+.scroll-area {
+    height: 168px; /* Asumsi 1 baris tinggi 42px x 4 baris = 168px */
+    overflow: hidden; /* Sembunyikan baris ke 5-9 */
+}
+
+/* Agar kolom header dan body sejajar */
+.tabel-body td:nth-child(1) { width: 35%; }
+.tabel-body td:nth-child(2) { width: 65%; }
+
 </style>
+
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
 </footer>
@@ -380,6 +755,107 @@ body.home-page {
 
 </div>
 
+<Script>
+
+// ATUR TANGGAL DAN JAM MISA DI SINI (Format: Bulan Tanggal, Tahun Jam:Menit:Detik)
+// Contoh: September 15, 2024 pukul 08:00 pagi
+const tanggalMisa = new Date("Sep 21, 2026 08:00:00").getTime();
+
+const hitungMundur = setInterval(function() {
+    // Dapatkan waktu saat ini
+    const sekarang = new Date().getTime();
+    
+    // Cari selisih waktu antara sekarang dan waktu misa
+    const selisih = tanggalMisa - sekarang;
+    
+    // Kalkulasi waktu untuk hari, jam, menit, dan detik
+    const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+    const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+    const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+    
+    // Format angka agar selalu 2 digit (misal: 09 bukan 9)
+    document.getElementById("hari").innerHTML = hari < 10 ? '0' + hari : hari;
+    document.getElementById("jam").innerHTML = jam < 10 ? '0' + jam : jam;
+    document.getElementById("menit").innerHTML = menit < 10 ? '0' + menit : menit;
+    document.getElementById("detik").innerHTML = detik < 10 ? '0' + detik : detik;
+    
+    // Jika waktu sudah habis/lewat
+    if (selisih < 0) {
+        clearInterval(hitungMundur);
+        document.getElementById("countdown").innerHTML = "<h3 style='color:#d32f2f; margin:0;'>MISA SEDANG BERLANGSUNG / SELESAI</h3>";
+    }
+}, 1000); // Di-refresh setiap 1 detik
+
+// --- SCRIPT POINT 3: DATA NOVENA & AUTO SCROLL ---
+
+// 1. MASUKKAN LINK SPREADSHEET CSV BOSS DI SINI
+const urlSpreadsheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=1797219813&single=true&output=csv";
+
+// Fungsi untuk mengambil data dan menampilkan di tabel
+async function muatDataNovena() {
+    try {
+        const respons = await fetch(urlSpreadsheet);
+        const dataCSV = await respons.text();
+        
+        // Memecah data berdasarkan baris (Enter)
+        const baris = dataCSV.split('\n');
+        let htmlTabel = "";
+
+        // Mulai dari i = 1 untuk melewati baris pertama (Header di Spreadsheet)
+        // Jika di spreadsheet baris 1 langsung data (bukan header), ubah let i = 0
+        for (let i = 1; i < baris.length; i++) {
+            if (baris[i].trim() !== "") {
+                // Memecah kolom berdasarkan koma
+                const kolom = baris[i].split(','); 
+                
+                // Menghilangkan tanda kutip (jika ada bawaan CSV)
+                const tanggal = kolom[0] ? kolom[0].replace(/['"]+/g, '') : '';
+                const dipimpin = kolom[1] ? kolom[1].replace(/['"]+/g, '') : '';
+
+                htmlTabel += `<tr><td>${tanggal}</td><td>${dipimpin}</td></tr>`;
+            }
+        }
+
+        const tbody = document.getElementById("novena-data");
+        tbody.innerHTML = htmlTabel;
+
+        // Gandakan data untuk efek scroll tiada henti (Infinite Loop)
+        tbody.innerHTML += htmlTabel; 
+
+        // Jalankan animasi auto-scroll
+        mulaiAutoScroll();
+
+    } catch (error) {
+        document.getElementById("novena-data").innerHTML = "<tr><td colspan='2'>Gagal memuat data.</td></tr>";
+        console.error("Error ambil data:", error);
+    }
+}
+
+// Fungsi Auto Scroll
+function mulaiAutoScroll() {
+    const scrollArea = document.getElementById("scroll-area");
+    const tinggiSatuBaris = scrollArea.querySelector("tr").offsetHeight; // Ambil tinggi 1 baris
+    
+    setInterval(() => {
+        // Gulir ke bawah sebanyak 1 baris (karena 3 detik per baris sangat nyaman dibaca)
+        scrollArea.scrollBy({ top: tinggiSatuBaris, behavior: 'smooth' });
+
+        // Jika sudah mencapai setengah (data aslinya habis, masuk ke data gandaan)
+        // Kembalikan ke atas secara instan tanpa ketahuan
+        if (scrollArea.scrollTop >= scrollArea.scrollHeight / 2) {
+            setTimeout(() => {
+                scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+            }, 500); // Tunggu animasi smooth selesai dulu
+        }
+    }, 3000); // 3000 ms = 3 Detik
+}
+
+// Jalankan fungsi saat web dibuka
+muatDataNovena();
+
+</script>
+	
 <script src="js/script.js"></script>
 
 </body>
