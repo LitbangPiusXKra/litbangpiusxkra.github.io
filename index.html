@@ -176,14 +176,78 @@
             </div>
         </div>
 
-		
-
         <!-- Tempat untuk Point 4 (Gambar Berjalan) -->
         <div id="tempat-gambar-berjalan" style="margin-top: 20px;">
             <!-- Nanti Carousel Gambar masuk ke sini -->
         </div>
     </div>
 
+<!-- ================= POINT 4: GALERI BERJALAN (Bawah Penuh) ================= -->
+    <div class="kegiatan-full-wrapper">
+        <h3 class="kegiatan-title">Kegiatan Seputar HUT ke-69</h3>
+        
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <!-- GAMBAR 1 SD 4 -->
+                <!-- Perhatikan atribut 'data-title', 'data-desc', dan 'data-link'. Ini untuk memunculkan detail saat di-klik -->
+                
+                <img src="images/Donor.jpg" class="kegiatan-img" 
+                     data-title="Donor Darah" 
+                     data-desc="Mari berbagi darah, berbagi kehidupan. Pelaksanaan: Minggu, 28 Juni 2026." 
+                     data-link="LINK_PENDAFTARAN_1">
+                     
+                <img src="images/mewarna.jpg" class="kegiatan-img" 
+                     data-title="Mewarnai PIA" 
+                     data-desc="Lomba mewarnai untuk anak-anak PIA. Ekspresikan imajinasimu dengan ceria." 
+                     data-link="https://bit.ly/mewarnaiPIA">
+                     
+                <img src="images/akubisa.jpg" class="kegiatan-img" 
+                     data-title="Lomba Aku Bisa" 
+                     data-desc="Lomba kreativitas anak. Tunjukkan prestasimu dan raih kemenangan." 
+                     data-link="https://bit.ly/AkuBisaPiusan2026">
+                     
+                <img src="images/merias.jpg" class="kegiatan-img" 
+                     data-title="Merias Wajah" 
+                     data-desc="Lomba merias wajah. Tampil cantik, tebarkan pesona cinta." 
+                     data-link="https://bit.ly/meriaswajahdanmenghiastumpeng">
+
+                <!-- COPY PASTE GAMBAR 1 SD 4 SEKALI LAGI DI BAWAH INI UNTUK EFEK SCROLL TANPA PUTUS -->
+                <img src="images/Donor.jpg" class="kegiatan-img" data-title="Donor Darah" data-desc="Mari berbagi darah, berbagi kehidupan. Pelaksanaan: Minggu, 28 Juni 2026." data-link="LINK_PENDAFTARAN_1">
+                <img src="images/mewarna.jpg" class="kegiatan-img" data-title="Mewarnai PIA" data-desc="Halloo anak-anak Se Paroki Pius X Karanganyar🙃
+
+Yuk rame-rame ikut lomba mewarnai dalam rangka Pesta Nama Dan Ulang Tahun Paroki ke 69
+
+Mari ramaikan lomba ini ya.
+Ajak teman² ikut lomba ini, biar seru githu.." data-link="https://bit.ly/mewarnaiPIA">
+                <img src="images/akubisa.jpg" class="kegiatan-img" data-title="Lomba Aku Bisa" data-desc="Hai Remaja misinoner Paroki St Pius X Karanganyar
+
+Panitia Piusan mau ajak kamu bermain, belajar dan pastinya dapat hadiah gaes.
+
+Yukkk ikutan lomba " Aku Bisa",  Buktikan bahwa kamu adalah Remaja Katolik yang misinoner, cerdas. 
+Siapa pun boleh ikut lomba ini. Apalagi kamu Calon Penerima Sakramen Penguatan, yukkk ikutan. Wajib.." data-link="https://bit.ly/AkuBisaPiusan2026">
+                <img src="images/merias.jpg" class="kegiatan-img" data-title="Merias Wajah" data-desc="Halooo Keluarga Katolik Paroki St Pius X
+
+Ikuti lomba merias pasangan  dalam rangka memeriahkan Ulang Tahun Paroki ke -69
+
+Per lingkungan wajib mengirimkan perwakilan ya. Biar semua terlibat Dan seru. ." data-link="https://bit.ly/meriaswajahdanmenghiastumpeng">
+            </div>
+        </div>
+    </div>
+	<!-- STRUKTUR POPUP KETIKA GAMBAR DI KLIK -->
+	<div id="popupModal" class="modal-overlay">
+		<div class="modal-content">
+			<span class="close-btn">&times;</span>
+			<div class="modal-body">
+				<img id="modal-img" src="" alt="Gambar Detail">
+				<div class="modal-text">
+					<h2 id="modal-title">Judul Kegiatan</h2>
+					<p id="modal-desc">Deskripsi kegiatan akan muncul di sini.</p>
+					<a id="modal-link" href="#" target="_blank" class="btn-daftar">Daftar Sekarang</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </section>	
 	
 <!-- ==============================================
@@ -722,6 +786,152 @@ body.home-page {
 .tabel-body td:nth-child(1) { width: 35%; }
 .tabel-body td:nth-child(2) { width: 65%; }
 
+/* --- POINT 4: CSS GALERI BERJALAN --- */
+.kegiatan-full-wrapper {
+    grid-column: 1 / -1; /* Ini kode sakti agar membentang penuh melewati kolom kiri & kanan */
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
+    text-align: center;
+}
+
+.kegiatan-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+}
+
+/* Container yang membatasi area scroll */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #fdfdfd;
+    padding: 15px 0;
+}
+
+/* Track yang bergerak dari kanan ke kiri */
+.marquee-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    /* Kecepatan scroll, ubah angka 20s jika ingin lebih lambat/cepat */
+    animation: scrollMarquee 25s linear infinite; 
+}
+
+/* Kalau mouse diarahkan ke gambar, jalannya berhenti biar gampang di-klik */
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused; 
+}
+
+.kegiatan-img {
+    height: 250px; /* Tinggi gambar */
+    width: auto;
+    border-radius: 10px;
+    cursor: pointer; /* Kursor berubah jadi tangan saat di-hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.kegiatan-img:hover {
+    transform: scale(1.05); /* Membesar sedikit saat di-hover */
+}
+
+/* Keyframes untuk efek berjalan */
+@keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Bergeser 50% karena gambarnya kita double/kopi paste 2x di HTML */
+}
+
+/* --- CSS POPUP (MODAL BOX) --- */
+.modal-overlay {
+    display: none; /* Disembunyikan dulu, muncul lewat JS */
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    animation: munculModal 0.3s ease-out;
+}
+
+@keyframes munculModal {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+#modal-img {
+    max-width: 50%;
+    border-radius: 8px;
+}
+
+.modal-text {
+    flex: 1;
+    text-align: left;
+}
+
+#modal-title {
+    font-family: 'Playfair Display', serif;
+    color: #d38c6d;
+    margin-top: 0;
+}
+
+#modal-desc {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+.btn-daftar {
+    display: inline-block;
+    background: #d32f2f;
+    color: #fff;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-daftar:hover {
+    background: #b71c1c;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .kegiatan-img { height: 180px; }
+    .modal-body { flex-direction: column; }
+    #modal-img { max-width: 100%; }
+    .modal-text { text-align: center; }
+}
+	
 </style>
 
 <footer>
@@ -857,6 +1067,50 @@ function mulaiAutoScroll() {
 // Jalankan fungsi saat web dibuka
 muatDataNovena();
 
+// --- SCRIPT POINT 4: POPUP MODAL GALERI ---
+
+const popup = document.getElementById("popupModal");
+const closeBtn = document.querySelector(".close-btn");
+const modalImg = document.getElementById("modal-img");
+const modalTitle = document.getElementById("modal-title");
+const modalDesc = document.getElementById("modal-desc");
+const modalLink = document.getElementById("modal-link");
+
+// Ambil semua gambar yang ada class 'kegiatan-img'
+const gambarKegiatan = document.querySelectorAll(".kegiatan-img");
+
+// Tambahkan event 'klik' ke masing-masing gambar
+gambarKegiatan.forEach(img => {
+    img.addEventListener("click", function() {
+        // Ambil data dari atribut HTML gambar yang diklik
+        const src = this.getAttribute("src");
+        const title = this.getAttribute("data-title");
+        const desc = this.getAttribute("data-desc");
+        const link = this.getAttribute("data-link");
+
+        // Masukkan data ke dalam Popup
+        modalImg.src = src;
+        modalTitle.innerText = title;
+        modalDesc.innerText = desc;
+        modalLink.href = link;
+
+        // Tampilkan Popup
+        popup.style.display = "flex";
+    });
+});
+
+// Fungsi untuk menutup Popup saat tombol 'X' diklik
+closeBtn.addEventListener("click", function() {
+    popup.style.display = "none";
+});
+
+// Fungsi untuk menutup Popup saat klik area luar kotak putih
+window.addEventListener("click", function(event) {
+    if (event.target === popup) {
+        popup.style.display = "none";
+    }
+});
+	
 </script>
 	
 <script src="js/script.js"></script>
