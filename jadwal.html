@@ -236,16 +236,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     
     // === 1. MASUKKAN LINK CSV SHEET "Misa2" DI SINI ===
-    const urlCSVMisa2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=542087165&single=true&output=csv";
+    const urlCSVMisa2 = "MASUKKAN_LINK_CSV_SHEET_MISA2_BOSS_DI_SINI";
     
-    let DATA_SEMUA_MISA = []; // Menyimpan semua baris dari spreadsheet
+    let DATA_SEMUA_MISA = [];
     const wadah = document.getElementById('wadahMisaBerikutnya');
     const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 
     // === 2. AMBIL DATA DARI GOOGLE SHEETS ===
     fetch(urlCSVMisa2)
         .then(response => {
-            if (!response.ok) throw new Error("Gagal mengambil data Misa Berikutnya");
+            if (!response.ok) throw new Error("Gagal mengambil data");
             return response.text();
         })
         .then(dataText => {
@@ -259,27 +259,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const kolom = barisAktif.split(pemisah);
 
-                const tanggalRaw = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : ''; // ex: 2024-09-15
-                const jamRaw = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';     // ex: 18:00
+                const tanggalRaw = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : ''; 
+                const jamRaw = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';     
                 const ket = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
                 const lokasi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
 
-                if (tanggalRaw && jamRaw) {
-                    // Gabungkan Tanggal dan Jam menjadi satu Waktu Baku untuk perhitungan mundur
-                    // Format yang aman untuk browser: "YYYY-MM-DDTHH:MM:00"
-                    const stringWaktu = `${tanggalRaw}T${jamRaw}:00`;
+                // Pastikan ada tanggal dan ada karakter ':' di jam
+                if (tanggalRaw && jamRaw && jamRaw.includes(':')) {
+                    
+                    // --- INI OBATNYA BOSS! ---
+                    // Memecah jam dan memastikan selalu 2 digit (misal: 5 jadi 05)
+                    let [jamNum, menitNum] = jamRaw.split(':');
+                    jamNum = jamNum.padStart(2, '0');
+                    menitNum = menitNum.padStart(2, '0');
+                    
+                    // Format baku yang tidak akan ditolak browser: YYYY-MM-DDTHH:MM:00
+                    const stringWaktu = `${tanggalRaw}T${jamNum}:${menitNum}:00`;
                     const waktuPasti = new Date(stringWaktu);
 
-                    // Ambil nama hari secara otomatis dari tanggal tersebut
-                    const namaHari = NAMA_HARI[waktuPasti.getDay()];
+                    // Cek lagi apakah setelah digabung datanya valid
+                    if (!isNaN(waktuPasti.getTime())) {
+                        const namaHari = NAMA_HARI[waktuPasti.getDay()]; // Ambil nama hari otomatis
 
-                    DATA_SEMUA_MISA.push({
-                        waktuAsli: waktuPasti, // Objek Date untuk hitung mundur
-                        hariTeks: namaHari,    // "Minggu", "Senin", dll
-                        jamTeks: jamRaw,       // "18:00"
-                        ket: ket,
-                        lokasi: lokasi
-                    });
+                        DATA_SEMUA_MISA.push({
+                            waktuAsli: waktuPasti, 
+                            hariTeks: namaHari,    
+                            jamTeks: `${jamNum}:${menitNum}`, // Tampilnya akan rapi: 05:25
+                            ket: ket,
+                            lokasi: lokasi
+                        });
+                    }
                 }
             }
 
@@ -287,11 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderMisa();
                 setInterval(updateCountdown, 1000);
             } else {
-                wadah.innerHTML = '<p style="text-align:center; padding:20px;">Belum ada jadwal misa yang diinput.</p>';
+                wadah.innerHTML = '<p style="text-align:center; padding:20px;">Belum ada jadwal misa yang valid.</p>';
             }
         })
         .catch(error => {
-            console.error("Detail Error Misa Berikutnya:", error);
+            console.error("Detail Error:", error);
             wadah.innerHTML = '<p style="text-align:center; padding:20px; color:#e74c3c;">Gagal memuat jadwal Misa terdekat.</p>';
         });
 
@@ -300,12 +309,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function get3AntrianTeratas() {
         const sekarang = new Date().getTime();
         
-        // Saring: Buang jadwal yang sudah lewat lebih dari 60 menit (3.600.000 milidetik)
+        // Buang jadwal yang sudah lewat 60 menit
         const jadwalAktif = DATA_SEMUA_MISA.filter(item => {
             return item.waktuAsli.getTime() > (sekarang - 3600000);
         });
 
-        // Ambil urutan 1, 2, dan 3 dari sisa data yang masih aktif
         return jadwalAktif.slice(0, 3);
     }
 
@@ -315,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = '';
 
         if (antrianTeratas.length === 0) {
-            wadah.innerHTML = '<p style="text-align:center; padding:20px;">Seluruh jadwal misa telah selesai.</p>';
+            wadah.innerHTML = '<p style="text-align:center; padding:20px; color:#555;">Seluruh jadwal misa telah selesai. Menunggu update jadwal berikutnya.</p>';
             return;
         }
 
@@ -363,19 +371,15 @@ document.addEventListener('DOMContentLoaded', function() {
             elemenWaktu.textContent = formatSisaWaktu(sisa);
 
             if (sisa > 0 && sisa <= 2700000) {
-                // Kurang dari 45 menit
                 elemenWaktu.classList.add('warning-merah');
                 elemenWaktu.style.animation = ""; 
             } else if (sisa <= 0 && sisa > -3600000) {
-                // Sedang berlangsung
                 elemenWaktu.classList.add('warning-merah');
                 elemenWaktu.style.animation = "none"; 
             } else {
                 elemenWaktu.classList.remove('warning-merah');
             }
 
-            // Jika kartu ini sudah lewat 1 jam, tandai untuk render ulang
-            // Render ulang akan membuang kartu ini dan memanggil data di bawahnya
             if (sisa <= -3600000) {
                 perluRenderUlang = true; 
             }
