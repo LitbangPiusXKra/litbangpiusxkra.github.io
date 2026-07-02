@@ -229,19 +229,18 @@
 =========================================== -->
 
 <!-- ==========================================
-    AMBIL DATA JADWAL MISA AKTIVE DARI SPREADSHEETS (Misa2)
+    AMBIL DATA JADWAL MISA BERURUTAN (QUEUE) DARI SPREADSHEET (Misa2)
 =========================================== -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
     // === 1. MASUKKAN LINK CSV SHEET "Misa2" DI SINI ===
-    const urlCSVMisa2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=542087165&single=true&output=csv";
+    const urlCSVMisa2 = "MASUKKAN_LINK_CSV_SHEET_MISA2_BOSS_DI_SINI";
     
-    let JADWAL_MISA = []; // Kosongkan, nanti diisi otomatis dari Spreadsheet
-
-    const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    let DATA_SEMUA_MISA = []; // Menyimpan semua baris dari spreadsheet
     const wadah = document.getElementById('wadahMisaBerikutnya');
+    const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 
     // === 2. AMBIL DATA DARI GOOGLE SHEETS ===
     fetch(urlCSVMisa2)
@@ -252,32 +251,39 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(dataText => {
             const barisData = dataText.replace(/\r/g, '').split('\n');
             const header = barisData[0] || '';
-            const pemisah = header.includes(';') ? ';' : ','; // Deteksi pemisah csv
+            const pemisah = header.includes(';') ? ';' : ','; 
 
-            // Mulai loop dari baris 1 (melewati judul kolom)
             for (let i = 1; i < barisData.length; i++) {
                 const barisAktif = barisData[i].trim();
                 if (barisAktif === '') continue;
 
                 const kolom = barisAktif.split(pemisah);
 
-                // Ambil dan bersihkan data
-                let hari = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
-                const jam = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
+                const tanggalRaw = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : ''; // ex: 2024-09-15
+                const jamRaw = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';     // ex: 18:00
                 const ket = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
                 const lokasi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
 
-                if (hari && jam) {
-                    // Pastikan huruf pertama hari huruf besar (kapital) agar cocok dengan sistem
-                    hari = hari.charAt(0).toUpperCase() + hari.slice(1).toLowerCase();
-                    
-                    // Masukkan ke dalam array JADWAL_MISA
-                    JADWAL_MISA.push({ hari: hari, jam: jam, ket: ket, lokasi: lokasi });
+                if (tanggalRaw && jamRaw) {
+                    // Gabungkan Tanggal dan Jam menjadi satu Waktu Baku untuk perhitungan mundur
+                    // Format yang aman untuk browser: "YYYY-MM-DDTHH:MM:00"
+                    const stringWaktu = `${tanggalRaw}T${jamRaw}:00`;
+                    const waktuPasti = new Date(stringWaktu);
+
+                    // Ambil nama hari secara otomatis dari tanggal tersebut
+                    const namaHari = NAMA_HARI[waktuPasti.getDay()];
+
+                    DATA_SEMUA_MISA.push({
+                        waktuAsli: waktuPasti, // Objek Date untuk hitung mundur
+                        hariTeks: namaHari,    // "Minggu", "Senin", dll
+                        jamTeks: jamRaw,       // "18:00"
+                        ket: ket,
+                        lokasi: lokasi
+                    });
                 }
             }
 
-            // SETELAH DATA BERHASIL DIAMBIL, JALANKAN FUNGSI COUNTDOWN
-            if (JADWAL_MISA.length > 0) {
+            if (DATA_SEMUA_MISA.length > 0) {
                 renderMisa();
                 setInterval(updateCountdown, 1000);
             } else {
@@ -290,38 +296,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
 
-    // === 3. FUNGSI MENCARI 3 MISA TERDEKAT ===
-    function get3MisaTerdekat() {
-        const sekarang = new Date();
-        let semuaJadwal = [];
-
-        JADWAL_MISA.forEach(item => {
-            const targetHari = NAMA_HARI.indexOf(item.hari);
-            // Amankan jika salah ketik jam (misal tidak pakai : )
-            if (!item.jam.includes(':')) return; 
-            
-            const [jam, menit] = item.jam.split(':').map(Number);
-
-            for (let i = 0; i < 2; i++) {
-                let tgl = new Date(sekarang);
-                let selisihHari = (targetHari - sekarang.getDay() + 7) % 7;
-                selisihHari += (i * 7);
-                
-                tgl.setDate(sekarang.getDate() + selisihHari);
-                tgl.setHours(jam, menit, 0, 0);
-
-                // Jika jam sudah lewat lebih dari 60 menit, jangan ambil
-                // 3600000 ms = 60 menit
-                if (tgl.getTime() > (sekarang.getTime() - 3600000)) {
-                    semuaJadwal.push({...item, datetime: tgl});
-                }
-            }
+    // === 3. LOGIKA ANTRIAN: AMBIL 3 TERATAS YANG BELUM KADALUWARSA ===
+    function get3AntrianTeratas() {
+        const sekarang = new Date().getTime();
+        
+        // Saring: Buang jadwal yang sudah lewat lebih dari 60 menit (3.600.000 milidetik)
+        const jadwalAktif = DATA_SEMUA_MISA.filter(item => {
+            return item.waktuAsli.getTime() > (sekarang - 3600000);
         });
 
-        return semuaJadwal.sort((a,b) => a.datetime - b.datetime).slice(0, 3);
+        // Ambil urutan 1, 2, dan 3 dari sisa data yang masih aktif
+        return jadwalAktif.slice(0, 3);
     }
 
-    // === 4. FUNGSI FORMAT COUNTDOWN ===
+    // === 4. FUNGSI RENDER HTML ===
+    function renderMisa() {
+        const antrianTeratas = get3AntrianTeratas();
+        let html = '';
+
+        if (antrianTeratas.length === 0) {
+            wadah.innerHTML = '<p style="text-align:center; padding:20px;">Seluruh jadwal misa telah selesai.</p>';
+            return;
+        }
+
+        antrianTeratas.forEach((misa, index) => {
+            html += `
+            <div class="kartu-misa ${index === 0 ? 'kartu-aktif' : ''}" data-waktu="${misa.waktuAsli.toISOString()}">
+                <div class="kartu-header">
+                    <div class="waktu-misa"><span class="hari">${misa.hariTeks.toUpperCase()}</span> <span class="jam">${misa.jamTeks}</span></div>
+                    <div class="sisa-waktu">menghitung...</div>
+                </div>
+                <div class="keterangan-misa">${misa.ket}</div>
+                <div class="info-tambahan">
+                    <span class="teks-jarak">${misa.lokasi}</span>
+                </div>
+            </div>`;
+        });
+        wadah.innerHTML = html;
+    }
+
+    // === 5. FUNGSI FORMAT WAKTU ===
     function formatSisaWaktu(ms) {
         if (ms <= 0 && ms > -3600000) return 'SEDANG BERLANGSUNG...'; 
         
@@ -336,28 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${menit} mnt ${sisaDetik} dtk lagi`; 
     }
 
-    // === 5. FUNGSI RENDER HTML ===
-    function renderMisa() {
-        const misaTerdekat = get3MisaTerdekat();
-        let html = '';
-
-        misaTerdekat.forEach((misa, index) => {
-            html += `
-            <div class="kartu-misa ${index === 0 ? 'kartu-aktif' : ''}" data-waktu="${misa.datetime.toISOString()}">
-                <div class="kartu-header">
-                    <div class="waktu-misa"><span class="hari">${misa.hari.toUpperCase()}</span> <span class="jam">${misa.jam}</span></div>
-                    <div class="sisa-waktu">menghitung...</div>
-                </div>
-                <div class="keterangan-misa">${misa.ket}</div>
-                <div class="info-tambahan">
-                    <span class="teks-jarak">${misa.lokasi}</span>
-                </div>
-            </div>`;
-        });
-        wadah.innerHTML = html;
-    }
-
-    // === 6. MESIN WAKTU (UPDATE SETIAP DETIK) ===
+    // === 6. MESIN UPDATE SETIAP DETIK ===
     function updateCountdown() {
         const semuaKartu = document.querySelectorAll('#wadahMisaBerikutnya .kartu-misa');
         let perluRenderUlang = false;
@@ -381,6 +374,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 elemenWaktu.classList.remove('warning-merah');
             }
 
+            // Jika kartu ini sudah lewat 1 jam, tandai untuk render ulang
+            // Render ulang akan membuang kartu ini dan memanggil data di bawahnya
             if (sisa <= -3600000) {
                 perluRenderUlang = true; 
             }
