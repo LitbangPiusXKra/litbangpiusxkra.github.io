@@ -361,7 +361,7 @@ text-align:center;
 max-width:100%;
 border-radius:20px;
 box-shadow:0 10px 25px rgba(0,0,0,0.2);
-transform: translateX(-100px);
+transform: translate(-100px, 30px);
 }
 
 /* ==========================
