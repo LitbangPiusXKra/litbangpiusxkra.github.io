@@ -351,17 +351,41 @@ background:#0B1F3A;
 color:white;
 }
 
-.tentang-img{
-flex:1;
-min-width:300px;
-text-align:center;
+/* 1. KOTAK BUNGKUS UTAMA (Efek geser dipindah ke sini agar foto & nama barengan) */
+.tentang-img {
+    position: relative; /* WAJIB ADA: Agar kotak nama tahu batas fotonya */
+    display: inline-block; /* Agar lebarnya pas membungkus foto */
+    transform: translate(-40px, 30px); /* Efek geser kiri & turun yang Boss buat tadi */
 }
 
-.tentang-img img{
-max-width:100%;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-transform: translate(-85px, 30px);
+/* 2. FOTONYA */
+.tentang-img img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: block;
+    /* (transform di sini dihapus, sudah dipindah ke .tentang-img di atas) */
+}
+
+/* 3. KOTAK NAMA YANG MENUMPUK */
+.nama-romo-badge {
+    position: absolute; /* Membuatnya melayang di atas foto */
+    bottom: -18px; /* Menariknya ke bawah agar menumpuk di tepi bawah foto. Ubah angka ini kalau mau lebih naik/turun */
+    left: 50%; /* Menarik ke tengah */
+    transform: translateX(-50%); /* Kunci rahasia agar benar-benar pas di tengah horisontal */
+    z-index: 2; /* Memastikan kotaknya ada di DEPAN foto */
+    
+    /* Desain Visual Kotaknya */
+    background-color: #ffffff; /* Latar putih */
+    color: #2c3e50; /* Warna teks gelap elegan */
+    padding: 10px 25px; /* Jarak ruang dalam kotak */
+    border-radius: 30px; /* Ujung kotak melengkung seperti pil */
+    font-family: 'Playfair Display', serif; /* Font elegan */
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Bayangan memancar agar terlihat 3D */
+    white-space: nowrap; /* Mencegah teks terpotong jadi 2 baris */
+    border: 2px solid #e8ecef; /* Garis tepi sangat tipis */
 }
 
 /* ==========================
