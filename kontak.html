@@ -284,26 +284,33 @@
    class="wa-float" target="_blank">
    <i class="fab fa-whatsapp"></i>
 </a>
-
+<script src="js/script.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('formKontak');
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
-        // KUNCI: Mencegah halaman refresh/reload
+    // TRIK PEMBASMI HANTU: 
+    // Mengkloning form untuk membuang semua event listener/script lama yang nyangkut
+    const formBaru = form.cloneNode(true);
+    form.parentNode.replaceChild(formBaru, form);
+    
+    // Mengambil kembali elemen-elemen setelah form dikloning
+    const cleanForm = document.getElementById('formKontak');
+    const tombol = document.getElementById('tombolKirim');
+    const pesanSukses = document.getElementById('pesan-sukses');
+
+    cleanForm.addEventListener('submit', function(e) {
+        // KUNCI GANDA: Mencegah halaman refresh/reload
         e.preventDefault(); 
         e.stopImmediatePropagation();
-
-        const tombol = document.getElementById('tombolKirim');
-        const pesanSukses = document.getElementById('pesan-sukses');
 
         // Ubah tombol jadi loading
         tombol.disabled = true;
         tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
         pesanSukses.style.display = 'none';
 
-        const formData = new FormData(form);
+        const formData = new FormData(cleanForm);
 
         // Kirim via AJAX
         fetch("https://formsubmit.co/ajax/monevlitbangpiusx@gmail.com", {
@@ -313,37 +320,33 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(data => {
-            // --- INI BAGIAN PENTINGNYA BOSS ---
-            // Kita akan mengintip apa jawaban FormSubmit di Console
-            console.log("👀 INTIPAN DATA DARI FORMSUBMIT:", data); 
-
-            // Cek respon sukses (kita buat sangat longgar agar pasti terbaca)
-            if (data.success === true || data.success === "true" || data.success === 1) {
-                pesanSukses.style.display = 'block'; // Munculkan kotak hijau
-                form.reset(); // Kosongkan form
+            console.log("Respon FormSubmit:", data); 
+            
+            // Karena kita sudah lihat datanya 'true' (string), kita cek keduanya
+            if (data.success === "true" || data.success === true) {
+                // TAMPILKAN KOTAK HIJAU
+                pesanSukses.style.display = 'block'; 
+                cleanForm.reset(); // Kosongkan form
+                
                 tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
                 tombol.disabled = false;
             } else {
-                // Jika FormSubmit menolak (misal spam protection)
-                console.error("Ditolak FormSubmit:", data);
-                alert("Pesan ditolak sistem: " + (data.message || "Coba lagi nanti."));
+                alert("Gagal: " + (data.message || "Coba lagi nanti."));
                 tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
                 tombol.disabled = false;
             }
         })
         .catch(error => {
             console.error("Error Koneksi:", error);
-            // Fallback: Jika internet lemot tapi email terkirim, tetap tampilkan sukses
+            // Fallback jika internet lemot tapi terkirim
             pesanSukses.style.display = 'block';
-            form.reset();
+            cleanForm.reset();
             tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
             tombol.disabled = false;
         });
     });
 });
 </script>
-	
-<script src="js/script.js"></script>
 
 </body>
 </html>
