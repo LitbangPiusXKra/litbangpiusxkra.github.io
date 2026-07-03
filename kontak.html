@@ -133,7 +133,7 @@
 </section>
 
 <div class="kontak-form">
-    <h3>Kirim Pesan</h3>
+    <h3>Kirim Pesan/ Maukan</h3>
 
     <!-- Tampilan sukses (muncul lewat JS setelah kirim) -->
     <div id="pesan-sukses" style="
@@ -149,7 +149,7 @@
         ✅ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
     </div>
 
-    <form id="formKontak" action="https://formsubmit.co/monevlitbangpiusx@gmail.com" method="POST">
+    <form id="formKontak">
 
         <!-- ===== PENGATURAN EMAIL (Dibiarkan agar rapi di Gmail) ===== -->
         <input type="hidden" name="_subject" value="📩 Pesan Baru dari Website Paroki Santo Pius X">
@@ -286,55 +286,60 @@
 </a>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    
     const form = document.getElementById('formKontak');
     const tombol = document.getElementById('tombolKirim');
     const pesanSukses = document.getElementById('pesan-sukses');
 
-    form.addEventListener('submit', function(e) {
-        // 1. MENCEGAH WEBSITE PINDAH HALAMAN
-        e.preventDefault(); 
+    if(form) {
+        form.addEventListener('submit', function(e) {
+            
+            // KUNCI GANDA: Paksa browser diam di tempat!
+            e.preventDefault(); 
+            e.stopPropagation();
 
-        // 2. Ubah tampilan tombol saat proses loading
-        tombol.disabled = true;
-        tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-        pesanSukses.style.display = 'none'; // Sembunyikan pesan sukses (jika sebelumnya sudah muncul)
+            // Ubah tombol
+            tombol.disabled = true;
+            tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            pesanSukses.style.display = 'none'; 
 
-        // 3. Ambil semua data isian form (Nama, Email, Pesan)
-        const formData = new FormData(form);
+            // Ambil data
+            const formData = new FormData(form);
 
-        // 4. Kirim data ke FormSubmit via jalur khusus AJAX (Gaib/Belakang layar)
-        // Perhatikan ada tambahan kata "/ajax/" di linknya
-        fetch("https://formsubmit.co/ajax/monevlitbangpiusx@gmail.com", {
-            method: "POST",
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // JIKA BERHASIL TERKIRIM
-            if(data.success === "true" || data.success === true) {
-                form.reset(); // Bersihkan kotak isian secara otomatis
-                pesanSukses.style.display = 'block'; // Munculkan kotak hijau sukses
-                
-                // Kembalikan kondisi tombol seperti semula
+            // Tembak langsung ke URL FormSubmit AJAX
+            fetch("https://formsubmit.co/ajax/monevlitbangpiusx@gmail.com", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success === "true" || data.success === true) {
+                    form.reset(); // Kosongkan isian
+                    
+                    // TAMPILKAN KOTAK HIJAU
+                    pesanSukses.style.display = 'block'; 
+                    
+                    tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+                    tombol.disabled = false;
+                } else {
+                    alert("Maaf, terjadi kesalahan dari server.");
+                    tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+                    tombol.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Koneksi gagal. Pastikan internet Anda lancar.");
                 tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
                 tombol.disabled = false;
-            } else {
-                alert("Maaf, gagal mengirim pesan. Silakan coba lagi.");
-                tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
-                tombol.disabled = false;
-            }
-        })
-        .catch(error => {
-            // JIKA INTERNET TERPUTUS / ERROR
-            console.error(error);
-            alert("Terjadi kesalahan koneksi internet. Pesan tidak terkirim.");
-            tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
-            tombol.disabled = false;
+            });
         });
-    });
+    }
+});
 </script>
 	
 <script src="js/script.js"></script>
