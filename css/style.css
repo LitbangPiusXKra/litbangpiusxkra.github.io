@@ -355,7 +355,7 @@ color:white;
 .tentang-img {
     position: relative; /* WAJIB ADA: Agar kotak nama tahu batas fotonya */
     display: inline-block; /* Agar lebarnya pas membungkus foto */
-    transform: translate(-40px, 30px); /* Efek geser kiri & turun yang Boss buat tadi */
+    transform: translate(-85px, 30px); /* Efek geser kiri & turun yang Boss buat tadi */
 }
 
 /* 2. FOTONYA */
