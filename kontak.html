@@ -129,21 +129,164 @@
 		</div>
 
     </div>
-	
-	<div class="kontak-form">
-		<h3>Kirim Pesan/ Masukan</h3>
-
-		<form action="https://formsubmit.co/monevlitmangpiusx@gmail.com" method="POST">
-			<input type="text" name="nama" placeholder="Nama Anda" required>
-			<input type="email" name="email" placeholder="Email Anda" required>
-			<textarea name="pesan" rows="5" placeholder="Tulis pesan Anda..." required></textarea>
-        
-			<button type="submit">Kirim Pesan</button>
-		</form>
-	</div>
 
 </section>
 
+<div class="kontak-form">
+		<h3>Kirim Pesan</h3>
+
+		<!-- Tampilan sukses (disembunyikan dulu, muncul lewat JS setelah kirim) -->
+		<div id="pesan-sukses" style="
+			display: none;
+			background: #e8f5e9;
+			border: 1px solid #a5d6a7;
+			color: #2e7d32;
+			padding: 15px 20px;
+			border-radius: 8px;
+			margin-bottom: 20px;
+			text-align: center;
+			font-weight: 600;">
+			✅ Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
+		</div>
+
+		<form id="formKontak"
+			action="https://formsubmit.co/monevlitbangpiusx@gmail.com" 
+			method="POST">
+
+			<!-- ===== FIELD TERSEMBUNYI WAJIB ADA ===== -->
+
+			<!-- 1. Menonaktifkan halaman captcha bawaan FormSubmit -->
+			<input type="hidden" name="_captcha" value="false">
+
+			<!-- 2. Redirect ke halaman yang sama setelah form terkirim -->
+			<!-- Ganti dengan URL kontak.html Boss yang sebenarnya -->
+			<input type="hidden" name="_next" value="https://LitbangPiusXKra.github.io/litbangpiusxkra.hithub.io/kontak.html">
+
+			<!-- 3. Judul email yang akan masuk ke Gmail Boss -->
+			<input type="hidden" name="_subject" value="📩 Pesan Baru dari Website Paroki Santo Pius X">
+
+			<!-- 4. Format email yang diterima lebih rapi (tabel) -->
+			<input type="hidden" name="_template" value="table">
+
+			<!-- 5. Menambahkan CC jika ingin email salinan dikirim ke alamat lain -->
+			<!-- Hapus baris ini kalau tidak perlu -->
+			<!-- <input type="hidden" name="_cc" value="emaillain@gmail.com"> -->
+
+			<!-- ===== FIELD INPUT UTAMA ===== -->
+			<div class="form-group">
+				<label for="nama">Nama Lengkap</label>
+				<input type="text" 
+                   id="nama"
+                   name="nama" 
+                   placeholder="Nama Anda" 
+                   required>
+			</div>
+
+			<div class="form-group">
+				<label for="email">Alamat Email</label>
+				<input type="email" 
+                   id="email"
+                   name="email" 
+                   placeholder="Email Anda" 
+                   required>
+			</div>
+
+			<div class="form-group">
+				<label for="subjek">Subjek</label>
+				<input type="text" 
+                   id="subjek"
+                   name="subjek" 
+                   placeholder="Perihal pesan Anda"
+                   required>
+			</div>
+
+			<div class="form-group">
+				<label for="pesan">Pesan</label>
+				<textarea id="pesan"
+                      name="pesan" 
+                      rows="5" 
+                      placeholder="Tulis pesan Anda di sini..." 
+                      required></textarea>
+			</div>
+
+			<button type="submit" id="tombolKirim">
+				<i class="fas fa-paper-plane"></i> Kirim Pesan
+			</button>
+
+		</form>
+	</div>
+	
+<style>
+
+/* Grup setiap input agar ada jarak dan label */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.kontak-form input,
+.kontak-form textarea {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Efek border berubah warna saat input diklik */
+.kontak-form input:focus,
+.kontak-form textarea:focus {
+    border-color: #4a8b71;
+    box-shadow: 0 0 0 3px rgba(74, 139, 113, 0.15);
+}
+
+.kontak-form textarea {
+    resize: vertical; /* Hanya bisa dibesarkan ke bawah */
+    min-height: 120px;
+}
+
+/* Tombol Kirim */
+#tombolKirim {
+    background-color: #4a8b71;
+    color: white;
+    border: none;
+    padding: 13px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#tombolKirim:hover {
+    background-color: #3a7a60;
+    transform: translateY(-2px);
+}
+
+/* Animasi tombol saat loading (mengirim) */
+#tombolKirim:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    transform: none;
+}
+
+</style>
+	
 <footer>
     © 2026 Paroki Santo Pius X Karanganyar
 </footer>
@@ -175,6 +318,32 @@
    <i class="fab fa-whatsapp"></i>
 </a>
 
+<script>
+    const form = document.getElementById('formKontak');
+    const tombol = document.getElementById('tombolKirim');
+    const pesanSukses = document.getElementById('pesan-sukses');
+
+    form.addEventListener('submit', function(e) {
+
+        // Ubah tombol jadi "Mengirim..." agar umat tahu prosesnya berjalan
+        tombol.disabled = true;
+        tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+        // Biarkan form submit berjalan normal ke FormSubmit
+        // Setelah redirect kembali ke halaman ini via _next,
+        // kita cek apakah ada parameter ?terkirim=1 di URL
+    });
+
+    // Cek apakah halaman dibuka setelah redirect sukses dari FormSubmit
+    // Caranya: tambahkan ?terkirim=1 di akhir URL _next
+    const urlSekarang = new URLSearchParams(window.location.search);
+    if (urlSekarang.get('terkirim') === '1') {
+        pesanSukses.style.display = 'block';
+        // Scroll otomatis ke pesan sukses
+        pesanSukses.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+	
 <script src="js/script.js"></script>
 
 </body>
