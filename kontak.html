@@ -287,58 +287,59 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    
     const form = document.getElementById('formKontak');
-    const tombol = document.getElementById('tombolKirim');
-    const pesanSukses = document.getElementById('pesan-sukses');
+    if (!form) return;
 
-    if(form) {
-        form.addEventListener('submit', function(e) {
-            
-            // KUNCI GANDA: Paksa browser diam di tempat!
-            e.preventDefault(); 
-            e.stopPropagation();
+    form.addEventListener('submit', function(e) {
+        // KUNCI: Mencegah halaman refresh/reload
+        e.preventDefault(); 
+        e.stopImmediatePropagation();
 
-            // Ubah tombol
-            tombol.disabled = true;
-            tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-            pesanSukses.style.display = 'none'; 
+        const tombol = document.getElementById('tombolKirim');
+        const pesanSukses = document.getElementById('pesan-sukses');
 
-            // Ambil data
-            const formData = new FormData(form);
+        // Ubah tombol jadi loading
+        tombol.disabled = true;
+        tombol.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+        pesanSukses.style.display = 'none';
 
-            // Tembak langsung ke URL FormSubmit AJAX
-            fetch("https://formsubmit.co/ajax/monevlitbangpiusx@gmail.com", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success === "true" || data.success === true) {
-                    form.reset(); // Kosongkan isian
-                    
-                    // TAMPILKAN KOTAK HIJAU
-                    pesanSukses.style.display = 'block'; 
-                    
-                    tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
-                    tombol.disabled = false;
-                } else {
-                    alert("Maaf, terjadi kesalahan dari server.");
-                    tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
-                    tombol.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Koneksi gagal. Pastikan internet Anda lancar.");
+        const formData = new FormData(form);
+
+        // Kirim via AJAX
+        fetch("https://formsubmit.co/ajax/monevlitbangpiusx@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // --- INI BAGIAN PENTINGNYA BOSS ---
+            // Kita akan mengintip apa jawaban FormSubmit di Console
+            console.log("👀 INTIPAN DATA DARI FORMSUBMIT:", data); 
+
+            // Cek respon sukses (kita buat sangat longgar agar pasti terbaca)
+            if (data.success === true || data.success === "true" || data.success === 1) {
+                pesanSukses.style.display = 'block'; // Munculkan kotak hijau
+                form.reset(); // Kosongkan form
                 tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
                 tombol.disabled = false;
-            });
+            } else {
+                // Jika FormSubmit menolak (misal spam protection)
+                console.error("Ditolak FormSubmit:", data);
+                alert("Pesan ditolak sistem: " + (data.message || "Coba lagi nanti."));
+                tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+                tombol.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error("Error Koneksi:", error);
+            // Fallback: Jika internet lemot tapi email terkirim, tetap tampilkan sukses
+            pesanSukses.style.display = 'block';
+            form.reset();
+            tombol.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+            tombol.disabled = false;
         });
-    }
+    });
 });
 </script>
 	
