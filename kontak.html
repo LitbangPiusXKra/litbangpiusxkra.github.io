@@ -220,31 +220,39 @@
     margin-bottom: 8px;
 }
 
-.kontak-form input,
-.kontak-form textarea {
-    padding: 14px 16px;
-    border: 1.5px solid #e1e8ed;
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: inherit;
-    transition: all 0.3s ease;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box; /* Agar padding tidak merusak lebar */
-    background-color: #fcfcfc; /* Warna isian abu-abu super terang */
+/* Styling Kotak Input (Nama, Email, Subjek) */
+.kontak-form input {
+    padding: 14px 16px !important;
+    border: 1.5px solid #d1d9e0 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background-color: #f0f4f8 !important; /* Warna abu-abu kebiruan soft */
+    color: #333 !important; /* Warna teks gelap agar kontras */
 }
 
-/* Efek menyala saat isian diklik */
+/* KHUSUS KOTAK PESAN (Warnanya dibuat sedikit lebih gelap dari inputan atasnya) */
+.kontak-form textarea {
+    padding: 14px 16px !important;
+    border: 1.5px solid #d1d9e0 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background-color: #e8ecef !important; /* Abu-abu agak gelap yang elegan */
+    color: #333 !important;
+    resize: vertical !important; 
+    min-height: 140px !important;
+}
+
+/* Efek Keren: Saat kotak diklik, warnanya berubah putih dan menyala hijau */
 .kontak-form input:focus,
 .kontak-form textarea:focus {
-    border-color: #4a8b71;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(74, 139, 113, 0.1);
-}
-
-.kontak-form textarea {
-    resize: vertical; /* Hanya bisa ditarik ke bawah */
-    min-height: 130px;
+    border-color: #4a8b71 !important;
+    background-color: #ffffff !important; /* Berubah putih terang saat diklik */
+    box-shadow: 0 0 0 4px rgba(74, 139, 113, 0.15) !important;
+    outline: none !important;
 }
 
 /* Membuat tombol Kirim di tengah dan elegan */
