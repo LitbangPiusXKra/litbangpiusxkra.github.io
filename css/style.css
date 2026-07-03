@@ -317,24 +317,35 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 gap:50px;
-flex-wrap:wrap;
+max-width: 1080px; /* Sedikit dilebarkan agar teks yang dibesarkan punya ruang napas */
+margin: 50px auto; 
+padding: 0 20px;
 }
 
-.tentang-text{
-flex:1;
-min-width:300px;
+.tentang-text {
+    flex: 0 0 55%; /* Teks mengambil 55% ruang kiri */
+    text-align: left !important; /* MEMAKSA SEMUA KONTEN RATA KIRI */
 }
 
 .tentang-text h2{
+text-align: left;
 color:#0B1F3A;
 font-size:36px;
+margin-top: 0;
 margin-bottom:20px;
 }
 
-.tentang-text p{
-margin-bottom:15px;
+.tentang-text p {
+text-align: left; /* Memaksa paragraf rata kiri */
+line-height: 1.8;
+color: #444;
+margin-bottom: 20px;
+font-size: 18px; /* HURUF DIBESARKAN (Sebelumnya standar 15px/16px) */
 }
-
+.tentang-text .btn {
+    display: inline-block;
+    margin-top: 10px;
+}
 .btn{
 display:inline-block;
 padding:10px 25px;
@@ -353,9 +364,12 @@ color:white;
 
 /* 1. KOTAK BUNGKUS UTAMA (Efek geser dipindah ke sini agar foto & nama barengan) */
 .tentang-img {
-    position: relative; /* WAJIB ADA: Agar kotak nama tahu batas fotonya */
-    display: inline-block; /* Agar lebarnya pas membungkus foto */
-    transform: translate(-85px, 30px); /* Efek geser kiri & turun yang Boss buat tadi */
+    position: relative; 
+    flex: 0 0 35%; /* Foto mengambil jatah 35% layar */
+    display: flex;
+    justify-content: center; /* Memastikan foto di tengah kotaknya sendiri */
+    /* Geser ke kiri (minus) dihapus, hanya pakai turun ke bawah saja */
+    transform: translateY(20px); 
 }
 
 /* 2. FOTONYA */
@@ -366,6 +380,8 @@ color:white;
     display: block;
     /* (transform di sini dihapus, sudah dipindah ke .tentang-img di atas) */
 }
+
+
 
 /* 3. KOTAK NAMA YANG MENUMPUK */
 .nama-romo-badge {
@@ -386,6 +402,22 @@ color:white;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Bayangan memancar agar terlihat 3D */
     white-space: nowrap; /* Mencegah teks terpotong jadi 2 baris */
     border: 2px solid #e8ecef; /* Garis tepi sangat tipis */
+}
+
+@media (max-width: 768px) {
+    .tentang-container {
+        flex-direction: column; /* Ubah susunan jadi atas-bawah */
+        text-align: center;
+    }
+    .tentang-text, .tentang-img {
+        flex: 0 0 100%; /* Di HP, keduanya mengambil full 100% layar */
+        max-width: 100%;
+        padding-right: 0;
+    }
+    .tentang-img {
+        transform: translateY(0); /* Netralkan posisi di HP */
+        margin-top: 30px;
+    }
 }
 
 /* ==========================
