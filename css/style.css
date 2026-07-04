@@ -613,7 +613,7 @@ SECTION PENGURUS
     
     /* Memasang Background Gereja + Efek Gelap (Overlay) agar teks tetap terbaca */
     /* UBAH 'images/bg-gereja.jpg' DENGAN NAMA FILE FOTO GEREJA BOSS */
-    background-image: linear-gradient(rgba(0, 43, 92, 0.7), rgba(0, 0, 0, 0.8)), url('../images/bg-gereja.jpg');
+    background-image: linear-gradient(rgba(0, 43, 92, 0.7), rgba(0, 0, 0, 0.8)), url('../images/banner1.png');
     background-size: cover; /* Agar gambar memenuhi layar */
     background-position: center; /* Gambar fokus di tengah */
     background-attachment: fixed; /* Efek keren: Gambar diam saat layar di-scroll (Parallax) */
