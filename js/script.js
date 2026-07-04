@@ -52,7 +52,7 @@ window.addEventListener('load', checkFadeIn);
 document.addEventListener('DOMContentLoaded', function() {
     
     // MASUKKAN LINK CSV SHEET "DataGaleri" DI SINI
-    const urlCSVGaleri = "MASUKKAN_LINK_CSV_GALERI_BOSS_DI_SINI";
+    const urlCSVGaleri = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=176725659&single=true&output=csv";
     const wadahGaleri = document.getElementById('wadah-galeri-dinamis');
 
     fetch(urlCSVGaleri)
