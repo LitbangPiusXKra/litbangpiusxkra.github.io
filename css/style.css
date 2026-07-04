@@ -604,53 +604,55 @@ SECTION PENGURUS
 ========================== */
 /* --- SECTION & JUDUL --- */
 /* ==================================================
-   1 & 2. SECTION UTAMA & BACKGROUND GEREJA
+   1 & 2. SECTION UTAMA (BACKGROUND NATURAL)
    ================================================== */
 .pengurus-section {
     position: relative;
-    /* Menurunkan posisi agar tidak nabrak header (120px dari atas) */
     padding: 120px 20px 80px 20px; 
-    
-    /* Memasang Background Gereja + Efek Gelap (Overlay) agar teks tetap terbaca */
-    /* UBAH 'images/bg-gereja.jpg' DENGAN NAMA FILE FOTO GEREJA BOSS */
-    background-image: linear-gradient(rgba(0, 43, 92, 0.7), rgba(0, 0, 0, 0.8)), url('../images/Banner1.png');
-    background-size: cover; /* Agar gambar memenuhi layar */
-    background-position: center; /* Gambar fokus di tengah */
-    background-attachment: fixed; /* Efek keren: Gambar diam saat layar di-scroll (Parallax) */
     min-height: 100vh;
+    
+    /* GRADIENT DIHAPUS, MURNI HANYA GAMBAR ASLI */
+    /* Pastikan path url-nya sesuai seperti yang kita bahas sebelumnya ya Boss */
+    background: url("../images/bg-gereja.jpg") center center / cover no-repeat !important;
+    background-attachment: fixed; /* Parallax effect tetap dipertahankan */
 }
 
-/* Judul Halaman */
+/* ==================================================
+   JUDUL HALAMAN (Diberi bayangan tebal agar terbaca di atas foto asli)
+   ================================================== */
 .judul-halaman {
     text-align: center;
     margin-bottom: 50px;
     position: relative;
-    z-index: 2; /* Memastikan teks ada di atas background */
+    z-index: 2;
 }
 
 .judul-halaman h2 {
     font-family: 'Playfair Display', serif;
     font-size: 38px;
-    color: #ffffff; /* Diubah jadi PUTIH karena backgroundnya sekarang gelap */
+    color: #ffffff !important; 
     margin-bottom: 10px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Efek bayangan teks */
+    /* Bayangan ditebalkan agar tulisan menonjol keluar dari foto gereja */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.9), 0px 0px 20px rgba(0,0,0,0.7) !important; 
 }
 
 .judul-halaman p {
     font-size: 18px;
-    color: #e0e0e0; /* Putih agak abu-abu */
+    color: #ffffff !important; 
     margin-top: 0;
+    font-weight: 600; /* Agak ditebalkan */
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.9) !important;
 }
 
 .garis-cantik {
     width: 80px;
-    height: 3px;
+    height: 4px;
     background-color: #d38c6d; 
     border: none;
     border-radius: 5px;
     margin: 20px auto 0;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.5); /* Garis juga diberi bayangan */
 }
-
 /* ==================================================
    WADAH KARTU (GRID SYSTEM)
    ================================================== */
