@@ -153,14 +153,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // CATATAN: Ini asumsi kolom foto di Spreadsheet tetap ada di Kolom E (ke-5)
                 // Jika Boss MENGHAPUS TOTAL kolom deskripsi di Sheets, ganti kolom[4] di bawah ini jadi kolom[3]
                 let foto = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
-                if (!foto) { foto = 'images/dummy-profile.jpg'; } 
+                if (!foto) { foto = 'images/dummy-profil.jpg'; } 
 
                 // Jika kolom nama ada isinya, buatkan Kartu HTML-nya TANPA Deskripsi
                 if (nama) {
                     htmlKartu += `
                     <div class="pengurus-card">
                         <div class="pengurus-foto">
-                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profile.jpg'">
+                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profil.jpg'">
                         </div>
                         <div class="pengurus-info">
                             <h3>${nama}</h3>
