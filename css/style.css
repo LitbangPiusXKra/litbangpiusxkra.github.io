@@ -903,37 +903,78 @@ flex-grow:1;
     min-height: 100vh; /* Tambahan agar background menutupi sampai bawah layar */
 }
 
+/* ==================================================
+   JUDUL HALAMAN (CLASSIC-MODERN & ELEGAN)
+   ================================================== */
 .galeri h2 {
-    font-size: 36px;
-    color: #0B1F3A; /* Navy Boss */
-    margin-bottom: 40px;
     font-family: 'Playfair Display', serif;
+    font-size: 42px; /* Diperbesar sedikit agar berwibawa */
+    font-weight: 700;
+    color: #0B1F3A; /* Navy Kebanggaan Paroki */
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    text-align: center;
 }
 
+/* Sub-Judul Tambahan (Opsional di bawah Judul agar lebih informatif) */
+.galeri::after {
+    content: "Dokumentasi Iman dan Kebersamaan Umat Paroki";
+    display: block;
+    font-size: 16px;
+    color: #888;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* ==================================================
+   TOMBOL FILTER (SOFT, PIL, & INTERAKTIF)
+   ================================================== */
 .galeri-filter {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 15px; /* Jarak antar tombol dibuat lebih longgar */
+    margin-bottom: 50px;
 }
 
 .filter-btn {
-    padding: 10px 25px;
-    border: 2px solid #0B1F3A;
-    background: transparent;
-    color: #0B1F3A;
-    border-radius: 30px;
-    cursor: pointer;
+    padding: 12px 30px; /* Lebih tebal dan nyaman diklik */
+    border: 1px solid #e1e8ed; /* Garis tepi tipis abu-abu pudar (sangat soft) */
+    background-color: #ffffff; /* Latar belakang putih bersih */
+    color: #555555; /* Warna teks abu-abu teduh (tidak kaku hitam) */
+    border-radius: 30px; /* Membulat sempurna seperti kapsul */
+    font-size: 15px;
     font-weight: 600;
-    transition: 0.3s;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Efek transisi super halus */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); /* Bayangan sangat tipis */
 }
 
-.filter-btn:hover,
+/* Efek saat Kursor Mendekat (Hover) */
+.filter-btn:hover {
+    color: #0B1F3A; /* Berubah ke warna Navy */
+    background-color: #f5f8fa; /* Sedikit kebiruan pudar */
+    border-color: #0B1F3A;
+    transform: translateY(-2px); /* Melayang naik sedikit */
+    box-shadow: 0 6px 15px rgba(11, 31, 58, 0.08);
+}
+
+/* Efek saat Tombol AKTIF / DIKLIK (Sangat Menonjol tapi tetap Soft) */
 .filter-btn.active {
-    background: #0B1F3A;
-    color: #C9A15A; /* Emas Boss */
-    box-shadow: 0 5px 15px rgba(11, 31, 58, 0.3);
+    background-color: #0B1F3A !important; /* Latar belakang Navy penuh */
+    color: #C9A15A !important; /* Tulisan Emas yang kontras */
+    border-color: #0B1F3A !important;
+    transform: translateY(-2px);
+    /* Efek menyala emas lembut di sekeliling tombol */
+    box-shadow: 0 8px 25px rgba(11, 31, 58, 0.25), 0 0 10px rgba(201, 161, 90, 0.2) !important; 
+}
+
+/* Efek Riak saat Tombol di-Klik (Active State) */
+.filter-btn:active {
+    transform: scale(0.95); /* Memampat sedikit seperti membal */
 }
 
 .galeri-grid {
