@@ -613,8 +613,7 @@ SECTION PENGURUS
     
     /* GRADIENT DIHAPUS, MURNI HANYA GAMBAR ASLI */
     /* Pastikan path url-nya sesuai seperti yang kita bahas sebelumnya ya Boss */
-    background: url("../images/Banner1.png") center center / cover no-repeat !important;
-    background-attachment: fixed; /* Parallax effect tetap dipertahankan */
+    background: url("../images/Banner1.png") center center / cover no-repeat fixed !important;
 }
 
 /* ==================================================
