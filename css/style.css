@@ -603,91 +603,109 @@ height:400px;
 SECTION PENGURUS
 ========================== */
 /* --- SECTION & JUDUL --- */
+/* ==================================================
+   1 & 2. SECTION UTAMA & BACKGROUND GEREJA
+   ================================================== */
 .pengurus-section {
-    background-color: #fcfcfc; /* Warna latar sangat soft (putih tulang) */
-    padding: 60px 20px;
+    position: relative;
+    /* Menurunkan posisi agar tidak nabrak header (120px dari atas) */
+    padding: 120px 20px 80px 20px; 
+    
+    /* Memasang Background Gereja + Efek Gelap (Overlay) agar teks tetap terbaca */
+    /* UBAH 'images/bg-gereja.jpg' DENGAN NAMA FILE FOTO GEREJA BOSS */
+    background-image: linear-gradient(rgba(0, 43, 92, 0.7), rgba(0, 0, 0, 0.8)), url('../images/bg-gereja.jpg');
+    background-size: cover; /* Agar gambar memenuhi layar */
+    background-position: center; /* Gambar fokus di tengah */
+    background-attachment: fixed; /* Efek keren: Gambar diam saat layar di-scroll (Parallax) */
+    min-height: 100vh;
 }
 
+/* Judul Halaman */
 .judul-halaman {
     text-align: center;
     margin-bottom: 50px;
+    position: relative;
+    z-index: 2; /* Memastikan teks ada di atas background */
 }
 
 .judul-halaman h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    color: #002b5c; /* Biru Navy Gereja */
+    font-size: 38px;
+    color: #ffffff; /* Diubah jadi PUTIH karena backgroundnya sekarang gelap */
     margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Efek bayangan teks */
 }
 
 .judul-halaman p {
     font-size: 18px;
-    color: #666;
+    color: #e0e0e0; /* Putih agak abu-abu */
     margin-top: 0;
 }
 
 .garis-cantik {
     width: 80px;
     height: 3px;
-    background-color: #d38c6d; /* Warna Terracotta / Emas */
+    background-color: #d38c6d; 
     border: none;
     border-radius: 5px;
     margin: 20px auto 0;
 }
 
-/* --- WADAH KARTU (GRID SYSTEM) --- */
+/* ==================================================
+   WADAH KARTU (GRID SYSTEM)
+   ================================================== */
 .pengurus-container {
     display: grid;
-    /* Rahasia agar rapi: Lebar kartu minimal 280px, kalau layar lebar otomatis jadi beberapa kolom */
+    /* Layout dinamis: akan menyesuaikan layar otomatis */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1100px;
+    gap: 35px;
+    max-width: 1150px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
-/* --- DESAIN KARTU (SOFT & PROFESIONAL) --- */
+/* DESAIN KARTU */
 .pengurus-card {
     background: #ffffff;
     border-radius: 16px;
-    overflow: hidden; /* Agar foto di atas ikut melengkung sesuai border */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Bayangan sangat lembut */
+    overflow: hidden; 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Bayangan ditebalkan karena background gelap */
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    border: 1px solid #f0f0f0;
+    border: none; /* Border dihilangkan agar lebih clean */
     display: flex;
     flex-direction: column;
 }
 
-/* Efek mengambang saat disentuh mouse */
 .pengurus-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-12px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
-/* --- FOTO PENGURUS --- */
+/* FOTO PENGURUS */
 .pengurus-foto {
     width: 100%;
-    height: 280px; /* Tinggi foto seragam semua */
+    height: 300px; 
     overflow: hidden;
 }
 
 .pengurus-foto img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Foto otomatis dipotong rapi tanpa gepeng */
-    object-position: top; /* Fokus ke wajah (atas) */
+    object-fit: cover; 
+    object-position: top; 
     transition: transform 0.5s ease;
 }
 
-/* Foto nge-zoom sedikit saat di-hover */
 .pengurus-card:hover .pengurus-foto img {
     transform: scale(1.08);
 }
 
-/* --- INFO TEKS PENGURUS --- */
+/* INFO TEKS PENGURUS */
 .pengurus-info {
     padding: 25px 20px;
-    text-align: center; /* Dibuat rata tengah agar berwibawa */
-    flex-grow: 1; /* Mengisi sisa ruang ke bawah */
+    text-align: center; 
+    flex-grow: 1; 
 }
 
 .pengurus-info h3 {
@@ -699,9 +717,9 @@ SECTION PENGURUS
 
 .badge-jabatan {
     display: inline-block;
-    background-color: #e8f0fe; /* Biru sangat soft */
-    color: #1a73e8; /* Teks biru jelas */
-    padding: 5px 15px;
+    background-color: #e8f0fe; 
+    color: #1a73e8; 
+    padding: 6px 18px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: bold;
@@ -724,35 +742,46 @@ SECTION PENGURUS
     padding-top: 10px;
 }
 
-/* Di HP kita kembalikan ke normal supaya tidak patah-patah */
-@media(max-width:768px){
-.pengurus-section{
-background-attachment: scroll;
-}
+/* ==================================================
+   3. SETTING RESPONSIF (UNTUK HP & TABLET)
+   ================================================== */
+
+/* Untuk TABLET (Layar sedang) */
+@media (max-width: 992px) {
+    .pengurus-section {
+        padding-top: 100px; /* Jarak atas dikurangi sedikit */
+    }
+    .pengurus-container {
+        gap: 25px; /* Jarak antar kartu dirapatkan */
+        padding: 0 20px;
+    }
+    .pengurus-foto {
+        height: 260px; /* Foto sedikit dipendekkan */
+    }
 }
 
-/* TABLET */
-@media(max-width:1024px){
-.pengurus-container{
-grid-template-columns:repeat(2, 1fr);
-}
+/* Untuk HANDPHONE (Layar kecil) */
+@media (max-width: 768px) {
+    .pengurus-section {
+        padding-top: 90px;
+    }
+    .judul-halaman h2 {
+        font-size: 28px; /* Huruf judul dikecilkan agar muat di HP */
+    }
+    .judul-halaman p {
+        font-size: 15px;
+    }
+    .pengurus-container {
+        /* Memaksa kartu menjadi 1 baris ke bawah (Atas-Bawah) di HP */
+        grid-template-columns: 1fr; 
+        gap: 30px;
+        padding: 0 15px;
+    }
+    .pengurus-foto {
+        height: 320px; /* Di HP foto bisa dibesarkan lagi karena jadi 1 baris */
+    }
 }
 
-/* HP */
-@media(max-width:768px){
-.pengurus-container{
-grid-template-columns:1fr;
-}
-
-.pengurus-card{
-text-align:center;
-padding:20px;
-}
-
-.pengurus-foto img{
-width:180px;
-}
-}
 
 /* ================= KONTAK RESPONSIVE ================= */
 
