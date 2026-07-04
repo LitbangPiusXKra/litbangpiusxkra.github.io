@@ -137,34 +137,37 @@ document.addEventListener('DOMContentLoaded', function() {
             const barisData = dataText.replace(/\r/g, '').split('\n');
             let htmlKartu = '';
 
-            // Looping dari baris ke-2 (melewati judul kolom)
+                        // Looping dari baris ke-2 (melewati judul kolom)
             for (let i = 1; i < barisData.length; i++) {
                 const barisAktif = barisData[i].trim();
                 if (barisAktif === '') continue;
 
-                // Trik memecah kolom CSV (Aman kalau di dalam deskripsi ada tanda koma)
-                // Ini regex agar koma di dalam tanda kutip (") tidak ikut terpotong
+                // Trik memecah kolom CSV
                 const kolom = barisAktif.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
-                // Ekstrak data dan bersihkan tanda kutip
+                // Ekstrak data (Deskripsi sudah dibuang)
                 const nama = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
                 const jabatan = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
                 const periode = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
                 
-                // Jika kolom E (Foto) kosong, beri gambar profil bawaan/dummy
+                // CATATAN: Ini asumsi kolom foto di Spreadsheet tetap ada di Kolom E (ke-5)
+                // Jika Boss MENGHAPUS TOTAL kolom deskripsi di Sheets, ganti kolom[4] di bawah ini jadi kolom[3]
                 let foto = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
-                if (!foto) { foto = 'images/dummy-profil.jpg'; } 
+                if (!foto) { foto = 'images/dummy-profile.jpg'; } 
 
-                // Jika kolom nama ada isinya, buatkan Kartu HTML-nya
+                // Jika kolom nama ada isinya, buatkan Kartu HTML-nya TANPA Deskripsi
                 if (nama) {
                     htmlKartu += `
                     <div class="pengurus-card">
                         <div class="pengurus-foto">
-                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profil.jpg'">
+                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profile.jpg'">
                         </div>
                         <div class="pengurus-info">
                             <h3>${nama}</h3>
                             <div class="badge-jabatan">${jabatan}</div>
+                            
+                            <!-- Baris Deskripsi Dihapus dari Sini -->
+                            
                             <p class="periode-teks">Periode: ${periode}</p>
                         </div>
                     </div>
