@@ -746,20 +746,21 @@ SECTION PENGURUS
 }
 
 /* ==================================================
-   3. SETTING RESPONSIF (UNTUK HP & TABLET)
+   SETTING RESPONSIF (UNTUK HP & TABLET) - FOTO FULL
    ================================================== */
 
 /* Untuk TABLET (Layar sedang) */
 @media (max-width: 992px) {
     .pengurus-section {
-        padding-top: 100px; /* Jarak atas dikurangi sedikit */
+        padding-top: 100px; 
     }
     .pengurus-container {
-        gap: 25px; /* Jarak antar kartu dirapatkan */
+        gap: 25px; 
         padding: 0 20px;
     }
     .pengurus-foto {
-        height: 260px; /* Foto sedikit dipendekkan */
+        /* Di tablet kartu agak menyempit, tinggi kita sesuaikan agar proporsional */
+        height: 280px !important; 
     }
 }
 
@@ -769,22 +770,22 @@ SECTION PENGURUS
         padding-top: 90px;
     }
     .judul-halaman h2 {
-        font-size: 28px; /* Huruf judul dikecilkan agar muat di HP */
+        font-size: 28px; 
     }
     .judul-halaman p {
         font-size: 15px;
     }
     .pengurus-container {
-        /* Memaksa kartu menjadi 1 baris ke bawah (Atas-Bawah) di HP */
+        /* Memaksa kartu menjadi 1 baris penuh ke bawah di HP */
         grid-template-columns: 1fr; 
         gap: 30px;
         padding: 0 15px;
     }
     .pengurus-foto {
-        height: 320px; /* Di HP foto bisa dibesarkan lagi karena jadi 1 baris */
+        /* KUNCI HP: Karena kartu jadi lebar, tinggi foto kita tambah agar orangnya tidak terlihat kecil/jauh */
+        height: 380px !important; 
     }
 }
-
 
 /* ================= KONTAK RESPONSIVE ================= */
 
