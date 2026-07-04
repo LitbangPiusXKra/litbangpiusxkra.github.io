@@ -686,20 +686,15 @@ SECTION PENGURUS
 /* FOTO PENGURUS */
 .pengurus-foto {
     width: 100%;
-    height: 320px; /* Saya tinggikan sedikit agar lebih lega */
-    background-color: #f8fafc; /* Warna latar abu-abu sangat muda/pudar */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Memastikan foto orang menempel di bawah (nempel kotak teks) */
+    height: auto; /* Biarkan tinggi kotak mengikuti tinggi foto aslinya */
     overflow: hidden;
 }
 
 .pengurus-foto img {
     width: 100%;
-    height: 100%;
-    /* KUNCI RAHASIA: 'contain' memaksa foto tampil 100% utuh tanpa dipotong! */
-    object-fit: contain !important; 
-    object-position: bottom !important; /* Memastikan foto sejajar di bawah */
+    height: auto; /* Foto dibiarkan proporsional */
+    display: block;
+    object-fit: unset !important; /* Matikan efek potong (cover/contain) */
     transition: transform 0.5s ease;
 }
 
