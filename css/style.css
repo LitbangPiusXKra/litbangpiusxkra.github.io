@@ -1169,15 +1169,6 @@ flex-grow:1;
     100% { opacity: 1; transform: translateX(0) scale(1); }
 }
 
-/* HP RESPONSIVE */
-@media(max-width: 768px) {
-    .lightbox-prev, .lightbox-next { display: none; } /* Sembunyikan panah agar foto tidak ketutupan */
-    .lightbox-content { max-width: 100%; margin-top: 0; }
-    .lightbox-text-box { width: 100%; margin-top: 10px; padding: 15px; }
-    .lightbox img { max-height: 45vh; }
-    .lightbox-close { top: 10px; right: 20px; }
-}
-
 /* ==================================================
    WADAH MEDIA & IKON PLAY VIDEO MASIH DALAM HAL GALERI
    ================================================== */
@@ -1238,6 +1229,32 @@ flex-grow:1;
     border-radius: 10px !important;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
     outline: none !important;
+}
+
+/* ==================================================
+   HP & TABLET RESPONSIVE
+   ================================================== */
+@media(max-width: 768px) {
+    /* MUNCULKAN PANAH KEMBALI DENGAN UKURAN MINI */
+    .lightbox-prev, .lightbox-next { 
+        display: block !important; 
+        font-size: 24px !important; /* Ukuran panah dikecilkan */
+        padding: 8px 12px !important; /* Lingkaran tombol dikecilkan */
+        background: rgba(0, 0, 0, 0.4) !important; /* Diberi latar gelap sedikit agar tidak nyaru dengan foto cerah */
+        z-index: 100001 !important; /* Pastikan selalu di paling depan */
+    }
+    
+    /* Posisikan mepet ke pinggir layar agar tidak menutupi tengah foto */
+    .lightbox-prev { left: 5px !important; }
+    .lightbox-next { right: 5px !important; }
+
+    /* Aturan untuk kotak dan gambar di HP */
+    .lightbox-content { max-width: 100%; margin-top: 0; }
+    .lightbox-text-box { width: 100%; margin-top: 10px; padding: 15px; }
+    .lightbox img, .lightbox-media-wadah video { max-height: 45vh !important; }
+    
+    /* Tombol X (Close) sedikit dikecilkan juga */
+    .lightbox-close { top: 10px; right: 15px; font-size: 35px !important; }
 }
 
 /* ==========================
