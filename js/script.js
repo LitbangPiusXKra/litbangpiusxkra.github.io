@@ -151,6 +151,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let currentIndex = 0;
             let visibleItems = [];
 
+           const lightboxMediaWadah = document.getElementById("lightboxMediaWadah");
+
             function showMedia(index){
                 const item = visibleItems[index];
                 const tipeMedia = item.getAttribute("data-tipe");
@@ -160,25 +162,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 const ketEl = item.querySelector(".galeri-ket").getAttribute("data-ket");
                 const srcMedia = item.querySelector(".media-galeri").getAttribute("src");
 
-                // MATIKAN VIDEO TERLEBIH DAHULU (Biar suara gak tumpang tindih)
-                lightboxVid.pause();
-                lightboxVid.src = "";
+                // KOSONGKAN WADAH DULU (Ini yang mencegah gambar/video menumpuk!)
+                lightboxMediaWadah.innerHTML = "";
 
                 // ISI TEKS
                 lightboxJudul.innerText = judulEl;
                 lightboxTanggal.innerText = tglEl;
                 lightboxCaption.innerText = ketEl;
 
-                // TAMPILKAN VIDEO ATAU GAMBAR
+                // CETAK MEDIA KE DALAM WADAH SESUAI TIPENYA
                 if (tipeMedia === 'video') {
-                    lightboxImg.style.display = 'none'; // Sembunyikan foto
-                    lightboxVid.style.display = 'block'; // Tampilkan Video
-                    lightboxVid.src = srcMedia;
-                    lightboxVid.play(); // OTOMATIS PLAY SAAT DIBUKA
+                    lightboxMediaWadah.innerHTML = `<video src="${srcMedia}" controls autoplay></video>`;
                 } else {
-                    lightboxVid.style.display = 'none'; // Sembunyikan Video
-                    lightboxImg.style.display = 'block'; // Tampilkan Foto
-                    lightboxImg.src = srcMedia;
+                    lightboxMediaWadah.innerHTML = `<img src="${srcMedia}" alt="${judulEl}">`;
                 }
             }
 
@@ -206,11 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showMedia(currentIndex);
             });
 
-            // FUNGSI TUTUP (SANGAT PENTING: MATIKAN VIDEO SAAT DITUTUP)
+            // FUNGSI TUTUP (SANGAT PENTING: Kosongkan wadah agar suara video mati)
             function tutupLightbox() {
                 lightbox.classList.remove("show");
-                lightboxVid.pause(); // Video Langsung Berhenti
-                lightboxVid.src = "";
+                lightboxMediaWadah.innerHTML = ""; // Menghancurkan video dari layar agar suaranya stop
             }
 
             lightboxClose.addEventListener("click", tutupLightbox);
