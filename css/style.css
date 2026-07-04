@@ -602,73 +602,126 @@ height:400px;
 /* ==========================
 SECTION PENGURUS
 ========================== */
-
-.pengurus-section{
-padding:120px 5% 80px 5%;
-background: url("../images/FotoGereja.jpg") center / cover no-repeat;
-background-size: contain;   /* ini kunci agar tidak terpotong */
-background-attachment: fixed; /* INI YANG PALING PENTING */
-background-color: #ffffff;  /* warna kosong jika ada ruang */
+/* --- SECTION & JUDUL --- */
+.pengurus-section {
+    background-color: #fcfcfc; /* Warna latar sangat soft (putih tulang) */
+    padding: 60px 20px;
 }
 
-.pengurus-section h2{
-position:relative;
-z-index:1;
-text-align:center;
-color:#0B1F3A;
-font-size:36px;
-margin-bottom:50px;
+.judul-halaman {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
-.pengurus-container{
-position:relative;
-z-index:1;
-display:grid;
-grid-template-columns:repeat(3, 1fr);
-gap:30px;
+.judul-halaman h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #002b5c; /* Biru Navy Gereja */
+    margin-bottom: 10px;
 }
 
-.pengurus-card{
-background:white;
-border-radius:15px;
-padding:25px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
-text-align:center;
-transition:0.3s ease;
+.judul-halaman p {
+    font-size: 18px;
+    color: #666;
+    margin-top: 0;
 }
 
-.pengurus-card:hover{
-transform:translateY(-5px);
+.garis-cantik {
+    width: 80px;
+    height: 3px;
+    background-color: #d38c6d; /* Warna Terracotta / Emas */
+    border: none;
+    border-radius: 5px;
+    margin: 20px auto 0;
 }
 
-/* FOTO TIDAK TERPOTONG */
-.pengurus-foto{
-width:100%;
-display:flex;
-justify-content:center;
-margin-bottom:15px;
+/* --- WADAH KARTU (GRID SYSTEM) --- */
+.pengurus-container {
+    display: grid;
+    /* Rahasia agar rapi: Lebar kartu minimal 280px, kalau layar lebar otomatis jadi beberapa kolom */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.pengurus-foto img{
-width:200px;
-height:auto;              /* penting agar tidak terpotong */
-object-fit:contain;       /* supaya foto utuh */
-border-radius:15px;
-border:5px solid #C9A15A;
+/* --- DESAIN KARTU (SOFT & PROFESIONAL) --- */
+.pengurus-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden; /* Agar foto di atas ikut melengkung sesuai border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Bayangan sangat lembut */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
 }
 
-/* INFO */
-.pengurus-info h3{
-margin-bottom:8px;
-color:#0B1F3A;
-font-size:18px;
+/* Efek mengambang saat disentuh mouse */
+.pengurus-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
-.pengurus-info p{
-margin-bottom:5px;
-color:#333;
-font-size:13px;
-line-height:1.4;
+/* --- FOTO PENGURUS --- */
+.pengurus-foto {
+    width: 100%;
+    height: 280px; /* Tinggi foto seragam semua */
+    overflow: hidden;
+}
+
+.pengurus-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Foto otomatis dipotong rapi tanpa gepeng */
+    object-position: top; /* Fokus ke wajah (atas) */
+    transition: transform 0.5s ease;
+}
+
+/* Foto nge-zoom sedikit saat di-hover */
+.pengurus-card:hover .pengurus-foto img {
+    transform: scale(1.08);
+}
+
+/* --- INFO TEKS PENGURUS --- */
+.pengurus-info {
+    padding: 25px 20px;
+    text-align: center; /* Dibuat rata tengah agar berwibawa */
+    flex-grow: 1; /* Mengisi sisa ruang ke bawah */
+}
+
+.pengurus-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+}
+
+.badge-jabatan {
+    display: inline-block;
+    background-color: #e8f0fe; /* Biru sangat soft */
+    color: #1a73e8; /* Teks biru jelas */
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.pengurus-info p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.periode-teks {
+    font-size: 13px !important;
+    color: #888 !important;
+    font-style: italic;
+    margin-top: 15px;
+    border-top: 1px dashed #eee;
+    padding-top: 10px;
 }
 
 /* Di HP kita kembalikan ke normal supaya tidak patah-patah */
