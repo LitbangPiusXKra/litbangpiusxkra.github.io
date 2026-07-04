@@ -59,76 +59,19 @@
     <h2>Galeri Foto Kegiatan Paroki</h2>
 
     <!-- FILTER KATEGORI -->
-    <div class="galeri-filter">
+     <div class="galeri-filter">
         <button class="filter-btn active" data-filter="all">Semua</button>
         <button class="filter-btn" data-filter="misa">Misa</button>
         <button class="filter-btn" data-filter="omk">OMK</button>
-        <button class="filter-btn" data-filter="baptis">Baptis</button>
+        <button class="filter-btn" data-filter="pewartaan">Pewartaan</button>
         <button class="filter-btn" data-filter="sosial">Sosial</button>
     </div>
 
-    <!-- GRID GALERI -->
-    <div class="galeri-grid">
-
-        <!-- ITEM 1 -->
-        <div class="galeri-item" data-kategori="misa">
-            <h3 class="galeri-judul">Misa Natal 2025</h3>
-            <span class="galeri-tanggal">25 Desember 2025</span>
-            <img src="images/banner.jpg" alt="Misa Natal"
-                 data-ket="Perayaan Misa Malam Natal bersama seluruh umat paroki dengan penuh sukacita dan khidmat.">
-            <p class="galeri-ket">
-                Perayaan Misa Malam Natal bersama seluruh umat paroki
-                dengan penuh sukacita.
-            </p>
-        </div>
-
-        <!-- ITEM 2 -->
-        <div class="galeri-item" data-kategori="baptis">
-            <h3 class="galeri-judul">Baptisan Bayi</h3>
-            <span class="galeri-tanggal">12 Januari 2026</span>
-            <img src="images/logo.png" alt="Baptisan"
-                 data-ket="Sakramen Baptis bagi putra-putri umat sebagai tanda kelahiran baru dalam Kristus.">
-            <p class="galeri-ket">
-                Sakramen Baptis bagi putra-putri umat di Paroki
-                Santo Pius X.
-            </p>
-        </div>
-
-        <!-- ITEM 3 -->
-        <div class="galeri-item" data-kategori="omk">
-            <h3 class="galeri-judul">Kegiatan OMK</h3>
-            <span class="galeri-tanggal">5 Februari 2026</span>
-            <img src="images/banner.jpg" alt="OMK"
-                 data-ket="Pertemuan Orang Muda Katolik dalam membangun kebersamaan, persaudaraan, dan iman.">
-            <p class="galeri-ket">
-                Pertemuan Orang Muda Katolik dalam membangun
-                kebersamaan dan iman.
-            </p>
-        </div>
-
-        <!-- ITEM 4 -->
-        <div class="galeri-item" data-kategori="sosial">
-            <h3 class="galeri-judul">Bakti Sosial</h3>
-            <span class="galeri-tanggal">20 Maret 2026</span>
-            <img src="images/logo.png" alt="Baksos"
-                 data-ket="Kegiatan bakti sosial pembagian sembako kepada masyarakat yang membutuhkan.">
-            <p class="galeri-ket">
-                Pembagian sembako kepada warga sekitar sebagai wujud
-                kasih dan kepedulian.
-            </p>
-        </div>
-		
-		<!-- ITEM 5 -->
-        <div class="galeri-item" data-kategori="omk">
-            <h3 class="galeri-judul">Kegiatan OMK</h3>
-            <span class="galeri-tanggal">15 Mei 2026</span>
-            <img src="images/logo.png" alt="OMK"
-                 data-ket="Pertemuan Orang Muda Katolik Pemilihan Kepenguruan Baru">
-            <p class="galeri-ket">
-                Pertemuan Orang Muda Katolik Pemilihan
-                Kepenguruan Baru
-            </p>
-        </div>
+    <!-- GRID GALERI YANG AKAN DIISI OTOMATIS OLEH SPREADSHEETS -->
+    <div class="galeri-grid" id="wadah-galeri-dinamis">
+        <p style="text-align: center; width: 100%; color: #888; grid-column: 1 / -1;">
+            <i class="fas fa-spinner fa-spin"></i> Sedang memuat galeri foto...
+        </p>
     </div>
 </section>
 
