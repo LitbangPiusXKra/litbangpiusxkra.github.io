@@ -150,10 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const nama = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
                 const jabatan = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
                 const periode = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
-                const deskripsi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
                 
                 // Jika kolom E (Foto) kosong, beri gambar profil bawaan/dummy
-                let foto = kolom[4] ? kolom[4].replace(/^"|"$/g, '').trim() : '';
+                let foto = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
                 if (!foto) { foto = 'images/dummy-profil.jpg'; } 
 
                 // Jika kolom nama ada isinya, buatkan Kartu HTML-nya
