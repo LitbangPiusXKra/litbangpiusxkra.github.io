@@ -55,79 +55,26 @@
 
 
 <!-- ====== ISI HALAMAN (BAGIAN INI YANG DIGANTI-GANTI) ====== -->
+<!-- ====== ISI HALAMAN PENURUS PGPM ====== -->
 <section class="pengurus-section">
+    
+    <!-- Judul Halaman yang Elegan -->
+    <div class="judul-halaman">
+        <h2>Susunan Pengurus PGPM</h2>
+        <p>Paroki Santo Pius X Karanganyar</p>
+        <hr class="garis-cantik">
+    </div>
 
-<!-- <h2>Pengurus PGPM</h2> -->
-
-    <div class="pengurus-container">
-
-        <!-- CARD 1 -->
-        <div class="pengurus-card fade-in">
-            <div class="pengurus-foto">
-                <img src="images/pgpm1.jpg" alt="Nama Pengurus">
-            </div>
-            <div class="pengurus-info">
-                <h3>Romo Robertus Triwidodo Pr.</h3>
-                <p><strong>Jabatan:</strong> Ketua PGPM</p>
-                <p><strong>Periode:</strong> 2025 – 2028</p>
-                <p>Bertanggung jawab dalam koordinasi pelayanan pastoral.</p>
-            </div>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="pengurus-card fade-in">
-            <div class="pengurus-foto">
-                <img src="images/pgpm2.jpg" alt="Nama Pengurus">
-            </div>
-            <div class="pengurus-info">
-                <h3>Maria Theresia</h3>
-                <p><strong>Jabatan:</strong> Sekretaris</p>
-                <p><strong>Periode:</strong> 2025 – 2028</p>
-                <p>Mengelola administrasi dan dokumentasi kegiatan.</p>
-            </div>
-        </div>
-		
-		<!-- CARD 3 -->
-        <div class="pengurus-card fade-in">
-            <div class="pengurus-foto">
-                <img src="images/pgpm3.jpg" alt="Nama Pengurus">
-            </div>
-            <div class="pengurus-info">
-                <h3>GGP Mantab</h3>
-                <p><strong>Jabatan:</strong> Bendahara</p>
-                <p><strong>Periode:</strong> 2025 – 2028</p>
-                <p>Mengelola administrasi Keuangan Paroki.</p>
-            </div>
-        </div>
-		
-		<!-- CARD 4 -->
-        <div class="pengurus-card fade-in">
-            <div class="pengurus-foto">
-                <img src="images/pgpm3.jpg" alt="Nama Pengurus">
-            </div>
-            <div class="pengurus-info">
-                <h3>GGP Mantab</h3>
-                <p><strong>Jabatan:</strong> Bendahara</p>
-                <p><strong>Periode:</strong> 2025 – 2028</p>
-                <p>Mengelola administrasi Keuangan Paroki.</p>
-            </div>
-        </div>
-		
-		<!-- CARD 5 -->
-        <div class="pengurus-card fade-in">
-            <div class="pengurus-foto">
-                <img src="images/pgpm3.jpg" alt="Nama Pengurus">
-            </div>
-            <div class="pengurus-info">
-                <h3>GGP Mantab</h3>
-                <p><strong>Jabatan:</strong> Bendahara</p>
-                <p><strong>Periode:</strong> 2025 – 2028</p>
-                <p>Mengelola administrasi Keuangan Paroki.</p>
-            </div>
-        </div>
+    <!-- Wadah ini akan diisi OTOMATIS oleh JavaScript dari Spreadsheets -->
+    <div class="pengurus-container" id="wadah-pengurus-pgpm">
+        <p style="text-align: center; width: 100%; color: #888;">
+            <i class="fas fa-spinner fa-spin"></i> Sedang mengambil data pengurus...
+        </p>
     </div>
 
 </section>
+
+<!-- ====== AKHIR ISI HALAMAN ====== -->
 
 <!-- ====== AKHIR ISI HALAMAN ====== -->
 
@@ -169,5 +116,79 @@
 <!-- ====== SCRIPT (SAMA SEMUA HALAMAN) ====== -->
 <script src="js/script.js"></script>
 
+!-- ==========================================
+     SCRIPT AMBIL DATA PENGURUS DARI SPREADSHEETS
+=========================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. MASUKKAN LINK CSV SHEET "DataPGPM" DI SINI
+    const urlCSVPgpm = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=793135057&single=true&output=csv";
+    
+    const wadahPengurus = document.getElementById('wadah-pengurus-pgpm');
+
+    fetch(urlCSVPgpm)
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal mengambil data");
+            return response.text();
+        })
+        .then(dataText => {
+            // Pecah data per baris
+            const barisData = dataText.replace(/\r/g, '').split('\n');
+            let htmlKartu = '';
+
+            // Looping dari baris ke-2 (melewati judul kolom)
+            for (let i = 1; i < barisData.length; i++) {
+                const barisAktif = barisData[i].trim();
+                if (barisAktif === '') continue;
+
+                // Trik memecah kolom CSV (Aman kalau di dalam deskripsi ada tanda koma)
+                // Ini regex agar koma di dalam tanda kutip (") tidak ikut terpotong
+                const kolom = barisAktif.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+
+                // Ekstrak data dan bersihkan tanda kutip
+                const nama = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim() : '';
+                const jabatan = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
+                const periode = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
+                const deskripsi = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
+                
+                // Jika kolom E (Foto) kosong, beri gambar profil bawaan/dummy
+                let foto = kolom[4] ? kolom[4].replace(/^"|"$/g, '').trim() : '';
+                if (!foto) { foto = 'images/dummy-profile.jpg'; } 
+
+                // Jika kolom nama ada isinya, buatkan Kartu HTML-nya
+                if (nama) {
+                    htmlKartu += `
+                    <div class="pengurus-card">
+                        <div class="pengurus-foto">
+                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profile.jpg'">
+                        </div>
+                        <div class="pengurus-info">
+                            <h3>${nama}</h3>
+                            <div class="badge-jabatan">${jabatan}</div>
+                            <p>${deskripsi}</p>
+                            <p class="periode-teks">Periode: ${periode}</p>
+                        </div>
+                    </div>
+                    `;
+                }
+            }
+
+            // Tampilkan ke website
+            if (htmlKartu !== '') {
+                wadahPengurus.innerHTML = htmlKartu;
+            } else {
+                wadahPengurus.innerHTML = '<p style="text-align:center; width:100%;">Belum ada data pengurus yang diinput.</p>';
+            }
+
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            wadahPengurus.innerHTML = '<p style="text-align:center; width:100%; color:red;">Gagal memuat data pengurus. Silakan periksa koneksi internet.</p>';
+        });
+});
+</script>
+
+	
 </body>
 </html>
