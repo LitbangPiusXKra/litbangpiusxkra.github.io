@@ -51,16 +51,10 @@ window.addEventListener('load', checkFadeIn);
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // ==================================================
-    // 1. MASUKKAN LINK CSV SHEET "DataGaleri" DI SINI
-    // ==================================================
-    const urlCSVGaleri = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL5wQIAMDGcop31TI15DlsFBHNscqMSEAdq23uVqknE7pc4hDPcQ64zlYpgWJ8VKPYoUnJ3FymJgEP/pub?gid=176725659&single=true&output=csv";
-    
+    // MASUKKAN LINK CSV SHEET "DataGaleri" DI SINI
+    const urlCSVGaleri = "MASUKKAN_LINK_CSV_GALERI_BOSS_DI_SINI";
     const wadahGaleri = document.getElementById('wadah-galeri-dinamis');
 
-    // ==================================================
-    // 2. MESIN PENGAMBIL DATA DARI GOOGLE SHEETS
-    // ==================================================
     fetch(urlCSVGaleri)
         .then(response => {
             if (!response.ok) throw new Error("Gagal mengambil data");
@@ -70,55 +64,54 @@ document.addEventListener('DOMContentLoaded', function() {
             const barisData = dataText.replace(/\r/g, '').split('\n');
             let htmlKartu = '';
 
-            // Looping dari baris 2
             for (let i = 1; i < barisData.length; i++) {
                 const barisAktif = barisData[i].trim();
                 if (barisAktif === '') continue;
 
                 const kolom = barisAktif.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
-                // Pastikan kategori huruf kecil semua agar filter tidak error (misal ketik OMK jadi omk)
                 const kategori = kolom[0] ? kolom[0].replace(/^"|"$/g, '').trim().toLowerCase() : 'lainnya';
                 const judul = kolom[1] ? kolom[1].replace(/^"|"$/g, '').trim() : '';
                 const tanggal = kolom[2] ? kolom[2].replace(/^"|"$/g, '').trim() : '';
                 const keterangan = kolom[3] ? kolom[3].replace(/^"|"$/g, '').trim() : '';
-                let foto = kolom[4] ? kolom[4].replace(/^"|"$/g, '').trim() : '';
+                let mediaUrl = kolom[4] ? kolom[4].replace(/^"|"$/g, '').trim() : '';
 
-                if (!foto) { foto = 'images/logo.png'; } // Gambar default jika kosong
+                if (!mediaUrl) { mediaUrl = 'images/logo.png'; } 
+
+                // DETEKSI APAKAH INI VIDEO ATAU GAMBAR
+                const isVideo = mediaUrl.toLowerCase().includes('.mp4');
 
                 if (judul) {
                     htmlKartu += `
-                    <div class="galeri-item" data-kategori="${kategori}">
+                    <div class="galeri-item" data-kategori="${kategori}" data-tipe="${isVideo ? 'video' : 'gambar'}">
                         <h3 class="galeri-judul">${judul}</h3>
                         <span class="galeri-tanggal">${tanggal}</span>
-                        <img src="${foto}" alt="${judul}" data-ket="${keterangan}">
-                        <p class="galeri-ket">${keterangan}</p>
+                        
+                        <div class="media-wadah">
+                            ${isVideo 
+                                ? `<video src="${mediaUrl}" class="media-galeri" preload="metadata" muted></video>
+                                   <i class="fas fa-play-circle play-icon"></i>` 
+                                : `<img src="${mediaUrl}" class="media-galeri" alt="${judul}">`
+                            }
+                        </div>
+                        
+                        <p class="galeri-ket" data-ket="${keterangan}">${keterangan}</p>
                     </div>
                     `;
                 }
             }
 
-            if (htmlKartu !== '') {
-                wadahGaleri.innerHTML = htmlKartu;
-            } else {
-                wadahGaleri.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Belum ada foto galeri.</p>';
-            }
+            if (htmlKartu !== '') { wadahGaleri.innerHTML = htmlKartu; } 
+            else { wadahGaleri.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Belum ada foto/video galeri.</p>'; }
 
-            // ==================================================
-            // KUNCI RAHASIA: JALANKAN LIGHTBOX & FILTER SETELAH FOTO MUNCUL
-            // ==================================================
             jalankanFiturGaleri();
-
         })
         .catch(error => {
             console.error("Error:", error);
-            wadahGaleri.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:red;">Gagal memuat galeri. Periksa koneksi internet.</p>';
+            wadahGaleri.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:red;">Gagal memuat galeri.</p>';
         });
 
 
-    // ==================================================
-    // 3. FUNGSI FILTER & LIGHTBOX (Dijalankan belakangan)
-    // ==================================================
     function jalankanFiturGaleri() {
         
         // --- MESIN FILTER ---
@@ -130,9 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.addEventListener("click", () => {
                     filterBtns.forEach(b => b.classList.remove("active"));
                     btn.classList.add("active");
-
                     const filter = btn.getAttribute("data-filter");
-
                     galeriItems.forEach(item => {
                         const kategori = item.getAttribute("data-kategori");
                         if(filter === "all" || filter === kategori){
@@ -145,87 +136,97 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // --- MESIN LIGHTBOX ---
+        // --- MESIN LIGHTBOX MULTIMEDIA ---
         const lightbox = document.getElementById("lightbox");
         if(lightbox){
             const lightboxImg = document.getElementById("lightboxImg");
+            const lightboxVid = document.getElementById("lightboxVid"); // ID Video baru
             const lightboxJudul = document.getElementById("lightboxJudul");
             const lightboxTanggal = document.getElementById("lightboxTanggal");
             const lightboxCaption = document.getElementById("lightboxCaption");
             const lightboxClose = document.getElementById("lightboxClose");
-            const lightboxPrev = document.getElementById("lightboxPrev");
-            const lightboxNext = document.getElementById("lightboxNext");
-
-            const galeriImg = document.querySelectorAll(".galeri-item img");
+            
+            const mediaGrid = document.querySelectorAll(".media-galeri");
 
             let currentIndex = 0;
-            let visibleImages = [];
+            let visibleItems = [];
 
-            function showImage(index, direction){
-                const img = visibleImages[index];
-                const item = img.closest(".galeri-item"); 
-
-                lightboxImg.classList.remove("slide-next", "slide-prev");
-                void lightboxImg.offsetWidth; 
-
-                lightboxImg.src = img.src;
+            function showMedia(index){
+                const item = visibleItems[index];
+                const tipeMedia = item.getAttribute("data-tipe");
                 
-                const judulEl = item.querySelector(".galeri-judul");
-                lightboxJudul.innerText = judulEl ? judulEl.innerText : "";
+                const judulEl = item.querySelector(".galeri-judul").innerText;
+                const tglEl = item.querySelector(".galeri-tanggal").innerText;
+                const ketEl = item.querySelector(".galeri-ket").getAttribute("data-ket");
+                const srcMedia = item.querySelector(".media-galeri").getAttribute("src");
 
-                const tglEl = item.querySelector(".galeri-tanggal");
-                lightboxTanggal.innerText = tglEl ? tglEl.innerText : "";
+                // MATIKAN VIDEO TERLEBIH DAHULU (Biar suara gak tumpang tindih)
+                lightboxVid.pause();
+                lightboxVid.src = "";
 
-                lightboxCaption.innerText = img.getAttribute("data-ket") || "";
+                // ISI TEKS
+                lightboxJudul.innerText = judulEl;
+                lightboxTanggal.innerText = tglEl;
+                lightboxCaption.innerText = ketEl;
 
-                if(direction === "next"){ lightboxImg.classList.add("slide-next"); } 
-                else if(direction === "prev"){ lightboxImg.classList.add("slide-prev"); }
+                // TAMPILKAN VIDEO ATAU GAMBAR
+                if (tipeMedia === 'video') {
+                    lightboxImg.style.display = 'none'; // Sembunyikan foto
+                    lightboxVid.style.display = 'block'; // Tampilkan Video
+                    lightboxVid.src = srcMedia;
+                    lightboxVid.play(); // OTOMATIS PLAY SAAT DIBUKA
+                } else {
+                    lightboxVid.style.display = 'none'; // Sembunyikan Video
+                    lightboxImg.style.display = 'block'; // Tampilkan Foto
+                    lightboxImg.src = srcMedia;
+                }
             }
 
-            galeriImg.forEach(img => {
-                img.addEventListener("click", () => {
-                    visibleImages = Array.from(galeriImg).filter(
-                        im => !im.closest(".galeri-item").classList.contains("hide")
-                    );
-                    currentIndex = visibleImages.indexOf(img);
+            mediaGrid.forEach(media => {
+                media.addEventListener("click", function() {
+                    visibleItems = Array.from(galeriItems).filter(i => !i.classList.contains("hide"));
+                    const klikItem = this.closest(".galeri-item");
+                    currentIndex = visibleItems.indexOf(klikItem);
+                    
                     lightbox.classList.add("show");
-                    showImage(currentIndex, "next");
+                    showMedia(currentIndex);
                 });
             });
 
-            lightboxNext.addEventListener("click", (e) => {
+            // TOMBOL NEXT & PREV
+            document.getElementById('lightboxNext').addEventListener("click", (e) => {
                 e.stopPropagation();
-                currentIndex = (currentIndex + 1) % visibleImages.length;
-                showImage(currentIndex, "next");
+                currentIndex = (currentIndex + 1) % visibleItems.length;
+                showMedia(currentIndex);
             });
 
-            lightboxPrev.addEventListener("click", (e) => {
+            document.getElementById('lightboxPrev').addEventListener("click", (e) => {
                 e.stopPropagation();
-                currentIndex = (currentIndex - 1 + visibleImages.length) % visibleImages.length;
-                showImage(currentIndex, "prev");
+                currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+                showMedia(currentIndex);
             });
 
-            lightboxClose.addEventListener("click", () => { lightbox.classList.remove("show"); });
+            // FUNGSI TUTUP (SANGAT PENTING: MATIKAN VIDEO SAAT DITUTUP)
+            function tutupLightbox() {
+                lightbox.classList.remove("show");
+                lightboxVid.pause(); // Video Langsung Berhenti
+                lightboxVid.src = "";
+            }
 
+            lightboxClose.addEventListener("click", tutupLightbox);
             lightbox.addEventListener("click", (e) => {
-                if(e.target === lightbox){ lightbox.classList.remove("show"); }
+                if(e.target === lightbox) tutupLightbox();
             });
-
             document.addEventListener("keydown", (e) => {
                 if(!lightbox.classList.contains("show")) return;
-                if(e.key === "Escape"){ lightbox.classList.remove("show"); }
-                if(e.key === "ArrowRight"){ 
-                    currentIndex = (currentIndex + 1) % visibleImages.length; 
-                    showImage(currentIndex, "next"); 
-                }
-                if(e.key === "ArrowLeft"){ 
-                    currentIndex = (currentIndex - 1 + visibleImages.length) % visibleImages.length; 
-                    showImage(currentIndex, "prev"); 
-                }
+                if(e.key === "Escape") tutupLightbox();
+                if(e.key === "ArrowRight") { currentIndex = (currentIndex + 1) % visibleItems.length; showMedia(currentIndex); }
+                if(e.key === "ArrowLeft") { currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length; showMedia(currentIndex); }
             });
         }
     }
 });
+
 
 
 // ===== MODAL SAMBUTAN =====
