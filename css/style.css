@@ -729,7 +729,8 @@ SECTION PENGURUS
     border-radius: 20px;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 15px;
+    /* JARAK BAWAH DIKECILKAN DARI 15px MENJADI 5px */
+    margin-bottom: 5px; 
 }
 
 .pengurus-info p {
@@ -743,9 +744,10 @@ SECTION PENGURUS
     font-size: 13px !important;
     color: #888 !important;
     font-style: italic;
-    margin-top: 15px;
-    border-top: 1px dashed #eee;
-    padding-top: 10px;
+    /* JARAK ATAS DIKECILKAN, GARIS PUTUS-PUTUS DIHAPUS BIAR CLEAN */
+    margin-top: 5px !important; 
+    border-top: none !important; 
+    padding-top: 0 !important;
 }
 
 /* ==================================================
