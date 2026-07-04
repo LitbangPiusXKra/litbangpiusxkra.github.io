@@ -1219,6 +1219,27 @@ flex-grow:1;
     color: #C9A15A; /* Berubah Emas saat di-hover */
 }
 
+/* WADAH MEDIA DINAMIS (GAMBAR / VIDEO) */
+.lightbox-media-wadah {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Memastikan Gambar dan Video ukurannya selalu seragam */
+.lightbox-media-wadah img, 
+.lightbox-media-wadah video {
+    max-width: 100% !important;
+    max-height: 55vh !important;
+    width: auto !important;
+    object-fit: contain !important; 
+    border-radius: 10px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    outline: none !important;
+}
+
 /* ==========================
 HALAMAN KONTAK
 ========================== */
