@@ -154,14 +154,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Jika kolom E (Foto) kosong, beri gambar profil bawaan/dummy
                 let foto = kolom[4] ? kolom[4].replace(/^"|"$/g, '').trim() : '';
-                if (!foto) { foto = 'images/dummy-profile.jpg'; } 
+                if (!foto) { foto = 'images/dummy-profil.jpg'; } 
 
                 // Jika kolom nama ada isinya, buatkan Kartu HTML-nya
                 if (nama) {
                     htmlKartu += `
                     <div class="pengurus-card">
                         <div class="pengurus-foto">
-                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profile.jpg'">
+                            <img src="${foto}" alt="Foto ${nama}" onerror="this.src='images/dummy-profil.jpg'">
                         </div>
                         <div class="pengurus-info">
                             <h3>${nama}</h3>
